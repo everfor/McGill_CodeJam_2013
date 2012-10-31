@@ -22,6 +22,7 @@ public class Map extends JPanel implements ActionListener {
 	int height = map[0].length;
 
 	boolean tunnel = false;
+	//begins pacman in stationary position
 	static boolean goLeft = false;
 	static boolean goRight = false;
 	static boolean goUp = false;
@@ -30,10 +31,10 @@ public class Map extends JPanel implements ActionListener {
 
 	// initialize pacman and ghosts
 	Pacman pacman = new Pacman();
-	Ghost ghost = new Ghost(10, 13);
-	Ghost ghost2 = new Ghost(30, 19);
+	Ghost ghost = new Ghost(7, 5);
+	Ghost ghost2 = new Ghost(30, 8);
 	Ghost ghost3 = new Ghost(4, 20);
-	Ghost ghost4 = new Ghost(30, 12);
+	Ghost ghost4 = new Ghost(32, 22);
 	Timer timer;
 
 	public Map() {
@@ -58,7 +59,7 @@ public class Map extends JPanel implements ActionListener {
 		fill(Color.darkGray, g, ghost3.getX(), ghost3.getY());
 		fill(Color.cyan, g, ghost4.getX(), ghost4.getY());
 
-		// check if pacman can move and then move
+		// check if pacman can move in a particular direction and then move
 		if (UserControls.checkMove(pacman, map, tunnel)) {
 			pacman.move(tunnel);
 
@@ -68,7 +69,7 @@ public class Map extends JPanel implements ActionListener {
 		ghost2.move(ghost2, map);
 		ghost3.move(ghost3, map);
 		ghost4.move(ghost4, map);
-
+		// checks if pacman has collided with a ghost
 		checkCollision();
 	}
 
@@ -84,7 +85,7 @@ public class Map extends JPanel implements ActionListener {
 			pauseSession();
 		}
 	}
-
+//method that pauses game (used by p keypress)
 	public void pauseSession() {
 		try {
 			timer.stop();
@@ -92,7 +93,7 @@ public class Map extends JPanel implements ActionListener {
 			System.out.println("There is a problem");
 		}
 	}
-
+	//method that resumes game (used by r keypress)
 	public void resumeSession() {
 		try {
 			timer.start();
@@ -156,8 +157,11 @@ public class Map extends JPanel implements ActionListener {
 	}
 
 	public class myActionListener extends KeyAdapter {
-		// this method checks if pacman can move in the inputted direction, and
-		// then moves pacman
+
+		/**
+		 * This method checks keypressed events and acts accordingly depending
+		 * on the particular key. This includes pacman's movements, pause and resume
+		 */
 		public void keyPressed(KeyEvent e) {
 			int key = e.getKeyCode();
 

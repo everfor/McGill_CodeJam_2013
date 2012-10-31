@@ -3,7 +3,16 @@ package interfaceFramework;
 import interfaceFramework.Pacman;
 
 public class UserControls {
-
+/**
+ * The checkMove() method checks if it is possible for pacman to move in 
+ * a specific direction by ensuring that there is no wall in his upcoming
+ * position. If a wall exists the method returns a false boolean to prevent pacman
+ * from changing directions.
+ * @param pacman used to find his coordinates
+ * @param map used to check upcoming coordinates for walls
+ * @param tunnel boolean that indicates if the specified coordinate is a tunnel
+ * @return
+ */
 	public static boolean checkMove(Pacman pacman, int map[][], boolean tunnel){
 		boolean result = true;
 		int x = pacman.getX();
@@ -34,7 +43,7 @@ public class UserControls {
 		return result;
 	}
 
-	
+	// to check if left move is possible
 	public static boolean moveLeft(Pacman pacman, int map[][]) {
 		boolean result = true;
 		int x = pacman.getX();

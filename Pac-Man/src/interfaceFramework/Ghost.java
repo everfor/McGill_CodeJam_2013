@@ -9,7 +9,13 @@ public class Ghost {
 		this.x = x;
 		this.y = y;
 	}
-
+/**
+ * This is the method that controls the ghosts movement. It is set to random,
+ * however before a ghosts movements it checks if the upcoming coordinates 
+ * are occupied with a wall.
+ * @param ghost used to find a particular ghost's coordinates
+ * @param map used to check upcoming coordinates for walls
+ */
 	public void move(Ghost ghost, int map[][]) {
 
 		Random generator = new Random();
@@ -34,7 +40,7 @@ public class Ghost {
 			x -= 37;
 		}
 	}
-
+//getX() and getY() get a ghost's x and y coordinates at a specified time.
 	public int getX() {
 		return x;
 	}
