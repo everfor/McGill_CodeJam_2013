@@ -13,19 +13,25 @@ public class Ghost {
 	public void move(Ghost ghost, int map[][]) {
 
 		Random generator = new Random();
-		int randommove = generator.nextInt(4);
+		int randomMove = generator.nextInt(4);
 
-		if (randommove == 0 && moveRight(ghost, map)) {
+		if (randomMove == 0 && moveRight(ghost, map)) {
 			x = x + 1;
 		}
-		else if (randommove == 1 && moveLeft(ghost, map)) {
+		else if (randomMove == 1 && moveLeft(ghost, map)) {
 			x = x - 1;
 		} 
-		else if (randommove == 2 && moveUp(ghost, map)) {
+		else if (randomMove == 2 && moveUp(ghost, map)) {
 			y = y - 1;
 		} 
-		else if (randommove == 3 && moveDown(ghost, map)) {
+		else if (randomMove == 3 && moveDown(ghost, map)) {
 			y = y + 1;
+		}
+		else if(map[ghost.getX()-1][ghost.getY()] == 4){
+			x += 37;
+		}
+		else if(map[ghost.getX()+1][ghost.getY()] == 4){
+			x -= 37;
 		}
 	}
 
@@ -43,7 +49,7 @@ public class Ghost {
 		int x = ghost.getX();
 		int y = ghost.getY();
 		
-		if(x == 1 || (x == 27 && y<=12)){
+		if(x == 1 || (x == 27 && y<=12) || (x == 4 && (y == 14 || y==16))){
 			result = false;
 		}
 		return result;
@@ -55,7 +61,7 @@ public class Ghost {
 		int x = ghost.getX();
 		int y = ghost.getY();
 
-		if (x == 38 || (x == 19 && y >= 5 && y <= 12)) {
+		if (x == 38 || (x == 19 && y >= 5 && y <= 12) || (x == 35 && (y == 14 || y==16))) {
 			result = false;
 		}
 		return result;
@@ -67,7 +73,8 @@ public class Ghost {
 		int x = ghost.getX();
 		int y = ghost.getY();
 
-		if (y == 1 || (x >= 20 && x <= 26 && y == 13)) {
+		if (y == 1 || (x >= 20 && x <= 26 && y == 13) || (x<=3 && (y == 15 || y ==17)) || 
+			(x>=36 && (y == 15 || y ==17))) {
 			result = false;
 		}
 		return result;
@@ -79,7 +86,8 @@ public class Ghost {
 		int x = ghost.getX();
 		int y = ghost.getY();
 
-		if (y == 28 || (x >= 20 && x < 26 && y == 4)) {
+		if (y == 28 || (x >= 20 && x < 26 && y == 4) || (x<=3 && (y == 13 || y ==15)) || 
+				(x>=36 && (y == 13 || y ==15))) {
 			result = false;
 		}
 		return result;
