@@ -1,18 +1,33 @@
 package interfaceFramework;
 
+import java.awt.Image;
+import java.io.File;
+
+import javax.swing.ImageIcon;
+
 public class Pacman {
 	int x, y;
-
+	Image image2;
+	File path;
+	
 	public Pacman() {
 		x = 1;
 		y = 1;
+	
+		path = new File("").getAbsoluteFile().getParentFile();
+		image2 = new ImageIcon(path + "\\resources\\pacman2.gif").getImage();
 	}
 	
 	public void moveTo(int x, int y){
 		this.x = x;
 		this.y = y;
 	}
-//move
+	
+	public void move(int dx, int dy){
+		x += dx;
+		y += dy;
+	}
+	//move
 	/**
 	 * Moves pacman one step in a direction that has been specified by the 
 	 * player. The specified coordinates are checked to ensure that it is not
@@ -21,29 +36,29 @@ public class Pacman {
 	 * @param tunnel boolean that indicates if the specified coordinate is a tunnel
 	 */
 	public void move(boolean tunnel) {
-		if(Map.goLeft){
+		if(Game.goLeft){
 			if(tunnel){
-				x += 37;
+				x += 27;
 			}
 			else{
 				x -= 1;
 			}
 		}
 		
-		else if(Map.goRight){
+		else if(Game.goRight){
 			if(tunnel){
-				x -= 37;
+				x -= 27;
 			}
 			else{
 				x += 1;
 			}
 		}
 		
-		else if(Map.goUp){
+		else if(Game.goUp){
 			y -= 1;
 		}
 		
-		else if(Map.goDown){
+		else if(Game.goDown){
 			y += 1;
 		}
 	}

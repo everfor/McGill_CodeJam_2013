@@ -16,11 +16,11 @@ public class Maze extends JFrame {
 	 */
 	public Maze() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(656, 518);
+		setSize(520, 596);
 		setLocationRelativeTo(null);
 		setVisible(true);
 		setTitle("Pac-Man");
-		add(new Map());
+		add(new Game());
 	}
 
 }

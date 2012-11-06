@@ -18,26 +18,26 @@ public class UserControls {
 		int x = pacman.getX();
 		int y = pacman.getY();
 		
-		if (map[x - 1][y] == 1 && Map.goLeft == true) {
+		if (map[x - 1][y] == 1 && Game.goLeft == true) {
 			result = false;
 		}
-		else if (map[x - 1][y] == 4 && Map.goLeft == true){
-			pacman.moveTo(38,15);
+		else if (map[x - 1][y] == 4 && Game.goLeft == true){
+			pacman.moveTo(38,14);
 		}
 		
-		else if (map[x + 1][y] == 1 && Map.goRight == true) {
-			result = false;
-		}
-		
-		else if (map[x + 1][y] == 4 && Map.goRight == true) {
-			pacman.moveTo(1,15);
-		}
-		
-		else if (map[x][y - 1] == 1 && Map.goUp == true) {
+		else if (map[x + 1][y] == 1 && Game.goRight == true) {
 			result = false;
 		}
 		
-		else if (map[x][y + 1] == 1 && Map.goDown == true) {
+		else if (map[x + 1][y] == 4 && Game.goRight == true) {
+			pacman.moveTo(1,14);
+		}
+		
+		else if (map[x][y - 1] == 1 && Game.goUp == true) {
+			result = false;
+		}
+		
+		else if (map[x][y + 1] == 1 && Game.goDown == true) {
 			result = false;
 		}
 		return result;
