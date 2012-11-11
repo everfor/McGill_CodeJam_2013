@@ -7,15 +7,19 @@ import javax.swing.ImageIcon;
 
 public class Pacman {
 	int x, y;
-	Image image2;
+	Image image1, image2, image3, image4;
 	File path;
 	
 	public Pacman() {
 		x = 1;
 		y = 1;
 	
-		path = new File("").getAbsoluteFile().getParentFile();
+		path = new File("").getAbsoluteFile();
+		image1 = new ImageIcon(path + "\\resources\\pacman1.gif").getImage();
 		image2 = new ImageIcon(path + "\\resources\\pacman2.gif").getImage();
+		image3 = new ImageIcon(path + "\\resources\\pacman3.gif").getImage();
+		image4 = new ImageIcon(path + "\\resources\\pacman4.gif").getImage();
+
 	}
 	
 	public void moveTo(int x, int y){
@@ -62,7 +66,6 @@ public class Pacman {
 			y += 1;
 		}
 	}
-//getX() and getY() get pacmans x and y coordinates at a specified time.
 	
 		public int getX() {
 			return x;

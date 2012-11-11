@@ -3,15 +3,19 @@ package interfaceFramework;
 import java.awt.Graphics;
 import java.awt.Image;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
 public class Map extends JPanel {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	final int width = 28;
-	final int height = 31;
+	final int height = 33; //2 more for extra space at bottom
 	
 	int board[][] = new int[width][height];
 	
@@ -23,7 +27,7 @@ public class Map extends JPanel {
 	static Scanner reader;
 	
 	public Map() {
-		path = new File("").getAbsoluteFile().getParentFile();		
+		path = new File("").getAbsoluteFile();		
 		wall = new ImageIcon(path + "\\resources\\wall.jpg").getImage();
 		space = new ImageIcon(path + "\\resources\\space.jpg").getImage();
 		
@@ -36,7 +40,7 @@ public class Map extends JPanel {
 		try {
 			reader = new Scanner(new File(path + "\\resources\\Map.txt"));
 		} 
-		catch (FileNotFoundException e) {
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
