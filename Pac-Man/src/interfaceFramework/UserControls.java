@@ -1,7 +1,5 @@
 package interfaceFramework;
 
-import interfaceFramework.Pacman;
-
 public class UserControls {
 /**
  * The checkMove() method checks if it is possible for pacman to move in 
@@ -9,40 +7,42 @@ public class UserControls {
  * position. If a wall exists the method returns a false boolean to prevent pacman
  * from changing directions.
  * @param pacman used to find his coordinates
- * @param map used to check upcoming coordinates for walls
+ * @param board used to check upcoming coordinates for walls
  * @param tunnel boolean that indicates if the specified coordinate is a tunnel
  * @return
  */
-	public static boolean checkMove(Pacman pacman, int map[][], boolean tunnel){
+
+
+	public static boolean checkMove(Pacman pacman, int board[][], boolean tunnel){
 		boolean result = true;
 		int x = pacman.getX();
 		int y = pacman.getY();
 		
-		if (map[x - 1][y] == 1 && Map.goLeft == true) {
+		if (board[x - 1][y] == 1 && Game.goLeft == true) {
 			result = false;
 		}
-		else if (map[x - 1][y] == 4 && Map.goLeft == true){
-			pacman.moveTo(38,15);
+		else if (board[x - 1][y] == 4 && Game.goLeft == true){
+			pacman.moveTo(27,14);
 		}
 		
-		else if (map[x + 1][y] == 1 && Map.goRight == true) {
-			result = false;
-		}
-		
-		else if (map[x + 1][y] == 4 && Map.goRight == true) {
-			pacman.moveTo(1,15);
-		}
-		
-		else if (map[x][y - 1] == 1 && Map.goUp == true) {
+		else if (board[x + 1][y] == 1 && Game.goRight == true) {
 			result = false;
 		}
 		
-		else if (map[x][y + 1] == 1 && Map.goDown == true) {
+		else if (board[x + 1][y] == 4 && Game.goRight == true) {
+			pacman.moveTo(0,14);
+		}
+		
+		else if (board[x][y - 1] == 1 && Game.goUp == true) {
+			result = false;
+		}
+		
+		else if (board[x][y + 1] == 1 && Game.goDown == true) {
 			result = false;
 		}
 		return result;
 	}
-
+	
 	// to check if left move is possible
 	public static boolean moveLeft(Pacman pacman, int map[][]) {
 		boolean result = true;
