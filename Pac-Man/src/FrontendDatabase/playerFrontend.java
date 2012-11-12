@@ -1,5 +1,6 @@
 package FrontendDatabase;
 import javax.swing.*;
+import playerManipulation.Player;
 import BackendDatabase.playerBackend;
 
 public class playerFrontend {
@@ -40,6 +41,9 @@ public class playerFrontend {
 		char[] temporaryPassword = passwordInput.getPassword();
 		String password = new String(temporaryPassword);
 		loginStatus = (database.checkLogin(usernameInput.getText(), password));
+		if (loginStatus){
+			Player currentPlayer = new Player(usernameInput.getText());
+		}
 		return loginStatus;	
 	}
 	/**
@@ -56,5 +60,46 @@ public class playerFrontend {
 		exists = (database.findPlayer(username));
 		return exists;	
 	}
+	/**
+	 * Handles checking the secuirty question in the database for a given username. This method
+	 * takes a username and a security answer as input and checks if it is identical as the saved one 
+	 * for the specific user.
+	 * @param username - the players username
+	 * @param securityAnswer - the player's inputted answer
+	 * @return return true if the answers are the same, false otherwise
+	 */
+	public static boolean checkSecurityAnswer(String username, JTextField securityAnswer){
+		playerBackend database;
+		database= new playerBackend();
+		boolean same = false;
+		String securityA = securityAnswer.getText();
+		same = (database.checkSecurityQuestion(username, securityA));
+		return same;	
+	}
+	/**
+	 * Handles getting a specific info from the database for a specific player.
+	 * @param username - the players username
+	 * @param databaseField - Some existing info for a player
+	 * @return returns the string with the data the field in the database contains
+	 */
+	public static String getInfo(String username, String databaseField){
+		playerBackend database;
+		database= new playerBackend();
+		String returnText=(database.getInfo(username,databaseField));
+		return returnText;
+	}
+	/**
+	 * Handles inputting a specific info to the database for a specific player.
+	 * @param username - the players username
+	 * @param databaseField - Some existing info for a player
+	 * @param newInfo - the updated info for that specific field in the database
+	 * @return returns the changes made to the players info
+	 */
+	public static boolean changeProfileDetails(String username, String databaseField, String newInfo){
+		boolean changesMade = false;		
+		playerBackend database;
+		database= new playerBackend();
+		changesMade = (database.changeProfileDetails (username, databaseField, newInfo));
+		return changesMade;
+	}
 }
-

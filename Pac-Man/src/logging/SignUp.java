@@ -19,7 +19,6 @@ public class SignUp {
 	static String errorMessage;
 	//determines which errors occured during signup
 	static boolean	usernameTaken, badPassLength, badUsernameLength, differentPasswords, usernameCharacters;
-
 	/**
 	 * Checks if two passwords are equal
 	 * @param password1 First password entered
@@ -138,22 +137,22 @@ public class SignUp {
 			errorMessage+="Username can't contains special character, ";
 		}
 	}
-/**
- * This method checks the player inputted data for errors using signupError() and
- * creates a personalized error message if errors do exist. These errors are shown in a pop-up
- * window. If no errors are found this method attempts to add a new entry into the database. If
- * it does so successfully the player is notified by a pop-up window that he has been added to the database.
- * Otherwise if an error occurs while inputting the data into the database the player is also notified 
- * via a pop-up window that the process was unsuccessful
- * @param newUsername the username inputted by the player
- * @param newPassword the password inputted by the player
- * @param securityQuestion the security question inputted by the player
- * @param securityAnswer the answer to the security question inputted by the player
- * @param reenterPassword the password re-entered by the player
- */
+	/**
+	 * This method checks the player inputted data for errors using signupError() and
+	 * creates a personalized error message if errors do exist. These errors are shown in a pop-up
+	 * window. If no errors are found this method attempts to add a new entry into the database. If
+	 * it does so successfully the player is notified by a pop-up window that he has been added to the database.
+	 * Otherwise if an error occurs while inputting the data into the database the player is also notified 
+	 * via a pop-up window that the process was unsuccessful
+	 * @param newUsername the username inputted by the player
+	 * @param newPassword the password inputted by the player
+	 * @param securityQuestion the security question inputted by the player
+	 * @param securityAnswer the answer to the security question inputted by the player
+	 * @param reenterPassword the password re-entered by the player
+	 */
 	public static void register(JTextField newUsername, JPasswordField newPassword,JTextField securityQuestion,
 			JTextField securityAnswer, JPasswordField reenterPassword){
-		
+
 		signupErrors(newUsername, newPassword, securityQuestion, securityAnswer,  reenterPassword);
 		if (errorMessage.equals("")){
 			if (playerFrontend.addNewPlayer(newUsername, newPassword, securityQuestion, securityAnswer)){
@@ -167,6 +166,4 @@ public class SignUp {
 			JOptionPane.showMessageDialog(null, errorMessage,"Error",JOptionPane.ERROR_MESSAGE);
 		}
 	}
-
-
 }

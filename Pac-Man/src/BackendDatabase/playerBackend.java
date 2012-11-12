@@ -27,7 +27,7 @@ public class playerBackend {
 	public boolean checkLogin(String username,String password){
 		try {
 			// Checks username and password in database
-			myStatement=myConnection.prepareStatement("select * from playerdatabase where username=? and password=?");
+			myStatement=myConnection.prepareStatement("select * from "+databaseName+" where username=? and password=?");
 			myStatement.setString(1, username); // Username and password inserted in query
 			myStatement.setString(2, password);  
 			//executes the prepared statement
@@ -52,7 +52,7 @@ public class playerBackend {
 	public boolean findPlayer(String username){
 		try {
 			// Checks username and password in database
-			myStatement=myConnection.prepareStatement("select * from playerdatabase where username=?");
+			myStatement=myConnection.prepareStatement("select * from "+databaseName+" where username=?");
 			myStatement.setString(1, username); // Username and password inserted in query
 			//executes the prepared statement
 			result=myStatement.executeQuery();
@@ -92,7 +92,57 @@ public class playerBackend {
 			return false;
 		} 
 	}
-	public boolean changeProfileDetails (String newUsername, String securityQuestion,String securityAnswer){
-return true;//TODO	
+	public boolean checkSecurityQuestion(String username,String securityAnswer){
+		try {
+			// Checks username and password in database
+			myStatement=myConnection.prepareStatement("select * from "+databaseName+" where username=? and securityAnswer=?");
+			myStatement.setString(1, username); // Username and securityAnswer inserted in query
+			myStatement.setString(2, securityAnswer);  
+			//executes the prepared statement
+			result=myStatement.executeQuery();
+			if(result.next()){
+				return true;
+			}
+			else{
+				return false;
+			}
+		} catch (Exception e) {
+			System.out.println("Error while searching database");
+			return false;
+		}
+	}
+	public boolean changeProfileDetails (String username, String databaseField, String newInfo){
+		try {
+
+			String query = "update "+databaseName+" set "+databaseField+" = ? where username = ? ";
+			myStatement = myConnection.prepareStatement(query); // create a statement
+			myStatement.setString(1, newInfo ); // set input parameter 1
+			myStatement.setString(2, username); // set input parameter 2
+			myStatement.executeUpdate(); // execute update statement
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}  
+	}
+	public String getInfo(String username, String databaseField){
+		String info="";
+		try {
+			// Checks username and password in database
+			myStatement=myConnection.prepareStatement("select "+databaseField+" from "+databaseName+" where username=?");
+			myStatement.setString(1, username); // Username inserted in query
+			//executes the prepared statement
+			result=myStatement.executeQuery();
+			if(result.next()){
+				info = result.getString(1);
+			}
+		} catch (Exception e) {
+			System.out.println("Error while searching username in the database");
+			return info;
+		}
+		return info;
+	}
 }
-}
+
+
+
