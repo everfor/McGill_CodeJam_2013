@@ -1,13 +1,24 @@
 package interfaceFramework;
 
+import java.awt.Image;
+import java.io.File;
 import java.util.Random;
+
+import javax.swing.ImageIcon;
 
 public class Ghost {
 	int x, y;
+	File path;
+	Image image1;
+	boolean goLeft, goRight, goUp, goDown;
+	boolean ghostDirection[] = new boolean[4]; 
 
 	public Ghost(int x, int y) {
 		this.x = x;
 		this.y = y;
+		
+		path = new File("").getAbsoluteFile();
+		image1 = new ImageIcon(path + "\\resources\\ghost1.gif").getImage();
 	}
 /**
  * This is the method that controls the ghosts movement. It is set to random,
@@ -16,31 +27,54 @@ public class Ghost {
  * @param ghost used to find a particular ghost's coordinates
  * @param board used to check upcoming coordinates for walls
  */
-	public void move(Ghost ghost, int board[][]) {
+	public void move(int board[][], boolean[] ghostDirection) {
+		goLeft = ghostDirection[0];
+		goRight = ghostDirection[1];
+		goUp = ghostDirection[2];
+		goDown = ghostDirection[3];
+		
+		if(goLeft) {
+			if(board[x - 1][y] == 1){
+				x += 0;
+				goLeft = false;
+			}
+			else {
+				x -= 1;
+			}
+		}
+		
+		else if(goRight) {
+			if(board[x + 1][y] == 1){
+				x += 0;
+				goRight = false;
+			}
+			else {
+				x += 1;
+			}
+		}
+		
+		else if(goUp) {
+			if(board[x][y - 1] == 1){
+				y += 0;
+				goUp = false;
+			}
+			else {
+				y -= 1;
+			}
+		}
+		
+		else if(goDown) {
+			if(board[x][y + 1] == 1){
+				y += 0;
+				goDown = false;
+			}
+			else {
+				y += 1;
+			}
+		}
+}
 
-		Random generator = new Random();
-		int randomMove = generator.nextInt(4);
-
-		if (randomMove == 0 && moveRight(ghost, board)) {
-			x = x + 1;
-		}
-		else if (randomMove == 1 && moveLeft(ghost, board)) {
-			x = x - 1;
-		} 
-		else if (randomMove == 2 && moveUp(ghost, board)) {
-			y = y - 1;
-		} 
-		else if (randomMove == 3 && moveDown(ghost, board)) {
-			y = y + 1;
-		}
-		else if(board[ghost.getX()-1][ghost.getY()] == 4){
-			x += 37;
-		}
-		else if(board[ghost.getX()+1][ghost.getY()] == 4){
-			x -= 37;
-		}
-	}
-//getX() and getY() get a ghost's x and y coordinates at a specified time.
+	//getX() and getY() get a ghost's x and y coordinates at a specified time.
 	public int getX() {
 		return x;
 	}
@@ -49,54 +83,43 @@ public class Ghost {
 		return y;
 	}
 
-	// to check if left move is possible
-	public static boolean moveLeft(Ghost ghost, int map[][]) {
-		boolean result = true;
-		int x = ghost.getX();
-		int y = ghost.getY();
+	public boolean[] moveLeft(){
+		boolean[] direction = new boolean[4];
+		direction[0] = true;
+		direction[1] = false;
+		direction[2] = false;
+		direction[3] = false;
 		
-		if(x == 1 || (x == 27 && y<=12) || (x == 4 && (y == 14 || y==16))){
-			result = false;
-		}
-		return result;
+		return direction;
 	}
-
-	// to check if right move is possible
-	public static boolean moveRight(Ghost ghost, int map[][]) {
-		boolean result = true;
-		int x = ghost.getX();
-		int y = ghost.getY();
-
-		if (x == 38 || (x == 19 && y >= 5 && y <= 12) || (x == 35 && (y == 14 || y==16))) {
-			result = false;
-		}
-		return result;
+	
+	public boolean[] moveRight(){
+		boolean[] direction = new boolean[4];
+		direction[0] = false;
+		direction[1] = true;
+		direction[2] = false;
+		direction[3] = false;
+		
+		return direction;
 	}
-
-	// to check if up move is possible
-	public static boolean moveUp(Ghost ghost, int map[][]) {
-		boolean result = true;
-		int x = ghost.getX();
-		int y = ghost.getY();
-
-		if (y == 1 || (x >= 20 && x <= 26 && y == 13) || (x<=3 && (y == 15 || y ==17)) || 
-			(x>=36 && (y == 15 || y ==17))) {
-			result = false;
-		}
-		return result;
+	
+	public boolean[] moveUp(){
+		boolean[] direction = new boolean[4];
+		direction[0] = false;
+		direction[1] = false;
+		direction[2] = true;
+		direction[3] = false;
+		
+		return direction;
 	}
-
-	// to check if down move is possible
-	public static boolean moveDown(Ghost ghost, int map[][]) {
-		boolean result = true;
-		int x = ghost.getX();
-		int y = ghost.getY();
-
-		if (y == 28 || (x >= 20 && x < 26 && y == 4) || (x<=3 && (y == 13 || y ==15)) || 
-				(x>=36 && (y == 13 || y ==15))) {
-			result = false;
-		}
-		return result;
+	
+	public boolean[] moveDown(){
+		boolean[] direction = new boolean[4];
+		direction[0] = false;
+		direction[1] = false;
+		direction[2] = false;
+		direction[3] = true;
+		
+		return direction;
 	}
-
 }

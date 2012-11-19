@@ -6,7 +6,7 @@ import java.io.File;
 import javax.swing.ImageIcon;
 
 public class Pacman {
-	int x, y;
+	double x, y;
 	Image image1, image2, image3, image4;
 	File path;
 	
@@ -39,13 +39,13 @@ public class Pacman {
 	 * pacman will continue to move in the previously inputed direction. 
 	 * @param tunnel boolean that indicates if the specified coordinate is a tunnel
 	 */
-	public void move(boolean tunnel) {
+	public void move(boolean tunnel, double speed) {
 		if(Game.goLeft){
 			if(tunnel){
 				x += 27;
 			}
 			else{
-				x -= 1;
+				x -= 1 * speed;
 			}
 		}
 		
@@ -54,24 +54,24 @@ public class Pacman {
 				x -= 27;
 			}
 			else{
-				x += 1;
+				x += 1 * speed;
 			}
 		}
 		
 		else if(Game.goUp){
-			y -= 1;
+			y -= 1 * speed;
 		}
 		
 		else if(Game.goDown){
-			y += 1;
+			y += 1 * speed;
 		}
 	}
 	
-		public int getX() {
+		public double getX() {
 			return x;
 		}
 
-		public int getY() {
+		public double getY() {
 			return y;
 		}
 	}

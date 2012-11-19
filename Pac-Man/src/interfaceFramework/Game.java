@@ -18,7 +18,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	Pacman pacman = new Pacman();
 	Map map = new Map();
-
+	Ghost ghost1 = new Ghost(20, 5);
 	static int pixel = 18;
 
 	boolean tunnel = false;
@@ -27,10 +27,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean goUp = false;
 	static boolean goDown = false;
 	static boolean stop = false;
-
-
+	
+	double speed = 1;
 	Timer timer;
-
+	
 	public Game() {
 		timer = new Timer(200, this);
 		timer.start();
@@ -49,23 +49,26 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		map.addMap(g);
 		
 		if(goRight){
-			g.drawImage(pacman.image1, pacman.getX()*pixel, pacman.getY()*pixel, null);
+			g.drawImage(pacman.image1, (int) pacman.getX()*pixel, (int) pacman.getY()*pixel, null);
 		}
 		else if(goLeft){
-			g.drawImage(pacman.image2, pacman.getX()*pixel, pacman.getY()*pixel, null);
+			g.drawImage(pacman.image2, (int) pacman.getX()*pixel, (int) pacman.getY()*pixel, null);
 		}
 		else if(goUp){
-			g.drawImage(pacman.image3, pacman.getX()*pixel, pacman.getY()*pixel, null);
+			g.drawImage(pacman.image3, (int) pacman.getX()*pixel, (int) pacman.getY()*pixel, null);
 		}
 		else if(goDown){
-			g.drawImage(pacman.image4, pacman.getX()*pixel, pacman.getY()*pixel, null);
+			g.drawImage(pacman.image4, (int) pacman.getX()*pixel, (int) pacman.getY()*pixel, null);
 		}
 
 		if (UserControls.checkMove(pacman, map.board, tunnel)) {
-			pacman.move(tunnel);
+			pacman.move(tunnel, speed);
 		}
+		
+		g.drawImage(ghost1.image1, ghost1.getX()*pixel, ghost1.getY()*pixel, null);
+		ghost1.ghostDirection = ghost1.moveLeft();
+		ghost1.move(map.board, ghost1.ghostDirection);
 	}
-	
 	//method that pauses game (used by p keypress)
 	public void pauseSession() {
 		try {
