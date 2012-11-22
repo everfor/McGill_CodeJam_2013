@@ -1,5 +1,7 @@
 package interfaceFramework;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -18,12 +20,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	Pacman pacman = new Pacman();
 	Map map = new Map();
-	Ghost ghost1 = new Ghost(20, 5);
+	Ghost ghost1 = new Ghost(8, 5);
 	static int pixel = 18;
 
 	boolean tunnel = false;
-	static boolean goLeft = false;
-	static boolean goRight = true;
+	static boolean goLeft = true;
+	static boolean goRight = false;
 	static boolean goUp = false;
 	static boolean goDown = false;
 	static boolean stop = false;
@@ -65,10 +67,34 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			pacman.move(tunnel, speed);
 		}
 		
+		if(map.board[(int) pacman.getX()][(int) pacman.getY()] == 2){
+			map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+		}
+		
+		if(map.board[(int) pacman.getX()][(int) pacman.getY()] == 3){
+//			timer.stop();
+			map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+		}
+		
+		map.addExtras(pacman, g);
+		
 		g.drawImage(ghost1.image1, ghost1.getX()*pixel, ghost1.getY()*pixel, null);
-		ghost1.ghostDirection = ghost1.moveLeft();
-		ghost1.move(map.board, ghost1.ghostDirection);
+		
+//		ghost1.movePossible(pacman, map.board, ghost1.ghostDirection);
+		ghost1.move(map.board, ghost1.moveLeft());
+		checkCollision();
+//		System.out.println((int) pacman.getX() + " " + ghost1.getX());
 	}
+	
+	public void checkCollision() {
+		if ((((int) pacman.getX() + 1 == ghost1.getX() && (int) pacman.getY() == ghost1.getY()) && goLeft)
+				|| (((int) pacman.getX() - 1 == ghost1.getX() && (int) pacman.getY() == ghost1.getY()) && goRight)
+				|| (((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() - 1 == ghost1.getY()) && goDown)
+				|| (((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() + 1 == ghost1.getY()) && goUp)) {
+			pauseSession();
+		}
+	}
+	
 	//method that pauses game (used by p keypress)
 	public void pauseSession() {
 		try {
@@ -77,6 +103,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			System.out.println("There is a problem");
 		}
 	}
+	
 	//method that resumes game (used by r keypress)
 	public void resumeSession() {
 		try {
