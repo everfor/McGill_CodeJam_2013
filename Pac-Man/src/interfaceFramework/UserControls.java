@@ -15,8 +15,8 @@ public class UserControls {
 
 	public static boolean checkMove(Pacman pacman, int board[][], boolean tunnel){
 		boolean result = true;
-		int x = pacman.getX();
-		int y = pacman.getY();
+		int x = (int) pacman.getX();
+		int y = (int) pacman.getY();
 		
 		if (board[x - 1][y] == 1 && Game.goLeft == true) {
 			result = false;
@@ -46,8 +46,8 @@ public class UserControls {
 	// to check if left move is possible
 	public static boolean moveLeft(Pacman pacman, int map[][]) {
 		boolean result = true;
-		int x = pacman.getX();
-		int y = pacman.getY();
+		int x = (int)pacman.getX();
+		int y = (int)pacman.getY();
 
 		if (map[x - 1][y] == 1) {
 			result = false;
@@ -58,8 +58,8 @@ public class UserControls {
 	// to check if right move is possible
 	public static boolean moveRight(Pacman pacman, int map[][]) {
 		boolean result = true;
-		int x = pacman.getX();
-		int y = pacman.getY();
+		int x = (int)pacman.getX();
+		int y = (int)pacman.getY();
 
 		if (map[x + 1][y] == 1) {
 			result = false;
@@ -70,8 +70,8 @@ public class UserControls {
 	// to check if up move is possible
 	public static boolean moveUp(Pacman pacman, int map[][]) {
 		boolean result = true;
-		int x = pacman.getX();
-		int y = pacman.getY();
+		int x = (int)pacman.getX();
+		int y = (int)pacman.getY();
 		
 		if (map[x][y - 1] == 1) {
 			result = false;
@@ -82,8 +82,8 @@ public class UserControls {
 	// to check if down move is possible
 	public static boolean moveDown(Pacman pacman, int map[][]) {
 		boolean result = true;
-		int x = pacman.getX();
-		int y = pacman.getY();
+		int x = (int)pacman.getX();
+		int y = (int)pacman.getY();
 
 		if (map[x][y + 1] == 1) {
 			result = false;
