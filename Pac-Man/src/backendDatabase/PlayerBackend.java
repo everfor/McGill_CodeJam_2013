@@ -2,12 +2,24 @@ package backendDatabase;
 
 import java.sql.*;
 
+/**
+ * 
+ * @author KristiB
+ * 
+ *         The Backend player database reads and writes to the mySQL database in
+ *         order to manage the player information, excluding statistics.
+ * 
+ */
 public class PlayerBackend {
 	Connection myConnection;
 	PreparedStatement myStatement;
 	ResultSet result;
 	String databaseName = "playerdatabase";
 
+	/**
+	 * Constructor for building a backend player database. It connects to the
+	 * mySQL Server to establish the connection.
+	 */
 	public PlayerBackend() {
 		try {
 			// Here the connection with database will occur
@@ -116,6 +128,16 @@ public class PlayerBackend {
 		}
 	}
 
+	/**
+	 * The method checks the security question inputted by the user with the one
+	 * saved in the database when the user has previously logged in
+	 * 
+	 * @param username
+	 *            the username inputed by the player
+	 * @param securityAnswer
+	 *            the securityAnswers inputted by the player
+	 * @return true if the security questions are the same, false otherwise
+	 */
 	public boolean checkSecurityQuestion(String username, String securityAnswer) {
 		try {
 			// Checks username and password in database
@@ -137,6 +159,21 @@ public class PlayerBackend {
 		}
 	}
 
+	/**
+	 * The method changes the profile details depending on the databasefield
+	 * which could be a password, security question, security answer or level
+	 * achieved(only called from game play since the user has no access to it).
+	 * 
+	 * @param username
+	 *            the username inputted by the player
+	 * @param databaseField
+	 *            the field in the database, whose info needs to be changed.
+	 * @param newInfo
+	 *            the new information that needs to be stored in the database
+	 *            field that needs to be changed
+	 * @return true if the change of the profile details was changed
+	 *         successfully, false otherwise
+	 */
 	public boolean changeProfileDetails(String username, String databaseField,
 			String newInfo) {
 		try {
@@ -155,6 +192,18 @@ public class PlayerBackend {
 		}
 	}
 
+	/**
+	 * The method pulls the specific information from the database field
+	 * specified by the player or the other classes that interact with it
+	 * 
+	 * @param username
+	 *            the username of the specific user whose information needs to
+	 *            be pulled
+	 * @param databaseField
+	 *            the database field whose information needs to be pulled
+	 * @return a string representing the info that is stored inside the database
+	 *         field of the specific user
+	 */
 	public String getInfo(String username, String databaseField) {
 		String info = "";
 		try {
@@ -170,31 +219,35 @@ public class PlayerBackend {
 			}
 		} catch (Exception e) {
 			System.out
-			.println("Error while searching username in the database");
+					.println("Error while searching username in the database");
 			return info;
 		}
 		return info;
 	}
 
+	/**
+	 * The method deletes all the information of a player corresponding to a
+	 * specific username
+	 * 
+	 * @param username
+	 *            the username of the player that needs to be removed
+	 * @return true if the player is removed, false otherwise
+	 */
 	public boolean removePlayer(String username) {
-		boolean deleted=false;
+		boolean deleted = false;
 		try {
 			// Checks username and password in database
-			// myStatement = myConnection.prepareStatement("delete from "
-			// + databaseName + " where username=?");
-
 			String query = "delete from playerdatabase where username=?";
-
-			myStatement = myConnection.prepareStatement(query); // create a
-			// statement
-			myStatement.setString(1, username); // Username inserted in query
+			// create a statement
+			myStatement = myConnection.prepareStatement(query);
+			// Username inserted in query
+			myStatement.setString(1, username);
 			// executes the prepared statement
-
 			myStatement.executeUpdate();
 			deleted = true;
 		} catch (Exception e) {
 			System.out
-			.println("Error while searching username in the database");
+					.println("Error while searching username in the database");
 			deleted = false;
 		}
 		return deleted;

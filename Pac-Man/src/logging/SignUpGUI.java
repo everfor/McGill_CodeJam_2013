@@ -14,24 +14,34 @@ import javax.swing.JTextField;
 
 import playerManipulation.Player;
 
-public class SignUpGUI extends LoggingGUI{
+/**
+ * The class deals with the graphical user interface related to resetting the
+ * password after validating the security answer for a specific username
+ */
+public class SignUpGUI extends LoggingGUI {
 	private static JPanel signUpPage;
 	private static JTextField newUsernameInput;
-	private static JPasswordField reenterPassword, newPasswordInput; 
+	private static JPasswordField reenterPassword, newPasswordInput;
 	private static JTextField securityQuestionInput, securityAnswerInput;
-	private static JLabel newUsernameLabel,newPasswordLabel, reenterPasswordLabel,securityQuestion, securityAnswer;
-	private static JButton signUpToLogin,registerButton;
+	private static JLabel newUsernameLabel, newPasswordLabel,
+			reenterPasswordLabel, securityQuestion, securityAnswer;
+	private static JButton signUpToLogin, registerButton;
 	Player currentPlayer;
 	String securityQuestionDisplayed;
-	/**
-	 * @wbp.parser.entryPoint
-	 */
-	public static JPanel signUpGUI(){
 
-		//CardLayout for the sign Up Page
+	/**
+	 * The method creates a panel for the graphical interface for the process of
+	 * sign up and displays to the player the necessary information to be filled
+	 * up
+	 * 
+	 * @return a JPanel for sign up
+	 */
+	public static JPanel signUpGUI() {
+
+		// CardLayout for the sign Up Page
 		signUpPage = new JPanel();
 		signUpPage.setBackground(Color.BLACK);
-		//initialize all components to be displayed
+		// initialize all components to be displayed
 		signUpToLogin = new JButton("Back");
 		signUpToLogin.setBounds(187, 361, 75, 23);
 		registerButton = new JButton("Register");
@@ -62,7 +72,7 @@ public class SignUpGUI extends LoggingGUI{
 		securityAnswerInput = new JTextField();
 		securityAnswerInput.setBounds(266, 301, 86, 20);
 		signUpPage.setLayout(null);
-		//displays all components in login screen
+		// displays all components in login screen
 		signUpPage.add(newUsernameLabel);
 		signUpPage.add(newUsernameInput);
 		signUpPage.add(newPasswordLabel);
@@ -75,23 +85,24 @@ public class SignUpGUI extends LoggingGUI{
 		signUpPage.add(securityAnswerInput);
 		signUpPage.add(signUpToLogin);
 		signUpPage.add(registerButton);
-		File path = new File("").getAbsoluteFile();		
-		ImageIcon background = new ImageIcon(path+ "\\resources\\background.gif");
+		File path = new File("").getAbsoluteFile();
+		ImageIcon background = new ImageIcon(path
+				+ "\\resources\\background.gif");
 		JLabel signUpBackground = new JLabel();
 		signUpBackground.setBounds(55, 10, 400, 150);
 		signUpBackground.setIcon(background);
 		signUpPage.add(signUpBackground);
-		//sets display size of input textfields
+		// sets display size of input textfields
 		newUsernameInput.setColumns(10);
 		newPasswordInput.setColumns(10);
 		reenterPassword.setColumns(10);
 		securityQuestionInput.setColumns(10);
 		securityAnswerInput.setColumns(10);
-		//sets what happens when the back button is pressed
+		// sets what happens when the back button is pressed
 		signUpToLogin.setActionCommand("Back");
-		signUpToLogin.addActionListener(new ActionListener(){
+		signUpToLogin.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent event){
+			public void actionPerformed(ActionEvent event) {
 				newUsernameInput.setText("");
 				newPasswordInput.setText("");
 				reenterPassword.setText("");
@@ -99,14 +110,15 @@ public class SignUpGUI extends LoggingGUI{
 				securityAnswerInput.setText("");
 				pages.show(pagePanels, "login");
 			}
-		}
-				);
-		//sets what happens when the register button is pressed
+		});
+		// sets what happens when the register button is pressed
 		registerButton.setActionCommand("Register");
-		registerButton.addActionListener(new ActionListener(){
+		registerButton.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent event){
-				SignUp.register(newUsernameInput, newPasswordInput, securityQuestionInput, securityAnswerInput,  reenterPassword);
+			public void actionPerformed(ActionEvent event) {
+				SignUp.register(newUsernameInput, newPasswordInput,
+						securityQuestionInput, securityAnswerInput,
+						reenterPassword);
 				newUsernameInput.setText("");
 				newPasswordInput.setText("");
 				reenterPassword.setText("");
@@ -114,8 +126,7 @@ public class SignUpGUI extends LoggingGUI{
 				securityAnswerInput.setText("");
 				pages.show(pagePanels, "login");
 			}
-		}
-				);
+		});
 		return signUpPage;
 	}
 }

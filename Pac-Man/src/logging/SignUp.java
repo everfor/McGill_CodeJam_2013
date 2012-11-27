@@ -12,6 +12,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import playerManipulation.VerifyPlayer;
 
+/**
+ * The class deals with the entire graphical user interface related to signing
+ * up a player into the game
+ * 
+ */
 public class SignUp {
 	static JLabel usernameLabel, passwordLabel, reenterPasswordLabel,
 			securityQuestionLabel, securityAnswerLabel;
@@ -40,6 +45,7 @@ public class SignUp {
 		String pass1 = new String(tempPassword1);
 		char[] tempPassword2 = password2.getPassword();
 		String pass2 = new String(tempPassword2);
+		//checking if the two passwords inputted are equal
 		if (pass1.equals(pass2)) {
 			match = true;
 		}
@@ -57,6 +63,7 @@ public class SignUp {
 		boolean goodLength = false;
 		char[] tempPassword = password.getPassword();
 		String pass = new String(tempPassword);
+		//verifying the length allowed for the game
 		if (pass.length() <= 45 && pass.length() >= 8) {
 			goodLength = true;
 		}
@@ -74,6 +81,7 @@ public class SignUp {
 	public static boolean usernameLength(JTextField usernameInput) {
 		boolean goodLength = false;
 		String username = usernameInput.getText();
+		//verifying the length allowed for the game
 		if (username.length() <= 16 && username.length() >= 6) {
 			goodLength = true;
 		}
@@ -180,7 +188,7 @@ public class SignUp {
 	public static void register(JTextField newUsername,
 			JPasswordField newPassword, JTextField securityQuestion,
 			JTextField securityAnswer, JPasswordField reenterPassword) {
-
+		// checking for errors
 		signupErrors(newUsername, newPassword, securityQuestion,
 				securityAnswer, reenterPassword);
 		if (errorMessage.equals("")) {

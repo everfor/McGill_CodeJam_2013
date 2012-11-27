@@ -6,6 +6,13 @@ import javax.swing.JTextField;
 import playerManipulation.Player;
 import backendDatabase.PlayerBackend;
 
+/**
+ * The class communicates with player backend class in order to perform tasks
+ * for each player
+ * 
+ * @author KristiB
+ * 
+ */
 public class PlayerFrontend {
 	/**
 	 * Handles the creation of a new entry in the database. This initializes all
@@ -35,17 +42,26 @@ public class PlayerFrontend {
 		password = new String(temporaryPassword);
 		securityQ = securityQuestion.getText();
 		securityA = securityAnswer.getText();
+		// trying to create the player
 		signUpStatus = (database.createPlayer(username, password, securityQ,
 				securityA));
 		return signUpStatus;
 	}
 
-	public static boolean deleteProfile(JTextField newUsername) {
+	/**
+	 * The method completely deletes the profile of a user from the database
+	 * 
+	 * @param username
+	 *            the username that needs to be deleted from the database
+	 * @return
+	 */
+	public static boolean deleteProfile(JTextField username) {
 		boolean deleteStatus = false;
 		PlayerBackend database;
 		database = new PlayerBackend();
-		String username= newUsername.getText();
-		if (database.removePlayer(username)) {
+		String username2 = username.getText();
+		// trying to delete the player from the database
+		if (database.removePlayer(username2)) {
 			deleteStatus = true;
 		}
 		return deleteStatus;
@@ -71,6 +87,8 @@ public class PlayerFrontend {
 		boolean loginStatus = false;
 		char[] temporaryPassword = passwordInput.getPassword();
 		String password = new String(temporaryPassword);
+		// Checking if the player exists in the database first, if not the
+		// player is created
 		loginStatus = (database.checkLogin(usernameInput.getText(), password));
 		if (loginStatus) {
 			Player currentPlayer = new Player(usernameInput.getText());
@@ -92,6 +110,7 @@ public class PlayerFrontend {
 		database = new PlayerBackend();
 		boolean exists = false;
 		String username = usernameInput.getText();
+		// checking if the player already exists in the database
 		exists = (database.findPlayer(username));
 		return exists;
 	}
@@ -113,6 +132,7 @@ public class PlayerFrontend {
 		database = new PlayerBackend();
 		boolean same = false;
 		String securityA = securityAnswer.getText();
+		// checking if the security questions are the same
 		same = (database.checkSecurityQuestion(username, securityA));
 		return same;
 	}
@@ -130,6 +150,7 @@ public class PlayerFrontend {
 	public static String getInfo(String username, String databaseField) {
 		PlayerBackend database;
 		database = new PlayerBackend();
+		// getting the information from the database for the specific user
 		String returnText = (database.getInfo(username, databaseField));
 		return returnText;
 	}
@@ -151,6 +172,7 @@ public class PlayerFrontend {
 		boolean changesMade = false;
 		PlayerBackend database;
 		database = new PlayerBackend();
+		// trying to perform to make the changes for a username
 		changesMade = (database.changeProfileDetails(username, databaseField,
 				newInfo));
 		return changesMade;

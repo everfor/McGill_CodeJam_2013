@@ -14,17 +14,24 @@ import javax.swing.JPasswordField;
 
 import playerManipulation.ChangeProfileDetails;
 
+/**
+ * The class deals with the entire graphical user interface related to changing
+ * a password
+ * 
+ */
 public class ChangePassGUI extends ResetGUI {
 	private static JPanel changePasswordPage;
 	private static JPasswordField recoverNewPassword,
 			reenterRecoverNewPassword;
-	private static JLabel recoverNewPasswordLabel, reenterRecoverNewPasswordLabel;
-	private static JButton newPassword,
-			cancelRecover;
+	private static JLabel recoverNewPasswordLabel,
+			reenterRecoverNewPasswordLabel;
+	private static JButton newPassword, cancelRecover;
 	static String securityQuestionDisplayed;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * The method creates a panel for changeing the password
+	 * 
+	 * @return a Jpanel for this GUI 
 	 */
 	public static JPanel changePasswordGUI() {
 		// Create Login Panel
@@ -55,46 +62,49 @@ public class ChangePassGUI extends ResetGUI {
 		changePasswordPage.add(cancelRecover);
 		recoverNewPassword.setColumns(10);
 		reenterRecoverNewPassword.setColumns(10);
-		File path = new File("").getAbsoluteFile();		
-		ImageIcon background = new ImageIcon(path+ "\\resources\\background.gif");
+		File path = new File("").getAbsoluteFile();
+		ImageIcon background = new ImageIcon(path
+				+ "\\resources\\background.gif");
 		JLabel changePassBG = new JLabel(background);
-		changePassBG.setBounds(47, 11, 400, 150);		
+		changePassBG.setBounds(47, 11, 400, 150);
 		changePasswordPage.add(changePassBG);
 
+		// Listening for a new password to be inputed.
 		newPassword.setActionCommand("newPassword");
 		newPassword.addActionListener(new ActionListener() {
 			@Override
+			// if the action was performed, the method comunicates to change
+			// profile details in order to fullfill the command
 			public void actionPerformed(ActionEvent event) {
 				if (SignUp.passwordLength(recoverNewPassword)) {
-				if (ChangeProfileDetails.changePassword(
-						currentPlayer.getUsername(), recoverNewPassword,
-						reenterRecoverNewPassword)) {
-					JOptionPane
-							.showMessageDialog(
-									null,
-									"Your password have been successfully changed",
-									"Password Changed",
-									JOptionPane.INFORMATION_MESSAGE);
-					recoverNewPassword.setText("");
-					reenterRecoverNewPassword.setText("");
-					pages.show(pagePanels, "login");
+					if (ChangeProfileDetails.changePassword(
+							currentPlayer.getUsername(), recoverNewPassword,
+							reenterRecoverNewPassword)) {
+						JOptionPane.showMessageDialog(null,
+								"Your password have been successfully changed",
+								"Password Changed",
+								JOptionPane.INFORMATION_MESSAGE);
+						recoverNewPassword.setText("");
+						reenterRecoverNewPassword.setText("");
+						pages.show(pagePanels, "login");
+					} else {
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"An error occured while recovering your password, please try again",
+										"Error", JOptionPane.ERROR_MESSAGE);
+					}
 				} else {
 					JOptionPane
 							.showMessageDialog(
 									null,
-									"An error occured while recovering your password, please try again",
+									"Password is not between 8-45 characters, please try again",
 									"Error", JOptionPane.ERROR_MESSAGE);
-				}
-				}
-				else{
-					JOptionPane
-					.showMessageDialog(
-							null,
-							"Password is not between 8-45 characters, please try again",
-							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
+		// If the player needs to go back and cancel this process of recovering
+		// the password
 		cancelRecover.setActionCommand("cancelRecover");
 		cancelRecover.addActionListener(new ActionListener() {
 			@Override

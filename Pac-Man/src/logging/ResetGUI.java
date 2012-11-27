@@ -14,17 +14,25 @@ import javax.swing.JTextField;
 
 import playerManipulation.RecoverPassword;
 
+/**
+ * The class deals with the graphical user interface related to resetting the
+ * password after validating the security answer for a specific username
+ * 
+ */
 public class ResetGUI extends RecoverGUI {
 	private static JPanel resetPasswordPage;
 	private static JTextField resetSecurityAnswerInput;
-	private static JLabel resetSecurityQuestion,
-			resetSecurityAnswer;
-	private static JButton resetMyPass,
-			resetToLogin;
+	private static JLabel resetSecurityQuestion, resetSecurityAnswer;
+	private static JButton resetMyPass, resetToLogin;
 	static String securityQuestionDisplayed;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * The method verifies the player's security answer to the security
+	 * questions and draws all the graphical interface needed for the user
+	 * 
+	 * @param playersSQ
+	 *            the player's auto generated security question
+	 * @return a JPanel to be inputted when this method is called
 	 */
 	public static JPanel resetPasswordGUI(String playersSQ) {
 		// Create Login Panel
@@ -65,13 +73,13 @@ public class ResetGUI extends RecoverGUI {
 			}
 		});
 		resetMyPass.setActionCommand("resetMyPass");
-		
-		File path = new File("").getAbsoluteFile();		
-		ImageIcon background = new ImageIcon(path+ "\\resources\\background.gif");
+
+		File path = new File("").getAbsoluteFile();
+		ImageIcon background = new ImageIcon(path
+				+ "\\resources\\background.gif");
 		JLabel resetBG = new JLabel(background);
 		resetBG.setBounds(47, 11, 400, 150);
-	
-		
+
 		resetPasswordPage.add(resetBG);
 		resetMyPass.addActionListener(new ActionListener() {
 			@Override
@@ -81,7 +89,7 @@ public class ResetGUI extends RecoverGUI {
 					pagePanels.add(ChangePassGUI.changePasswordGUI(),
 							"changePassPage");
 					pages.show(pagePanels, "changePassPage");
-					
+
 				} else {
 					JOptionPane.showMessageDialog(null,
 							"Invalid Answer, please try again", "Error",

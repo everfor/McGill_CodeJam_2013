@@ -16,17 +16,24 @@ import frontendDatabase.PlayerFrontend;
 
 import playerManipulation.Player;
 
+/**
+ * The class deals with the entire graphical user interface related to
+ * recovering a password for a specific username
+ */
+
 public class RecoverGUI extends LoggingGUI {
 	private static JPanel recoverPage;
 	private static JTextField recoverUsername;
 	private static JLabel recoverUsernameLabel;
-	private static JButton recoverMyPass,
-			recoverToLogin;
+	private static JButton recoverMyPass, recoverToLogin;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * The method creates the GUI panel for recovering a password and dealing
+	 * with all the inputs from the username.
+	 * 
+	 * @return the JPanel to be inputted for the recover password page
 	 */
 	public static JPanel recoverPasswordGUI() {
 		// Create Login Panel
@@ -68,12 +75,17 @@ public class RecoverGUI extends LoggingGUI {
 		});
 		recoverMyPass.setActionCommand("Submit");
 		recoverMyPass.addActionListener(new ActionListener() {
+			// waiting for an action to be performed in order to recover the
+			// password
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				if (PlayerFrontend.playerExists(recoverUsername)) {
 					currentPlayer = new Player(recoverUsername.getText());
-					securityQuestionDisplayed = currentPlayer.getSecurityQuestion();
-					pagePanels.add(ResetGUI.resetPasswordGUI(securityQuestionDisplayed), "resetPasswordPage");
+					securityQuestionDisplayed = currentPlayer
+							.getSecurityQuestion();
+					pagePanels.add(ResetGUI
+							.resetPasswordGUI(securityQuestionDisplayed),
+							"resetPasswordPage");
 					pages.show(pagePanels, "resetPasswordPage");
 					recoverUsername.setText("");
 				} else {
