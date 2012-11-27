@@ -2,7 +2,11 @@ package playerManipulation;
 import javax.swing.*;
 
 import frontendDatabase.PlayerFrontend;
-
+/**
+ * This class handles the verification of Players. Its method deal with 
+ * checking whether a player's username and password credentials match 
+ * that of the database as well as checking if a player exists in the database.
+ */
 public class VerifyPlayer {
 	/**
 	 * Checks whether the entered username and password match the information in the database

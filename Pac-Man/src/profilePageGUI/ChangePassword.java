@@ -17,9 +17,10 @@ import logging.SignUp;
 import playerManipulation.ChangeProfileDetails;
 import playerManipulation.Player;
 import playerManipulation.VerifyPlayer;
-import java.awt.BorderLayout;
-import java.awt.FlowLayout;
-
+/**
+ * The class deals with the entire graphical user interface related to
+ * changing a players password.
+ */
 public class ChangePassword extends ChangeProfileDetailsGUI {
 	private static JPanel changePasswordPage;
 	static Player currentPlayer;
@@ -29,7 +30,10 @@ public class ChangePassword extends ChangeProfileDetailsGUI {
 	static JButton backToProfile, changePassword;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * This method creates a JPanel for the page where a player is given the
+	 * opportunity to change his/her password.
+	 * 
+	 * @return the JPanel for the change password page
 	 */
 	public static JPanel changePasswordPage() {
 

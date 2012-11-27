@@ -12,23 +12,27 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import frontendDatabase.StatisticsFrontend;
-
 import playerManipulation.Player;
-import java.awt.Component;
-import javax.swing.Box;
-
-public class HighscoresGUI extends ProfilePage{
+import frontendDatabase.StatisticsFrontend;
+/**
+ * The class deals with the entire graphical user interface related to highscores.
+ * Both personal and global highscores are displayed in this class. 
+ *
+ */
+public class HighscoresGUI extends ProfilePage {
 	static JPanel personalHighscoresGUI;
 	static int[] personalHighScores;
-	static ArrayList <String> globalHighScores;
+	static ArrayList<String> globalHighScores;
 	static JLabel phs1, phs2, phs3, phs4, phs5, phs6, phs7, phs8, phs9, phs10;
 	static JLabel ghs1, ghs2, ghs3, ghs4, ghs5, ghs6, ghs7, ghs8, ghs9, ghs10;
-	static JLabel personalHSBackground, globalHSBackground,line;
+	static JLabel personalHSBackground, globalHSBackground, line;
 	static JButton highscoresToProfile;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * This method creates a JPanel for the page where a player gets to view
+	 * his/her personal highscores as well as the lobal highscores.
+	 * 
+	 * @return the JPanel for the highscores page
 	 */
 	public static JPanel displayHighscores() {
 		// Create profilepage Panel
@@ -37,22 +41,25 @@ public class HighscoresGUI extends ProfilePage{
 		personalHighscoresGUI.setLayout(null);
 		// Heading
 		File path = new File("").getAbsoluteFile();
-		ImageIcon highscoresImage= new ImageIcon(path
+		ImageIcon highscoresImage = new ImageIcon(path
 				+ "\\resources\\globalHS.gif");// TODO make a method to
 		globalHSBackground = new JLabel();
 		globalHSBackground.setLocation(250, 11);
 		globalHSBackground.setSize(230, 25);
 		globalHSBackground.setIcon(highscoresImage);
 		personalHighscoresGUI.add(globalHSBackground);
-		//line
-		ImageIcon lineImage= new ImageIcon(path
-				+ "\\resources\\line.jpg");// TODO make a method to
+		// line
+		ImageIcon lineImage = new ImageIcon(path + "\\resources\\line.jpg");// TODO
+																			// make
+																			// a
+																			// method
+																			// to
 		line = new JLabel();
 		line.setLocation(250, 50);
 		line.setSize(10, 490);
 		line.setIcon(lineImage);
 		personalHighscoresGUI.add(line);
-		//personal Highscores subheading		
+		// personal Highscores subheading
 		ImageIcon subHeading = new ImageIcon(path
 				+ "\\resources\\personalHS.gif");
 		personalHSBackground = new JLabel();
@@ -114,9 +121,9 @@ public class HighscoresGUI extends ProfilePage{
 		personalHighscoresGUI.add(phs8);
 		personalHighscoresGUI.add(phs9);
 		personalHighscoresGUI.add(phs10);
-		
+
 		globalHighScores = StatisticsFrontend.getGlobalHighScores();
-		//global highscores
+		// global highscores
 		ghs1 = new JLabel(globalHighScores.get(0));
 		ghs1.setHorizontalAlignment(SwingConstants.RIGHT);
 		ghs1.setBounds(304, 43, 176, 14);
@@ -171,17 +178,17 @@ public class HighscoresGUI extends ProfilePage{
 		personalHighscoresGUI.add(ghs10);
 
 		// back button
-				highscoresToProfile = new JButton("Back");
-				highscoresToProfile.setLocation(207, 551);
-				highscoresToProfile.setSize(95, 32);
-				personalHighscoresGUI.add(highscoresToProfile);
-				highscoresToProfile.setActionCommand("Back");
-				highscoresToProfile.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent event) {
-						pages.show(pagePanels, "profilePage");
-					}
-				});
+		highscoresToProfile = new JButton("Back");
+		highscoresToProfile.setLocation(207, 551);
+		highscoresToProfile.setSize(95, 32);
+		personalHighscoresGUI.add(highscoresToProfile);
+		highscoresToProfile.setActionCommand("Back");
+		highscoresToProfile.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				pages.show(pagePanels, "profilePage");
+			}
+		});
 
 		return personalHighscoresGUI;
 	}

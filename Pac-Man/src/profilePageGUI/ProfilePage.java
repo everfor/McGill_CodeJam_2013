@@ -14,25 +14,32 @@ import logging.LoggingGUI;
 import logging.LoginLogout;
 import playerManipulation.Player;
 
+/**
+ * The class deals with the entire graphical user interface related to the
+ * player's profile page where he/she can select to do one of the following
+ * options: Play game, change profile details, logout or view highscores.
+ */
 public class ProfilePage extends LoggingGUI {
 	private static JPanel personalGUI;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
 	static JButton playGame, highscores, logout, changeProfileDetails;
 
-	// TODO remove
 	/**
-	 * @wbp.parser.entryPoint
+	 * This method creates a JPanel for the player's profile page this is where
+	 * a player is given the option to either play game, change his/her profile
+	 * details, view highscores and logout
+	 * 
+	 * @return the JPanel for the Profile page
 	 */
-
 	public static JPanel profilePage() {
 		// Create profilepage Panel
 		personalGUI = new JPanel();
 		personalGUI.setBackground(Color.BLACK);
 		// background gif
 		File path = new File("").getAbsoluteFile();
-		//The following gif and all its occurences were extracted from:
-		//http://www.thepcmanwebsite.com/media/pacman_flash/
+		// The following gif and all its occurences were extracted from:
+		// http://www.thepcmanwebsite.com/media/pacman_flash/
 		ImageIcon background = new ImageIcon(path
 				+ "\\resources\\profileBackground.gif");// TODO make a method to
 														// do this

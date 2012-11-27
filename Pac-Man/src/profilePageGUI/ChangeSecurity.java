@@ -16,7 +16,10 @@ import javax.swing.JTextField;
 import playerManipulation.ChangeProfileDetails;
 import playerManipulation.Player;
 import playerManipulation.VerifyPlayer;
-
+/**
+ * The class deals with the entire graphical user interface related to
+ * changing a players security question and security answer.
+ */
 public class ChangeSecurity extends ChangeProfileDetailsGUI {
 	private static JPanel changeSecurityPage;
 	static Player currentPlayer;
@@ -25,9 +28,11 @@ public class ChangeSecurity extends ChangeProfileDetailsGUI {
 	static JTextField securityQuestion, securityAnswer;
 	static JPasswordField password;
 	static JButton backToProfile, changeSecurity;
-
 	/**
-	 * @wbp.parser.entryPoint
+	 * This method creates a JPanel for the page where a player is given the
+	 * opportunity to change his/her Security Question and Answer.
+	 * 
+	 * @return the JPanel for the change Security Question and Answer
 	 */
 	public static JPanel changeSecurityPage() {
 
@@ -95,43 +100,46 @@ public class ChangeSecurity extends ChangeProfileDetailsGUI {
 				JTextField usernameJTextfield = new JTextField(currentPlayer
 						.getUsername());
 				if (VerifyPlayer.loginCheck(password, usernameJTextfield)) {
-					if (ChangeProfileDetails.changeSecurity(securityQuestion.getText(),securityAnswer.getText())){
+					if (ChangeProfileDetails.changeSecurity(
+							securityQuestion.getText(),
+							securityAnswer.getText())) {
 						if (Player.clearPlayer()) {
 							Player currentPlayer = new Player(
 									usernameJTextfield.getText());
 						}
-							JOptionPane
-							.showMessageDialog(
-									null,
-									"Your Security information has been successfully changed",
-									"Security information Changed",
-									JOptionPane.INFORMATION_MESSAGE);
-							securityAnswer.setText("");
-							password.setText("");
-							securityQuestion.setText("");
-							pages.show(pagePanels, "profilePage");
-						}
-						else{
-							JOptionPane.showMessageDialog(null,
-									"An error occured while updating your information, please try again", "Error",
-									JOptionPane.ERROR_MESSAGE);
-							securityAnswer.setText("");
-							password.setText("");
-							securityQuestion.setText("");
-						}
-
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"Your Security information has been successfully changed",
+										"Security information Changed",
+										JOptionPane.INFORMATION_MESSAGE);
+						securityAnswer.setText("");
+						password.setText("");
+						securityQuestion.setText("");
+						pages.show(pagePanels, "profilePage");
 					} else {
-						JOptionPane.showMessageDialog(null,
-								"Incorrect Password, please try again", "Error",
-								JOptionPane.ERROR_MESSAGE);
+						JOptionPane
+								.showMessageDialog(
+										null,
+										"An error occured while updating your information, please try again",
+										"Error", JOptionPane.ERROR_MESSAGE);
 						securityAnswer.setText("");
 						password.setText("");
 						securityQuestion.setText("");
 					}
+
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Incorrect Password, please try again", "Error",
+							JOptionPane.ERROR_MESSAGE);
+					securityAnswer.setText("");
+					password.setText("");
+					securityQuestion.setText("");
 				}
-			});
+			}
+		});
 		changeSecurityPage.add(changeSecurity);
 
 		return changeSecurityPage;
-		}
 	}
+}

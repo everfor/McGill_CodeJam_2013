@@ -16,7 +16,11 @@ import javax.swing.JTextField;
 import logging.LoginLogout;
 import playerManipulation.Player;
 import frontendDatabase.PlayerFrontend;
-
+/**
+ * The class deals with the entire graphical user interface related to changing profile details
+ * here a player is given an option via a comboBox to which details of their account 
+ * they wish the change.
+ */
 public class ChangeProfileDetailsGUI extends ProfilePage {
 	private static JPanel changePasswordPage;
 	static Player currentPlayer;
@@ -29,11 +33,13 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 	static String[] comboBoxSelections = { "", "Username", "Password",
 			"Security Question" };
 
-	// TODO remove
 	/**
-	 * @wbp.parser.entryPoint
+	 * This method creates a JPanel for the Change Profile Details page. Here a
+	 * player gets the choice to move to the designated page to change his/her
+	 * selected information.
+	 * 
+	 * @return the JPanel for the change username page
 	 */
-
 	public static JPanel changeProfileDetailsPage() {
 		// Create changeProfileDetailsPage Panel
 		changePasswordPage = new JPanel();
@@ -106,6 +112,13 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 
 	}
 
+	/**
+	 * This method handles the selection of the comboBox, depending pn the
+	 * choice made the player will be moved to the appropriate page
+	 * 
+	 * @param comboBoxChoice
+	 *            a string representing the player's choice
+	 */
 	public static void implementSelection(String comboBoxChoice) {
 		if (comboBoxChoice.equals("Username")) {
 			pagePanels.add(ChangeUsername.changeUsernamePage(),

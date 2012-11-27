@@ -17,7 +17,10 @@ import logging.SignUp;
 import playerManipulation.ChangeProfileDetails;
 import playerManipulation.Player;
 import playerManipulation.VerifyPlayer;
-
+/**
+ * The class deals with the entire graphical user interface related to
+ * changing a players username.
+ */
 public class ChangeUsername extends ChangeProfileDetailsGUI {
 	private static JPanel changeUsernamePage;
 	static Player currentPlayer;
@@ -27,7 +30,10 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 	static JButton backToProfile, changeUsername;
 
 	/**
-	 * @wbp.parser.entryPoint
+	 * This method creates a JPanel for the page where a player is given the
+	 * opportunity to change his/her username.
+	 * 
+	 * @return the JPanel for the change username page
 	 */
 	public static JPanel changeUsernamePage() {
 
