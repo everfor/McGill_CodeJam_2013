@@ -8,20 +8,21 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import FrontendDatabase.playerFrontend;
+import frontendDatabase.PlayerFrontend;
+
 
 public class TestRecoverPassword {
-	String[] username = {"adebayorsux", "adebayorsux2", "adebayorsux3", "adebayorsux4"};
+	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName5"};
 	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityQuestions = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityAnswers = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 
 	
 	JTextField usernameTextFields[] = new JTextField[]{ 
-			new JTextField("adebayorsux"),  
-			new JTextField("adebayorsux2"),  
-			new JTextField("adebayorsux3"),  
-			new JTextField("adebayorsux4")  
+			new JTextField("PlayerName"),  
+			new JTextField("PlayerName2"),  
+			new JTextField("PlayerName3"),  
+			new JTextField("PlayerName5")  
 	}; 
 
 	JPasswordField passwordsTextField[] =new JPasswordField[]{
@@ -60,18 +61,21 @@ public class TestRecoverPassword {
 	};
 	
 
-	playerFrontend database = new playerFrontend();
+	PlayerFrontend database = new PlayerFrontend();
 	RecoverPassword profile = new RecoverPassword();
 	@Test
 	public void testCheckSecurityQuestion() {
-		for (int i = 0; i < 4; i++) {	
+		for (int i = 0; i < usernameTextFields.length; i++) {	
 			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
 				}
 					
-			
-				assertEquals(profile.checkSecurityQuestion(username[0], securityAnswerTextField[0]), true);
+		for (int i = 0; i < usernameTextFields.length; i++) {	
+				assertEquals(profile.checkSecurityQuestion(username[i], securityAnswerTextField[i]), true);
+				assertEquals(profile.checkSecurityQuestion(username[i], securityAnswerTextField[3-i]), false);
 				
-				for (int i = 0; i < 4; i++) {	
+		}
+				
+				for (int i = 0; i < usernameTextFields.length; i++) {	
 				database.deleteProfile(new JTextField(username[i]));
 				database.deleteProfile(usernameTextFields[i]);
 				

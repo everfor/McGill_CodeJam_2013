@@ -2,12 +2,14 @@ package test;
 
 
 import javax.swing.*;
-import FrontendDatabase.*;
-import BackendDatabase.*;
 import org.junit.Test;
+
+import backendDatabase.*;
+
+import frontendDatabase.*;
 import static org.junit.Assert.*;
 
-public class testGetInfo{
+public class TestGetInfo{
 	
 	
 	String[] existingUsername = {"rosicky", "rosicky1", "rosicky2", "rosicky3"};
@@ -16,12 +18,12 @@ public class testGetInfo{
 	String[] esecurityAnswers = {"A rosicky", "B rosicky", "C rosicky", "D rosicky"};
 	
 	String[] databaseField = {"username", "password", "securityQuestion", "securityAnswer"};
-	playerFrontend database = new playerFrontend();
-	playerBackend backdatabase = new playerBackend();
+	PlayerFrontend database = new PlayerFrontend();
+	PlayerBackend backdatabase = new PlayerBackend();
 	
 	@Test
 	public void testGetInfo() {
-		for(int i = 0; i<4; i++){
+		for(int i = 0; i<existingUsername.length; i++){
 			backdatabase.createPlayer(existingUsername[i], existingPasswords[i], esecurityQuestions[i], esecurityAnswers[i]);
 			assertEquals(database.getInfo(existingUsername[i], databaseField[1]),existingPasswords[i]);
 			assertEquals(database.getInfo(existingUsername[i], databaseField[2]),esecurityQuestions[i]);

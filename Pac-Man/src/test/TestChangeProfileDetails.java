@@ -1,28 +1,39 @@
 package test;
 
+import org.junit.Test;
+
+import backendDatabase.*;
+
+import frontendDatabase.*;
+import playerManipulation.*;
 import static org.junit.Assert.*;
 
 import javax.swing.*;
 
-import org.junit.Test;
 
-import FrontendDatabase.*;
-import BackendDatabase.*;
-import playerManipulation.*;
+
+
+
 
 public class TestChangeProfileDetails {
 	
-	String[] username = {"adebayorsux", "adebayorsux2", "adebayorsux3", "adebayorsux4"};
+	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName5"};
 	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityQuestions = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityAnswers = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
+	
+	String[] securityQuestions2 = {"A myUsernameiii", "B myUsernameiii", "C myUsernameiii", "D myUsernameiii"};
+	String[] securityAnswers2 = {"A myUsernameiii", "B myUsernameiii", "C myUsernameiii", "D myUsernameiii"};
+	
+
+	String[] newusername = {"rooneysux", "rooneysux2", "rooneysux3", "rooneysux5"};
 
 	
-	JTextField usernameTextFields[] = new JTextField[]{ 
-			new JTextField("adebayorsux"),  
-			new JTextField("adebayorsux2"),  
-			new JTextField("adebayorsux3"),  
-			new JTextField("adebayorsux4")  
+	JTextField usernameTextField[] = new JTextField[]{ 
+			new JTextField("PlayerName"),  
+			new JTextField("PlayerName2"),  
+			new JTextField("PlayerName3"),  
+			new JTextField("PlayerName5")  
 	}; 
 
 	JPasswordField passwordsTextField[] =new JPasswordField[]{
@@ -56,27 +67,72 @@ public class TestChangeProfileDetails {
 
 	
 
-	playerFrontend database = new playerFrontend();
+	PlayerFrontend database = new PlayerFrontend();
 	ChangeProfileDetails profile = new ChangeProfileDetails();
 	
 	
 	@Test
 	public void testChangePassword() {
 	
-		for (int i = 0; i < 4; i++) {	
-	database.addNewPlayer(usernameTextFields[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
+		for (int i = 0; i < usernameTextField.length; i++) {	
+	database.addNewPlayer(usernameTextField[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
 		}
 			
-	
-		assertEquals(profile.changePassword(username[0], passwordsTextField[0], NewPass[0]), true);
+		for (int i = 0; i < usernameTextField.length; i++) {	
+		assertEquals(profile.changePassword(username[i], passwordsTextField[i], NewPass[i]), true);
 		
-		for (int i = 0; i < 4; i++) {	
+		}
+		
+		for (int i = 0; i < usernameTextField.length; i++) {	
 		database.deleteProfile(new JTextField(username[i]));
-		database.deleteProfile(usernameTextFields[i]);
+		database.deleteProfile(usernameTextField[i]);
 		
 		
 		}
 		
 	}
+	
+	@Test
+	public void testChangeUsername() {
+		for (int i = 0; i < usernameTextField.length; i++) {	
+			database.addNewPlayer(usernameTextField[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
+				}
+					
+		for (int i = 0; i < usernameTextField.length; i++) {
+				assertEquals(profile.changeUsername(username[i], newusername[i]), true);
+		}
+				
+				for (int i = 0; i < usernameTextField.length; i++) {	
+				database.deleteProfile(new JTextField(newusername[i]));
+				database.deleteProfile(usernameTextField[i]);
+				
+				
+				}
+				
+			}
+	
+	
+	@Test
+	public void testChangeSecurity() {
+		for (int i = 0; i < usernameTextField.length; i++) {	
+			database.addNewPlayer(usernameTextField[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
+				}
+					
+			
+		
+		for (int i = 0; i < usernameTextField.length; i++) {
+				assertEquals(profile.changeSecurity(securityQuestions2[i], securityAnswers2[i]), true);
+		}
+				
+				for (int i = 0; i < usernameTextField.length; i++) {	
+				database.deleteProfile(new JTextField(username[i]));
+				database.deleteProfile(usernameTextField[i]);
+				
+				
+				}
+				
+			}
+	}
+	
 
-}
+

@@ -1,20 +1,26 @@
 package test;
 
-import javax.swing.*;
-import FrontendDatabase.*;
-import BackendDatabase.*;
-
 import org.junit.Test;
+
+import backendDatabase.*;
+
+import frontendDatabase.*;
 import static org.junit.Assert.*;
 
-public class databasetesting{
+import javax.swing.*;
+
+
+
+
+
+public class FrontendTesting{
 //JTextField and JPasswordField initializations 
 	
 	JTextField usernameTextFields[] = new JTextField[]{ 
-			new JTextField("puyolsux"),  
-			new JTextField("puyolsux2"),  
-			new JTextField("puyolsux3"),  
-			new JTextField("puyolsux4")  
+			new JTextField("PlayerName"),  
+			new JTextField("PlayerName2"),  
+			new JTextField("PlayerName3"),  
+			new JTextField("PlayerName4")  
 	}; 
 
 	JPasswordField passwordsTextField[] =new JPasswordField[]{
@@ -36,55 +42,65 @@ public class databasetesting{
 			new JTextField("C myUsernameii"),  
 			new JTextField("D myUsernameii")   
 	};  
+	JTextField usernameTextFieldsfail[] = new JTextField[]{ 
+			new JTextField("invalid"),  
+			new JTextField("invalid1"),  
+			new JTextField("invalid2"),  
+			new JTextField("invalid3")  
+	}; 
 //initializations of string objects
-	String[] username = {"puyolsux", "puyolsux2", "puyolsux3", "puyolsux4"};
+	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName4"};
 	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityQuestions = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityAnswers = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 
 	String[] databaseField = {"username", "password", "securityQuestion", "securityAnswer"};
-	String[] newUsername = {"permert69", "permert70", "permert71", "permert72"};
+	String[] newUsername = {"Username69", "Username70", "Username71", "Username72"};
 	String[] newPassword = {"password1", "password2", "password3", "password4"};
 	String[] newSecurityQuestions = {"SecurityQ", "SecurityQ2", "SecurityQ3", "SecurityQ4"};
-	String[] newSecurityAnswers = {"SecurityA", "SecurityA2", "SecurityA3", "SecurityA4"};
+	String[] newSecurityAnswers = {"SecurityA", "SecurityA2", "SecurityA3", "SecurityAu4"};
 	
-	String[] failUsername = {null , "", "permert71sdfasdfdfiukjhkhkjhhkjhkhfdfasfadsfdfasdfsfadffasdfsfasdfasdfas", "4353"};
+	String[] failUsername = {null , "", "Username71sdfasdfdfiukjhkhkjhhkjhkhfdfasfadsfdfasdfsfadffasdfsfasdfasdfas", "4353"};
 	
-	playerFrontend database = new playerFrontend();
+	PlayerFrontend database = new PlayerFrontend();
 	
 
 	//adds a new player to the database
 	@Test
 	public void testAddNewPlayer(){ 
-		for(int i = 0; i<4; i++){ //four fields in each of the string or JTextField arrays
+		for(int i = 0; i<usernameTextFields.length; i++){ //four fields in each of the string or JTextField arrays
 			assertEquals(database.addNewPlayer(usernameTextFields[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]),true);
 		}
 	}
 	// checks the success of the login operation for a given username and password
 	@Test
 	public void testLoginOperator() {
-		for(int i = 0; i<4; i++){
+		for(int i = 0; i<usernameTextFields.length; i++){
 			assertEquals(database.loginOperator(passwordsTextField[i], usernameTextFields[i]),true);
+			assertEquals(database.loginOperator(passwordsTextField[i], usernameTextFields[3-i]), false);
 		}
 	}
 	//utilizes the username to check if the added player exists in the database
 	@Test
 	public void testPlayerExists() { 
-		for(int i = 0; i<4; i++){
+		for(int i = 0; i<usernameTextFields.length; i++){
 			assertEquals(database.playerExists(usernameTextFields[i]),true);
+			assertEquals(database.playerExists(usernameTextFieldsfail[i]),false);
+			
 		}
 	}
 	//checks whether the given security answer for a given username matches the security answer for the player in the database
 	@Test
 	public void testChecksecurityAnswer() { 
-		for(int i = 0; i<4; i++){
+		for(int i = 0; i<usernameTextFields.length; i++){
 			assertEquals(database.checkSecurityAnswer(username[i], securityAnswerTextField[i]),true);
+			assertEquals(database.checkSecurityAnswer(username[i], securityAnswerTextField[3-i]),false);
 		}
 	}
 	//checks whether the specific profile detail has been changed, returns true if so
 	@Test
 	public void testChangeProfileDetails() {
-		for(int i = 0; i<4; i++){ //four fields in each of the string array
+		for(int i = 0; i<usernameTextFields.length; i++){ //four fields in each of the string array
 			
 			assertEquals(database.changeProfileDetails(username[i], databaseField[0], newUsername[i]) , true);
 			assertEquals(database.changeProfileDetails(username[i], databaseField[1], newPassword[i]) , true);
@@ -98,7 +114,7 @@ public class databasetesting{
 		
 		@Test
 	public void testDeleteProfile(){
-			for(int i = 0; i<4; i++){
+			for(int i = 0; i<usernameTextFields.length; i++){
 				assertEquals(database.deleteProfile(new JTextField(newUsername[i])) ,true);
 //				assertEquals(database.deleteProfile(new JTextField(username[i])) ,true);
 //				assertEquals(database.deleteProfile(new JTextField(failUsername[i])) ,true);
