@@ -1,11 +1,10 @@
 package interfaceFramework;
 
 import java.awt.EventQueue;
+import java.awt.GridBagConstraints;
+import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
-import java.awt.GridBagLayout;
-import javax.swing.JPanel;
-import java.awt.GridBagConstraints;
 
 
 public class Maze {
@@ -56,7 +55,7 @@ public class Maze {
 		gbc_panel.fill = GridBagConstraints.BOTH;
 		gbc_panel.gridx = 0;
 		gbc_panel.gridy = 0;
-		frame.getContentPane().add(panel, gbc_panel);
+		frame.getContentPane().add(panel, gbc_panel);	
 	}
 
 }

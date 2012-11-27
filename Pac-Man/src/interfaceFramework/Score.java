@@ -5,9 +5,10 @@ public class Score {
 	static int dotsLeft;
 	static int energizers = 4;
 	static int energizersLeft;
+	static int score;
 	
 	public static int getScore(int[][] board){
-		int score = 0;
+		score = 0;
 		dotsLeft = countDots(board);
 		energizersLeft = countEnergizers(board);
 		
@@ -37,5 +38,9 @@ public class Score {
 			}
 		}
 		return energizersLeft;
+	}
+	
+	public static int getHighScore() {
+		return score; 
 	}
 }

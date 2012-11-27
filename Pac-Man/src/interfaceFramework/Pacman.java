@@ -9,10 +9,11 @@ public class Pacman {
 	double x, y;
 	Image image1, image2, image3, image4;
 	File path;
+	int livesLeft = 3;
 	
 	public Pacman() {
-		x = 1;
-		y = 1;
+		x = 1; 			//14 starting position x
+		y = 5;			//23 starting position y
 	
 		path = new File("").getAbsoluteFile();
 		image1 = new ImageIcon(path + "\\resources\\pacman1.gif").getImage();
@@ -66,6 +67,14 @@ public class Pacman {
 			y += 1 * speed;
 		}
 	}
+	
+		public void setX(double x) {
+			this.x = x;
+		}
+	
+		public void setY(double y) {
+			this.y = y;
+		}
 	
 		public double getX() {
 			return x;

@@ -12,7 +12,6 @@ public class UserControls {
  * @return
  */
 
-
 	public static boolean checkMove(Pacman pacman, int board[][], boolean tunnel){
 		boolean result = true;
 		int x = (int) pacman.getX();
@@ -20,13 +19,15 @@ public class UserControls {
 		
 		if (board[x - 1][y] == 1 && Game.goLeft == true) {
 			result = false;
+			Game.stop = false;
 		}
 		else if (board[x - 1][y] == 4 && Game.goLeft == true){
 			pacman.moveTo(27,14);
 		}
 		
-		else if (board[x + 1][y] == 1 && Game.goRight == true) {
+		else if ((board[x + 1][y] == 1  || board[x + 1][y] == 5) && Game.goRight == true) {
 			result = false;
+			Game.stop = false;
 		}
 		
 		else if (board[x + 1][y] == 4 && Game.goRight == true) {
@@ -35,57 +36,59 @@ public class UserControls {
 		
 		else if (board[x][y - 1] == 1 && Game.goUp == true) {
 			result = false;
+			Game.stop = false;
 		}
 		
-		else if (board[x][y + 1] == 1 && Game.goDown == true) {
+		else if ((board[x][y + 1] == 1 || board[x][y + 1] == 5) && Game.goDown == true) {
 			result = false;
+			Game.stop = false;
 		}
 		return result;
 	}
 	
 	// to check if left move is possible
-	public static boolean moveLeft(Pacman pacman, int map[][]) {
+	public static boolean moveLeft(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
 		int y = (int)pacman.getY();
 
-		if (map[x - 1][y] == 1) {
+		if (board[x - 1][y] == 1 || board[x - 1][y] == 5) {
 			result = false;
 		}
 		return result;
 	}
 
 	// to check if right move is possible
-	public static boolean moveRight(Pacman pacman, int map[][]) {
+	public static boolean moveRight(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
 		int y = (int)pacman.getY();
 
-		if (map[x + 1][y] == 1) {
+		if (board[x + 1][y] == 1 || board[x + 1][y] == 5) {
 			result = false;
 		}
 		return result;
 	}
 
 	// to check if up move is possible
-	public static boolean moveUp(Pacman pacman, int map[][]) {
+	public static boolean moveUp(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
 		int y = (int)pacman.getY();
 		
-		if (map[x][y - 1] == 1) {
+		if (board[x][y - 1] == 1) {
 			result = false;
 		}
 		return result;
 	}
 
 	// to check if down move is possible
-	public static boolean moveDown(Pacman pacman, int map[][]) {
+	public static boolean moveDown(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
 		int y = (int)pacman.getY();
 
-		if (map[x][y + 1] == 1) {
+		if (board[x][y + 1] == 1 || board[x][y + 1] == 5) {
 			result = false;
 		}
 		return result;
