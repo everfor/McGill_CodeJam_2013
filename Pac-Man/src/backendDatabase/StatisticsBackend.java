@@ -9,7 +9,6 @@ public class StatisticsBackend {
 	ResultSet result;
 	String databaseName = "statisticsdatabase";
 
-	
 	public StatisticsBackend() {
 		try {
 			// Here the connection with database will occur
@@ -21,7 +20,6 @@ public class StatisticsBackend {
 		}
 	}
 
-	
 	public boolean createPlayerStats(String newUsername) {
 		boolean created = false;
 		try {
@@ -30,48 +28,42 @@ public class StatisticsBackend {
 					+ "(username, personalHighScore1, personalHighScore2, personalHighScore3, personalHighScore4, "
 					+ "personalHighScore5, personalHighScore6, personalHighScore7, personalHighScore8, personalHighScore9, personalHighScore10) "
 					+ "values(?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
-			// String query = "insert into " + databaseName +
-			// "values(?, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)";
 			myStatement = myConnection.prepareStatement(query);
 			myStatement.setString(1, newUsername);
 			myStatement.executeUpdate();
-			System.out.println("yes!");
 			return true;
 		} catch (Exception e) {
-			System.out.println("Error while creating player statistics in the database");
+			System.out
+					.println("Error while creating player statistics in the database");
 			e.printStackTrace();
 			return false;
 		}
 	}
 
-	
 	public boolean removePlayerStats(String username) {
 		boolean deleted = false;
 		try {
 			String query = "delete from " + databaseName + " where username=?";
-
 			myStatement = myConnection.prepareStatement(query); // create a
 			// statement
 			myStatement.setString(1, username); // Username inserted in query
-
 			// executes the prepared statement
 			int deletedEntries = myStatement.executeUpdate();
 			deleted = true;
 		} catch (Exception e) {
-			System.out.println("Error while removing player from the statistics database");
+			System.out
+					.println("Error while removing player from the statistics database");
 			deleted = false;
 		}
 		return deleted;
 	}
 
-	
 	/*
 	 * Returns 1-10th score,depending on rank, of the current player or -1 if
 	 * there is a problem
 	 */
 	public int getScore(String username, int rank) {
 		String databaseField = "personalHighScore" + Integer.toString(rank + 1);
-		System.out.println(databaseField);
 		int score = -1;
 		try {
 			// Checks username and password in database
@@ -80,18 +72,17 @@ public class StatisticsBackend {
 					+ " from statisticsdatabase where username=?");
 			myStatement.setString(1, username); // Username inserted in query
 			// executes the prepared statement
-			result=myStatement.executeQuery();;
+			result = myStatement.executeQuery();
 			if (result.next()) {
 				score = Integer.parseInt(result.getString(1));
-				getGlobalHighScoreFields(username);
 			}
 		} catch (Exception e) {
-			System.out.println("Error while getting the personal highscore from the database");
+			System.out
+					.println("Error while getting the personal highscore from the database");
 		}
 		return score;
 	}
 
-	
 	/* Sets the score of a given username in the sorted rank */
 	public boolean setScore(String username, int rank, int score) {
 		boolean updatedScore = false;
@@ -104,41 +95,48 @@ public class StatisticsBackend {
 					+ " " + "THEN " + score + " " + "ELSE " + databaseField
 					+ " " + "END " + "WHERE USERNAME=?");
 			// Username inserted in query
-			myStatement.setString(1, username); 
+			myStatement.setString(1, username);
 			// executes the prepared statement
-			result = myStatement.executeQuery();
-			if (result.next()) {
-				updatedScore = true;
-				
-			}
+			myStatement.executeUpdate();
+			updatedScore = true;
 		} catch (Exception e) {
-			System.out.println("Error while setting the personal highscore into the database");
+			System.out
+					.println("Error while setting the personal highscore into the database");
 			updatedScore = false;
 		}
 		return updatedScore;
 	}
 
-	
-	public void getGlobalHighScoreFields(String databaseField){
-		ArrayList<String> columnArray = new ArrayList<String>(10);;
-		try{
+	public ArrayList<String> getGlobalHighScore() {
+		ArrayList<String> resultsArray = new ArrayList<String>();
+		String query = "select * from ( select username, personalhighscore1 from statisticsdatabase "
+				+ "union all select username,  personalhighscore2 from statisticsdatabase union all select username,"
+				+ " personalhighscore3 from statisticsdatabase union all  "
+				+ "select username, personalhighscore4 from statisticsdatabase union all select username,"
+				+ " personalhighscore5 from statisticsdatabase union all select username,  personalhighscore6 from statisticsdatabase"
+				+ " union all select username,  personalhighscore7 from statisticsdatabase union all select username,  "
+				+ "personalhighscore8 from statisticsdatabase union all select username,  personalhighscore9 from statisticsdatabase"
+				+ " union all select username,  personalhighscore10 from statisticsdatabase) a order by personalhighscore1 desc limit 10;";
+		try {
 			// Checks username and password in database
-			myStatement = myConnection.prepareStatement("SELECT " + databaseField + " FROM statisticsdatabase " + 
-					"ORDER BY personalHighScore1 DESC LIMIT 10");
-			//executes the prepared statement
-			result=myStatement.getResultSet();
-			Object s=result.getObject(2);
-			//if (result.next()) {
-//				for (int i = 1; i <10 ; i++)
-//				{
-//				   columnArray.add( result.getString(i) );
-//				}
-				//System.out.println(columnArray);
-			//}
+			myStatement = myConnection.prepareStatement(query);
+			// executes the prepared statement
+			result = myStatement.executeQuery();
+			ResultSetMetaData rsmd = result.getMetaData();
+			
+			while (result.next()) {
+				ArrayList<String> row = new ArrayList<String>();
+				for (int column = 1; column <= rsmd.getColumnCount(); column++) {
+					row.add(result.getString(column));
+				}
+				resultsArray.addAll(row);
+			}
+			
 		} catch (Exception e) {
 			System.out
-			.println("Error while getting the global highscores from the database");
+					.println("Error while getting the global highscores from the database");
 		}
+		return resultsArray;
 	}
-	
+
 }
