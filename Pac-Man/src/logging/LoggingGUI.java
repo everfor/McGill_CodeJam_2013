@@ -59,6 +59,8 @@ public class LoggingGUI {
 		//add gif
 		File path = new File("").getAbsoluteFile();		
 		ImageIcon background = new ImageIcon(path+ "\\resources\\background.gif");
+		// This image and all other occurences of it were taken from:
+		//http://i889.photobucket.com/albums/ac94/xHeyJuicex/th_biz4.gif
 		JLabel loginBackground = new JLabel();
 		loginBackground.setBounds(47, 11, 400, 150);
 		

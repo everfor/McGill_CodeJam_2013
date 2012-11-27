@@ -28,7 +28,7 @@ public class Player {
 		return Player.mySecurityQuestion;
 	}
 
-	public static String getSecuirtyAnswer() {
+	public static String getSecurityAnswer() {
 		return Player.mySecurityAnswer;
 	}
 

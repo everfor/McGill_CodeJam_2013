@@ -31,6 +31,8 @@ public class ProfilePage extends LoggingGUI {
 		personalGUI.setBackground(Color.BLACK);
 		// background gif
 		File path = new File("").getAbsoluteFile();
+		//The following gif and all its occurences were extracted from:
+		//http://www.thepcmanwebsite.com/media/pacman_flash/
 		ImageIcon background = new ImageIcon(path
 				+ "\\resources\\profileBackground.gif");// TODO make a method to
 														// do this

@@ -14,7 +14,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import logging.LoginLogout;
-
 import playerManipulation.Player;
 import frontendDatabase.PlayerFrontend;
 
