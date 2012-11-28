@@ -1,12 +1,25 @@
 package interfaceFramework;
-
+/**
+ * The class deals with the aspects of the Score
+ * 
+ */
 public class Score {
 	static int dots = 240;
 	static int dotsLeft;
 	static int energizers = 4;
 	static int energizersLeft;
 	static int score;
-	
+
+	/**
+	 * This method gets the Score based on a formula calculation using the
+	 * countDots and countEnergizers methods
+	 * 
+	 * @param board
+	 * 	takes a two dimensional array of the map/board itself
+	 * 
+	 * @return score
+	 * 		returns the score based on dots and energizers consumed
+	 */
 	public static int getScore(int[][] board){
 		score = 0;
 		dotsLeft = countDots(board);
@@ -15,6 +28,15 @@ public class Score {
 		score = 10*(dots - dotsLeft) + 50*(energizers - energizersLeft);
 		return score;
 	}
+	/**
+	 * This method counts the amount of dots existing on the board
+	 * 
+	 * @param board
+	 * 	takes a two dimensional array of the map/board itself
+	 * 
+	 * @return dotsLeft
+	 * 		returns the number of dots left
+	 */
 	
 	public static int countDots(int[][] board){
 		int dotsLeft = 0;
@@ -28,6 +50,15 @@ public class Score {
 		return dotsLeft;
 	}
 	
+	/**
+	 * This method counts the amount of energizers existing on the board
+	 * 
+	 * @param board
+	 * 	takes a two dimensional array of the map/board itself
+	 * 
+	 * @return dotsLeft
+	 * 		returns the number of energizers left
+	 */
 	public static int countEnergizers(int[][] board){
 		int energizersLeft = 0;
 		for(int y=0; y<Map.height; y++){
@@ -39,8 +70,10 @@ public class Score {
 		}
 		return energizersLeft;
 	}
-	
+	/**
+	 * This method returns the highscore achieved
+	 */
 	public static int getHighScore() {
-		return score; 
+		return score; //CHANGE NAME
 	}
 }

@@ -6,7 +6,11 @@ import java.awt.GridBagLayout;
 
 import javax.swing.JFrame;
 
-
+/**
+ * The class sets the basic Grid guidelines and initializes the contents for the Frame of the Maze
+ * 
+ * 
+ */
 public class Maze {
 
 	private JFrame frame;

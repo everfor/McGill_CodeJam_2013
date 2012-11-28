@@ -10,9 +10,12 @@ import static org.junit.Assert.*;
 import javax.swing.*;
 
 
-
-
-
+/**
+ * This class tests all of the methods of PlayerFrontend
+ * 
+ * @author Arjun
+ * 
+ */
 public class FrontendTesting{
 //JTextField and JPasswordField initializations 
 	
@@ -65,14 +68,20 @@ public class FrontendTesting{
 	PlayerFrontend database = new PlayerFrontend();
 	
 
-	//adds a new player to the database
+	/**
+	 * This method tests the addition of a player via the frontend database
+	 * 
+	 */
+
 	@Test
 	public void testAddNewPlayer(){ 
 		for(int i = 0; i<usernameTextFields.length; i++){ //four fields in each of the string or JTextField arrays
 			assertEquals(database.addNewPlayer(usernameTextFields[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]),true);
 		}
 	}
-	// checks the success of the login operation for a given username and password
+	/**
+	 * This method checks the success of the login operation for a given username and password
+	 */
 	@Test
 	public void testLoginOperator() {
 		for(int i = 0; i<usernameTextFields.length; i++){
@@ -80,7 +89,9 @@ public class FrontendTesting{
 			assertEquals(database.loginOperator(passwordsTextField[i], usernameTextFields[3-i]), false);
 		}
 	}
-	//utilizes the username to check if the added player exists in the database
+	/**
+	 *utilizes the username to check if the added player exists in the database
+	 */
 	@Test
 	public void testPlayerExists() { 
 		for(int i = 0; i<usernameTextFields.length; i++){
@@ -89,7 +100,9 @@ public class FrontendTesting{
 			
 		}
 	}
-	//checks whether the given security answer for a given username matches the security answer for the player in the database
+	/**
+	 *checks whether the given security answer for a given username matches the security answer for the player in the database
+	 */
 	@Test
 	public void testChecksecurityAnswer() { 
 		for(int i = 0; i<usernameTextFields.length; i++){
@@ -97,7 +110,10 @@ public class FrontendTesting{
 			assertEquals(database.checkSecurityAnswer(username[i], securityAnswerTextField[3-i]),false);
 		}
 	}
-	//checks whether the specific profile detail has been changed, returns true if so
+	/**
+	checks whether the specific profile detail has been changed after using usingChangeProfileDetails
+	 */
+
 	@Test
 	public void testChangeProfileDetails() {
 		for(int i = 0; i<usernameTextFields.length; i++){ //four fields in each of the string array
@@ -111,7 +127,9 @@ public class FrontendTesting{
 		
 		}
 	}
-		
+	/**
+	 * checks whether the deleteProfile method successfully deletes the profile 
+	 */
 		@Test
 	public void testDeleteProfile(){
 			for(int i = 0; i<usernameTextFields.length; i++){

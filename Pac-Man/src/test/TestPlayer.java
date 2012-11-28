@@ -9,22 +9,28 @@ import org.junit.Test;
 
 import frontendDatabase.*;
 
+/**
+ * This class tests the methods in the Player class
+ * 
+ * @author Arjun
+ * 
+ */
 
 
 
 public class TestPlayer {
 
-	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName4"};
+	String[] username = {"PlayerName11", "PlayerName112", "PlayerName113", "PlayerName114"};
 	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityQuestions = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 	String[] securityAnswers = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 
 	
 	JTextField usernameTextFields[] = new JTextField[]{ 
-			new JTextField("PlayerName"),  
-			new JTextField("PlayerName2"),  
-			new JTextField("PlayerNameusernameTextFields.length"),  
-			new JTextField("PlayerName4")  
+			new JTextField("PlayerName11"),  
+			new JTextField("PlayerName112"),  
+			new JTextField("PlayerName113"),  
+			new JTextField("PlayerName114")  
 	}; 
 
 	JPasswordField passwordsTextField[] =new JPasswordField[]{
@@ -48,13 +54,14 @@ public class TestPlayer {
 	};  
 	
 	
-
+	int[] highscores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10};
 	
 	PlayerFrontend database = new PlayerFrontend();
 	
-	
-	
-	
+	/**
+	 * Tests whether the getUsername method successfully pulls the appropriate username from the database
+	 * 
+	 */
 	@Test
 	public void testGetUsername() {
 	
@@ -73,7 +80,11 @@ public class TestPlayer {
 				
 				
 	}
-
+	
+	/**
+	 * Tests whether the getSecurityQuestion method successfully pulls the appropriate SecurityQuestion from the database
+	 * 
+	 */
 	@Test
 	public void testGetSecurityQuestion() {
 		
@@ -89,9 +100,12 @@ public class TestPlayer {
 					database.deleteProfile(usernameTextFields[i]);
 			}	
 	}
-
+	/**
+	 * Tests whether the getSecurityAnswer method successfully pulls the appropriate SecurityAnswer from the database
+	 * 
+	 */
 	@Test
-	public void testGetSecuirtyAnswer() {
+	public void testGetSecurityAnswer() {
 		
 		
 		for (int i = 0; i<usernameTextFields.length; i++){
@@ -107,7 +121,10 @@ public class TestPlayer {
 			}	
 	}
 
-	
+	/**
+	 * Tests whether the getLevelAchieved method successfully pulls the appropriate LevelAchieved from the database
+	 * 
+	 */
 
 	@Test
 	public void testGetLevelAchieved() {
@@ -124,6 +141,11 @@ public class TestPlayer {
 					database.deleteProfile(usernameTextFields[i]);
 			}	
 	}
+	
+	/**
+	 * Tests whether the clearPlayer method empties the profile details corresponding to the specified object
+	 * 
+	 */	
 	@Test
 	public void testClearPlayer(){
 		for (int i = 0; i<usernameTextFields.length; i++){
@@ -139,23 +161,7 @@ public class TestPlayer {
 			}	
 	}
 	
-	@Test
-	public void testGetHighScores(){
-		for (int i = 0; i<usernameTextFields.length; i++){
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
-			
-			}
-		 	
-			Player profile = new Player(username[0]);
-			profile.setNewHighScore(10);
-			assertEquals(profile.getHighScores()[0], 5);
-					
-				
-			for (int i = 0; i<usernameTextFields.length; i++){		
-					database.deleteProfile(usernameTextFields[i]);
-			}	
-	}
-	
+
 	
 
 }

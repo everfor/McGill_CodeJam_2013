@@ -10,7 +10,12 @@ import org.junit.Test;
 
 import frontendDatabase.PlayerFrontend;
 
-
+/**
+ * This class tests the methods required in order to Recover a Password
+ * 
+ * @author Arjun
+ * 
+ */
 public class TestRecoverPassword {
 	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName5"};
 	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
@@ -63,6 +68,11 @@ public class TestRecoverPassword {
 
 	PlayerFrontend database = new PlayerFrontend();
 	RecoverPassword profile = new RecoverPassword();
+	
+	/**
+	 * Tests whether the checkSecurityQuestion method successfully matches the correct answer with the correct security question
+	 * 
+	 */
 	@Test
 	public void testCheckSecurityQuestion() {
 		for (int i = 0; i < usernameTextFields.length; i++) {	

@@ -1,15 +1,20 @@
 package interfaceFramework;
 
-public class UserControls {
 /**
+ * The UserControls class checks if it's possible for pacman to move in a specific direction
+ */
+
+public class UserControls {
+/** 
  * The checkMove() method checks if it is possible for pacman to move in 
  * a specific direction by ensuring that there is no wall in his upcoming
  * position. If a wall exists the method returns a false boolean to prevent pacman
  * from changing directions.
+ * 
  * @param pacman used to find his coordinates
  * @param board used to check upcoming coordinates for walls
  * @param tunnel boolean that indicates if the specified coordinate is a tunnel
- * @return
+ * @return a boolean specifying whether Pac-Man can move in a specfic direction or not
  */
 
 	public static boolean checkMove(Pacman pacman, int board[][], boolean tunnel){
@@ -45,8 +50,17 @@ public class UserControls {
 		}
 		return result;
 	}
+	/**
+	 * The moveLeft() method checks if it is possible for pacman to move left
+	 * by ensuring that there is no wall in his upcoming
+	 * position. If a wall exists the method returns a false boolean to prevent pacman
+	 * from changing directions.
+	 * 
+	 * @param pacman used to find his coordinates
+	 * @param board used to check upcoming coordinates for wall
+	 * @return a boolean specifying whether Pac-Man can move Left or not
+	 */
 	
-	// to check if left move is possible
 	public static boolean moveLeft(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
@@ -58,7 +72,16 @@ public class UserControls {
 		return result;
 	}
 
-	// to check if right move is possible
+	/**
+	 * The moveRight() method checks if it is possible for pacman to move Right
+	 * by ensuring that there is no wall in his upcoming
+	 * position. If a wall exists the method returns a false boolean to prevent pacman
+	 * from changing directions.
+	 * 
+	 * @param pacman used to find his coordinates
+	 * @param board used to check upcoming coordinates for walls
+	 * @return a boolean specifying whether Pac-Man can move Right or not
+	 */
 	public static boolean moveRight(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
@@ -70,7 +93,16 @@ public class UserControls {
 		return result;
 	}
 
-	// to check if up move is possible
+	/**
+	 * The moveUp() method checks if it is possible for pacman to move up
+	 * by ensuring that there is no wall in his upcoming
+	 * position. If a wall exists the method returns a false boolean to prevent pacman
+	 * from changing directions.
+	 * 
+	 * @param pacman used to find his coordinates
+	 * @param board used to check upcoming coordinates for walls
+	 * @return a boolean specifying whether Pac-Man can move up or not
+	 */
 	public static boolean moveUp(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();
@@ -82,7 +114,16 @@ public class UserControls {
 		return result;
 	}
 
-	// to check if down move is possible
+	/**
+	 * The moveDown() method checks if it is possible for pacman to move down
+	 * by ensuring that there is no wall in his upcoming
+	 * position. If a wall exists the method returns a false boolean to prevent pacman
+	 * from changing directions.
+	 * 
+	 * @param pacman used to find his coordinates
+	 * @param board used to check upcoming coordinates for walls
+	 * @return a boolean specifying whether Pac-Man can move down or not
+	 */
 	public static boolean moveDown(Pacman pacman, int board[][]) {
 		boolean result = true;
 		int x = (int)pacman.getX();

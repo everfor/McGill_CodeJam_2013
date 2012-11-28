@@ -11,10 +11,15 @@ import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
+/**
+ * The class creates the Map with a specific size and 
+ * includes the wall, space, dot, energizer, score, lives, door and life icons
+ * 
+ * 
+ * 
+ */
 public class Map extends JPanel {
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 
 	final static int width = 28;
@@ -27,6 +32,10 @@ public class Map extends JPanel {
 	File path;
 	static Scanner reader;
 	
+	/**
+	 * Constructor which adds the images corresponding to:
+	 * wall, space, dot, energizer, score, lives, door
+	 */
 	public Map() {
 		path = new File("").getAbsoluteFile();		
 		wall = new ImageIcon(path + "\\resources\\wall.jpg").getImage();
@@ -42,7 +51,11 @@ public class Map extends JPanel {
 		read();
 		close();
 	}
-	
+	/**
+	 * Method that reads the structure of the map from a text file, Map.txt
+	 * 
+	 * @return void
+	 */	
 	public void open(){
 		try {
 			reader = new Scanner(new File(path + "\\resources\\Map.txt"));
@@ -51,7 +64,12 @@ public class Map extends JPanel {
 			e.printStackTrace();
 		}
 	}
-	
+	/**
+	 * Method that imports the data found in the reader from the open method to an array 
+	 * which it then uses to create a rough structure of the board
+	 * 
+	 * @return void
+	 */	
 	public void read(){
 		String temp[] = new String[height];
 		while(reader.hasNext()){
@@ -66,12 +84,25 @@ public class Map extends JPanel {
 			}
 		}
 	}
+	/**
+	 * Method that closes the aforementioned reader
+	 * 
+	 * @return void
+	 */	
 	
 	public void close(){
 		reader.close();
 	}
-	
-	//0-space, 1-wall, 2-dot, 3-energizer, 4-tunnel
+	/**
+	 * Method that creates the map using the rough structure made in the read method
+	 * It resolves that structure into one with pixels and graphics corresponding to:
+	 * wall, space, dot, energizer and door
+	 * 
+	 * @param g
+	 * 		Graphics object 
+	 * 
+	 * @return void
+	 */	
 	public void addMap(Graphics g){
 		for(int y=0; y<height; y++){
 			for(int x=0; x<width; x++){
@@ -93,7 +124,18 @@ public class Map extends JPanel {
 			}
 		}
 	}
+	/**
+	 * Method that creates additional graphics:  score and lives
+	 * It also sets fonts, colours and appropriate images for these particular graphics
 	
+	 * @param g
+	 * 		Graphics object 
+	 * 
+	 * @param pacman
+	 * 		object of Pacman class, which contains the charactersitics of Pac-Man
+	 * 
+	 * @return void
+	 */	
 	public void addExtras(Pacman pacman, Graphics g){
 		g.drawImage(score, 0, 31*Game.pixel, null);
 		g.drawImage(lives, 13*Game.pixel, 31*Game.pixel, null);

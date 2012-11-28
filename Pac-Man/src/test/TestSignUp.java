@@ -11,7 +11,12 @@ import logging.*;
 import org.junit.Test;
 
 import frontendDatabase.*;
-
+/**
+ * This class tests the methods required in order to Sign Up and create a profile
+ * 
+ * @author Arjun
+ * 
+ */
 public class TestSignUp {
 	
 
@@ -79,7 +84,10 @@ public class TestSignUp {
 	
 	PlayerFrontend database = new PlayerFrontend(); 
 	
-	
+	/**
+	 * Tests whether the both passwords entered by the player match
+	 * 
+	 */
 	@Test
 	public void testPasswordMatch() {
 		for (int i =0; i<passwordsTextField.length; i++){
@@ -88,6 +96,10 @@ public class TestSignUp {
 		}
 	}
 
+	/**
+	 * Tests whether the password entered by the player are of the correct length
+	 * 
+	 */
 	@Test
 	public void testPasswordLength() {
 	
@@ -97,7 +109,10 @@ public class TestSignUp {
 		
 	}
 	}
-
+	/**
+	 * Tests whether the username entered by the player are of the correct length
+	 * 
+	 */
 	@Test
 	public void testUsernameLength() {
 		for (int i =0; i<passwordsTextField.length; i++){
@@ -106,7 +121,10 @@ public class TestSignUp {
 			
 		}
 	}
-
+	/**
+	 * Tests whether the username entered by the player contains any invalid characters 
+	 * 
+	 */
 	@Test
 	public void testInvalidCharacters() {
 		for (int i =0; i<passwordsTextField.length; i++){

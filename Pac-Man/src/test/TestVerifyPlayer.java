@@ -12,6 +12,12 @@ import frontendDatabase.PlayerFrontend;
 
 import playerManipulation.ChangeProfileDetails;
 
+/**
+ * This class tests the methods required to verify a player
+ * 
+ * @author Arjun
+ * 
+ */
 public class TestVerifyPlayer {
 	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName5"};
 	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
@@ -65,6 +71,10 @@ public class TestVerifyPlayer {
 	PlayerFrontend database = new PlayerFrontend();
 	VerifyPlayer profile = new VerifyPlayer();
 
+	/**
+	 * Tests whether the login is checked correctly
+	 * 
+	 */
 	@Test
 	public void testLoginCheck() {
 		
@@ -85,7 +95,10 @@ public class TestVerifyPlayer {
 	}
 		
 	}
-
+	/**
+	 * Tests whether the usernameExists method successfully finds a username that has been previously added in the database
+	 * 
+	 */
 	@Test
 	public void testUsernameExists() {
 	

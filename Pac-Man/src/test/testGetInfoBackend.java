@@ -9,6 +9,13 @@ import backendDatabase.*;
 import frontendDatabase.*;
 import static org.junit.Assert.*;
 
+/**
+ * This class tests the method GetInfo from playerBackend
+ * 
+ * @author Arjun
+ * 
+ */
+
 public class TestGetInfoBackend{
 
 
@@ -21,7 +28,10 @@ String[] esecurityAnswers = {"A theoi", "B theoi", "C theoi", "D theoi"};
 String[] databaseField = {"username", "password", "securityQuestion", "securityAnswer"};
 
 PlayerBackend database = new PlayerBackend();
-
+/**
+ * Tests whether the getInfo method successfully pulls the requisite fields from the database
+ * 
+ */
 
 @Test
 	public void testGetInfo() {

@@ -10,7 +10,12 @@ import static org.junit.Assert.*;
 
 import javax.swing.*;
 
-
+/**
+ * This class tests all of the methods of PlayerBackend
+ * 
+ * @author Arjun
+ * 
+ */
 
 
 
@@ -34,7 +39,11 @@ public class BackendTesting {
 	String[] failUsername = {null , "", "permert71sdfasdfdfiukjhkhkjhhkjhkhfdfasfadsfdfasdfsfadffasdfsfasdfasdfas", "username.length353"};
 	
 	
-	
+	/**
+	 * This method tests the creation of a player in the backend database
+	 * 
+	 */
+
 	@Test
 	public void testCreatePlayer() {
 
@@ -44,7 +53,10 @@ public class BackendTesting {
 		}
 
 	}
-
+	/**
+	 * This method tests whether the login checking mechanism is in order
+	 * 
+	 */
 	@Test
 	public void testCheckLogin() {
 		for (int i = 0; i < username.length; i++) { // four fields in each of the string array
@@ -52,7 +64,9 @@ public class BackendTesting {
 			assertEquals(database.checkLogin(username[i], passwords[3-i]), false);
 		}
 	}
-
+	/**
+	 * This method tests whether the findPlayer method suceeds in finding a player that has been added 
+	 */
 	@Test
 	public void testFindPlayer() {
 		for (int i = 0; i < username.length; i++) { // four fields in each of the string array
@@ -60,7 +74,9 @@ public class BackendTesting {
 			assertEquals(database.findPlayer("invalid"), false);
 		}
 	}
-
+	/**
+	 * This method tests whether only the correct Answer to the Security Question is accepted 
+	 */
 	@Test
 	public void testCheckSecurityQuestion() {
 		
@@ -69,7 +85,9 @@ public class BackendTesting {
 			assertEquals(database.checkSecurityQuestion(username[i], securityAnswers[3-i]) , false);
 		}
 	}
-
+	/**
+	 * This method tests whether the changeProfileDetails method successfully changes the requisite fields 
+	 */
 	@Test
 	public void testChangeProfileDetails() {
 		for(int i = 0; i<username.length; i++){ //four fields in each of the string array
@@ -85,7 +103,9 @@ public class BackendTesting {
 		
 	}
 	
-
+	/**
+	 * This method tests whether the player is removed successfully from the database by the removePlayer method
+	 */
 	@Test
 	public void testRemovePlayer() {
 		for(int i = 0; i<username.length; i++){ //four fields in each of the string array

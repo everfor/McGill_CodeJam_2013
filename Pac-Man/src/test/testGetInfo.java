@@ -9,6 +9,13 @@ import backendDatabase.*;
 import frontendDatabase.*;
 import static org.junit.Assert.*;
 
+/**
+ * This class tests the method GetInfo from playerFrontend
+ * 
+ * @author Arjun
+ * 
+ */
+
 public class TestGetInfo{
 	
 	
@@ -21,6 +28,11 @@ public class TestGetInfo{
 	PlayerFrontend database = new PlayerFrontend();
 	PlayerBackend backdatabase = new PlayerBackend();
 	
+	/**
+	 * Tests whether the getInfo method successfully pulls the requisite fields from the database
+	 * 
+	 */
+
 	@Test
 	public void testGetInfo() {
 		for(int i = 0; i<existingUsername.length; i++){

@@ -12,7 +12,12 @@ import javax.swing.*;
 
 
 
-
+/**
+ * This class tests all of the methods of ChangeProfileDetails
+ * 
+ * @author Arjun
+ * 
+ */
 
 
 public class TestChangeProfileDetails {
@@ -70,7 +75,10 @@ public class TestChangeProfileDetails {
 	PlayerFrontend database = new PlayerFrontend();
 	ChangeProfileDetails profile = new ChangeProfileDetails();
 	
-	
+	/**
+	 * Tests whether the method changePassword successfully changes the old password attributed to a username to a new password
+	 * 
+	 */
 	@Test
 	public void testChangePassword() {
 	
@@ -91,7 +99,10 @@ public class TestChangeProfileDetails {
 		}
 		
 	}
-	
+	/**
+	 * Tests whether the method changeUsername successfully changes the old username to a new username
+	 * 
+	 */
 	@Test
 	public void testChangeUsername() {
 		for (int i = 0; i < usernameTextField.length; i++) {	
@@ -111,7 +122,11 @@ public class TestChangeProfileDetails {
 				
 			}
 	
-	
+	/**
+	 * Tests whether the method changePassword successfully changes the old security questions and security answers
+	 * attributed to a username to new security questions and answers
+	 * 
+	 */
 	@Test
 	public void testChangeSecurity() {
 		for (int i = 0; i < usernameTextField.length; i++) {	
