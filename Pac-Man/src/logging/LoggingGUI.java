@@ -16,6 +16,12 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import playerManipulation.Player;
+/**
+ * 
+ * The class deals with the entire graphical user interface related to the first
+ * page that appears in the process of logging
+ * 
+ */
 public class LoggingGUI {
 	JFrame masterPage;
 	public static CardLayout pages;
@@ -37,6 +43,9 @@ public class LoggingGUI {
 			}
 		});
 	}
+	/**
+	 * A constructor for the gui of logging
+	 */
 	public LoggingGUI(){ 
 		//main page
 		masterPage = new JFrame();
@@ -77,6 +86,9 @@ public class LoggingGUI {
 		masterPage.getContentPane().add(pagePanels,BorderLayout.CENTER);
 		masterPage.setVisible(true);
 	}
+	/**
+	 * The method to display the logging page
+	 */
 	public void loginPage(){
 
 		//Create Login Panel
