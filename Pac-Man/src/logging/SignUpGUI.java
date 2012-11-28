@@ -119,14 +119,17 @@ public class SignUpGUI extends LoggingGUI {
 				SignUp.register(newUsernameInput, newPasswordInput,
 						securityQuestionInput, securityAnswerInput,
 						reenterPassword);
-				newUsernameInput.setText("");
-				newPasswordInput.setText("");
-				reenterPassword.setText("");
-				securityQuestionInput.setText("");
-				securityAnswerInput.setText("");
-				pages.show(pagePanels, "login");
+
+				
 			}
 		});
 		return signUpPage;
+	}
+	public static void clearFields(){
+		newUsernameInput.setText("");
+		newPasswordInput.setText("");
+		reenterPassword.setText("");
+		securityQuestionInput.setText("");
+		securityAnswerInput.setText("");
 	}
 }

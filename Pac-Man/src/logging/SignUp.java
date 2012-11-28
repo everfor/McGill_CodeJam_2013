@@ -17,7 +17,7 @@ import playerManipulation.VerifyPlayer;
  * up a player into the game
  * 
  */
-public class SignUp {
+public class SignUp extends SignUpGUI{
 	static JLabel usernameLabel, passwordLabel, reenterPasswordLabel,
 			securityQuestionLabel, securityAnswerLabel;
 	static JTextField newUsername, securityQuestion, securityAnswer;
@@ -197,10 +197,13 @@ public class SignUp {
 				StatisticsFrontend.initializePlayerStats(newUsername.getText());
 				JOptionPane.showMessageDialog(null, "SignUp Successful",
 						"Welcome", JOptionPane.INFORMATION_MESSAGE);
+				pages.show(pagePanels, "login");
+				
 			} else {
 				JOptionPane.showMessageDialog(null,
 						"SignUp UnSuccessful, try again", "Error",
 						JOptionPane.ERROR_MESSAGE);
+				clearFields();
 			}
 		} else {
 			JOptionPane.showMessageDialog(null, errorMessage, "Error",

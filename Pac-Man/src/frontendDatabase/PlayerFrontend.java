@@ -10,8 +10,6 @@ import backendDatabase.PlayerBackend;
  * The class communicates with player backend class in order to perform tasks
  * for each player
  * 
- * @author KristiB
- * 
  */
 public class PlayerFrontend {
 	/**

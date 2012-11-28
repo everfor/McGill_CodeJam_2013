@@ -6,9 +6,6 @@ import java.util.ArrayList;
 /**
  * The class writes and reads to the mySQL database for only the statistics
  * information of a specific player.
- * 
- * @author KristiB
- * 
  */
 public class StatisticsBackend {
 	Connection myConnection;

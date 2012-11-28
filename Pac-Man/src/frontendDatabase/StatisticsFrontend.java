@@ -7,9 +7,6 @@ import backendDatabase.*;
 /**
  * The class communicates with statistics backend class in order to perform
  * tasks for each player
- * 
- * @author KristiB
- * 
  */
 public class StatisticsFrontend {
 

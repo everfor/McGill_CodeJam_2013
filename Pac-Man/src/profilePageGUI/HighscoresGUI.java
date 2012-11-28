@@ -20,7 +20,7 @@ import frontendDatabase.StatisticsFrontend;
  *
  */
 public class HighscoresGUI extends ProfilePage {
-	static JPanel personalHighscoresGUI;
+	static JPanel highscoresGUI;
 	static int[] personalHighScores;
 	static ArrayList<String> globalHighScores;
 	static JLabel phs1, phs2, phs3, phs4, phs5, phs6, phs7, phs8, phs9, phs10;
@@ -36,9 +36,9 @@ public class HighscoresGUI extends ProfilePage {
 	 */
 	public static JPanel displayHighscores() {
 		// Create profilepage Panel
-		personalHighscoresGUI = new JPanel();
-		personalHighscoresGUI.setBackground(Color.BLACK);
-		personalHighscoresGUI.setLayout(null);
+		highscoresGUI = new JPanel();
+		highscoresGUI.setBackground(Color.BLACK);
+		highscoresGUI.setLayout(null);
 		// Heading
 		File path = new File("").getAbsoluteFile();
 		ImageIcon highscoresImage = new ImageIcon(path
@@ -47,7 +47,7 @@ public class HighscoresGUI extends ProfilePage {
 		globalHSBackground.setLocation(250, 11);
 		globalHSBackground.setSize(230, 25);
 		globalHSBackground.setIcon(highscoresImage);
-		personalHighscoresGUI.add(globalHSBackground);
+		highscoresGUI.add(globalHSBackground);
 		// line
 		ImageIcon lineImage = new ImageIcon(path + "\\resources\\line.jpg");// TODO
 																			// make
@@ -58,14 +58,14 @@ public class HighscoresGUI extends ProfilePage {
 		line.setLocation(250, 50);
 		line.setSize(10, 490);
 		line.setIcon(lineImage);
-		personalHighscoresGUI.add(line);
+		highscoresGUI.add(line);
 		// personal Highscores subheading
 		ImageIcon subHeading = new ImageIcon(path
 				+ "\\resources\\personalHS.gif");
 		personalHSBackground = new JLabel();
 		personalHSBackground.setBounds(10, 11, 230, 25);
 		personalHSBackground.setIcon(subHeading);
-		personalHighscoresGUI.add(personalHSBackground);
+		highscoresGUI.add(personalHSBackground);
 		// display personal high scores
 		personalHighScores = Player.getHighScores();
 
@@ -111,16 +111,16 @@ public class HighscoresGUI extends ProfilePage {
 		phs9.setForeground(Color.WHITE);
 		phs10.setForeground(Color.WHITE);
 		// add them to page
-		personalHighscoresGUI.add(phs1);
-		personalHighscoresGUI.add(phs2);
-		personalHighscoresGUI.add(phs3);
-		personalHighscoresGUI.add(phs4);
-		personalHighscoresGUI.add(phs5);
-		personalHighscoresGUI.add(phs6);
-		personalHighscoresGUI.add(phs7);
-		personalHighscoresGUI.add(phs8);
-		personalHighscoresGUI.add(phs9);
-		personalHighscoresGUI.add(phs10);
+		highscoresGUI.add(phs1);
+		highscoresGUI.add(phs2);
+		highscoresGUI.add(phs3);
+		highscoresGUI.add(phs4);
+		highscoresGUI.add(phs5);
+		highscoresGUI.add(phs6);
+		highscoresGUI.add(phs7);
+		highscoresGUI.add(phs8);
+		highscoresGUI.add(phs9);
+		highscoresGUI.add(phs10);
 
 		globalHighScores = StatisticsFrontend.getGlobalHighScores();
 		// global highscores
@@ -166,22 +166,22 @@ public class HighscoresGUI extends ProfilePage {
 		ghs9.setForeground(Color.WHITE);
 		ghs10.setForeground(Color.WHITE);
 		// add them to page
-		personalHighscoresGUI.add(ghs1);
-		personalHighscoresGUI.add(ghs2);
-		personalHighscoresGUI.add(ghs3);
-		personalHighscoresGUI.add(ghs4);
-		personalHighscoresGUI.add(ghs5);
-		personalHighscoresGUI.add(ghs6);
-		personalHighscoresGUI.add(ghs7);
-		personalHighscoresGUI.add(ghs8);
-		personalHighscoresGUI.add(ghs9);
-		personalHighscoresGUI.add(ghs10);
+		highscoresGUI.add(ghs1);
+		highscoresGUI.add(ghs2);
+		highscoresGUI.add(ghs3);
+		highscoresGUI.add(ghs4);
+		highscoresGUI.add(ghs5);
+		highscoresGUI.add(ghs6);
+		highscoresGUI.add(ghs7);
+		highscoresGUI.add(ghs8);
+		highscoresGUI.add(ghs9);
+		highscoresGUI.add(ghs10);
 
 		// back button
 		highscoresToProfile = new JButton("Back");
 		highscoresToProfile.setLocation(207, 551);
 		highscoresToProfile.setSize(95, 32);
-		personalHighscoresGUI.add(highscoresToProfile);
+		highscoresGUI.add(highscoresToProfile);
 		highscoresToProfile.setActionCommand("Back");
 		highscoresToProfile.addActionListener(new ActionListener() {
 			@Override
@@ -190,6 +190,6 @@ public class HighscoresGUI extends ProfilePage {
 			}
 		});
 
-		return personalHighscoresGUI;
+		return highscoresGUI;
 	}
 }

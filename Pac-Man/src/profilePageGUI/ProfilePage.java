@@ -1,5 +1,7 @@
 package profilePageGUI;
 
+import interfaceFramework.Maze;
+
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +22,7 @@ import playerManipulation.Player;
  * options: Play game, change profile details, logout or view highscores.
  */
 public class ProfilePage extends LoggingGUI {
-	private static JPanel personalGUI;
+	private static JPanel profilePageGUI;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
 	static JButton playGame, highscores, logout, changeProfileDetails;
@@ -34,8 +36,8 @@ public class ProfilePage extends LoggingGUI {
 	 */
 	public static JPanel profilePage() {
 		// Create profilepage Panel
-		personalGUI = new JPanel();
-		personalGUI.setBackground(Color.BLACK);
+		profilePageGUI = new JPanel();
+		profilePageGUI.setBackground(Color.BLACK);
 		// background gif
 		File path = new File("").getAbsoluteFile();
 		// The following gif and all its occurences were extracted from:
@@ -45,7 +47,7 @@ public class ProfilePage extends LoggingGUI {
 														// do this
 		JLabel profilePageBackground = new JLabel();
 		profilePageBackground.setIcon(background);
-		personalGUI.add(profilePageBackground);
+		profilePageGUI.add(profilePageBackground);
 		// initialize playGame button
 		ImageIcon playGameBG = new ImageIcon(path
 				+ "\\resources\\playgamebutton.gif");
@@ -54,7 +56,7 @@ public class ProfilePage extends LoggingGUI {
 		playGame.setBorderPainted(false);
 		playGame.setOpaque(false);
 		playGame.setFocusPainted(false);
-		personalGUI.add(playGame);
+		profilePageGUI.add(playGame);
 		// initialize highscores button
 		ImageIcon highscoresBG = new ImageIcon(path
 				+ "\\resources\\highscores.gif");
@@ -63,7 +65,7 @@ public class ProfilePage extends LoggingGUI {
 		highscores.setBorderPainted(false);
 		highscores.setOpaque(false);
 		highscores.setFocusPainted(false);
-		personalGUI.add(highscores);
+		profilePageGUI.add(highscores);
 		// initialize change profile details button
 		ImageIcon changeProfileDetailsBG = new ImageIcon(path
 				+ "\\resources\\changePorfileDetails.gif");
@@ -72,7 +74,7 @@ public class ProfilePage extends LoggingGUI {
 		changeProfileDetails.setBorderPainted(false);
 		changeProfileDetails.setOpaque(false);
 		changeProfileDetails.setFocusPainted(false);
-		personalGUI.add(changeProfileDetails);
+		profilePageGUI.add(changeProfileDetails);
 		// initialize logout button
 		ImageIcon logoutBG = new ImageIcon(path + "\\resources\\logout.gif");
 		JButton logout = new JButton(logoutBG);
@@ -80,9 +82,19 @@ public class ProfilePage extends LoggingGUI {
 		logout.setBorderPainted(false);
 		logout.setOpaque(false);
 		logout.setFocusPainted(false);
-		personalGUI.add(logout);
+		profilePageGUI.add(logout);
 
 		// set button actions
+		// playGame button
+		playGame.setActionCommand("playGame");
+		playGame.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				
+				//LoggingGUI.setMasterPage(Maze.initialize());
+			}
+		});
+
 		// logout button
 		logout.setActionCommand("logout");
 		logout.addActionListener(new ActionListener() {
@@ -111,7 +123,9 @@ public class ProfilePage extends LoggingGUI {
 				pages.show(pagePanels, "highscores");
 			}
 		});
-		return personalGUI;
+
+		
+		return profilePageGUI;
 
 	}
 }

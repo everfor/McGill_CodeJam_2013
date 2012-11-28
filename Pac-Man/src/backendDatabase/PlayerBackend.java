@@ -4,10 +4,8 @@ import java.sql.*;
 
 /**
  * 
- * @author KristiB
- * 
- *         The Backend player database reads and writes to the mySQL database in
- *         order to manage the player information, excluding statistics.
+ * The Backend player database reads and writes to the mySQL database in order
+ * to manage the player information, excluding statistics.
  * 
  */
 public class PlayerBackend {
