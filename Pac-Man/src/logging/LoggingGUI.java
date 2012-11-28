@@ -23,7 +23,7 @@ import playerManipulation.Player;
  * 
  */
 public class LoggingGUI {
-	JFrame masterPage;
+	public static JFrame masterPage;
 	public static CardLayout pages;
 	public static JPanel pagePanels;
 	private JPanel login;
@@ -158,5 +158,6 @@ public class LoggingGUI {
 				);
 
 	}
+
 
 }

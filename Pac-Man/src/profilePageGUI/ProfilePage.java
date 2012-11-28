@@ -90,8 +90,8 @@ public class ProfilePage extends LoggingGUI {
 		playGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				
-				//LoggingGUI.setMasterPage(Maze.initialize());
+				masterPage.setVisible(false);
+				Maze.main(null);
 			}
 		});
 
