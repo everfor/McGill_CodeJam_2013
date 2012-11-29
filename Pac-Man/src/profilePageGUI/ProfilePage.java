@@ -90,7 +90,7 @@ public class ProfilePage extends LoggingGUI {
 		playGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				masterPage.setVisible(false);
+				setMasterPageVisiblity(false);
 				Maze.main(null);
 			}
 		});
@@ -127,5 +127,8 @@ public class ProfilePage extends LoggingGUI {
 		
 		return profilePageGUI;
 
+	}
+	public static void setMasterPageVisiblity(boolean choice){
+		masterPage.setVisible(choice);
 	}
 }

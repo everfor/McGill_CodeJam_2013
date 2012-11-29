@@ -29,6 +29,12 @@ public class Score {
 		return score;
 	}
 	/**
+	 * This method returns the highscore achieved
+	 */
+	public static int getScore() {
+		return score; 
+	}
+	/**
 	 * This method counts the amount of dots existing on the board
 	 * 
 	 * @param board
@@ -70,10 +76,5 @@ public class Score {
 		}
 		return energizersLeft;
 	}
-	/**
-	 * This method returns the highscore achieved
-	 */
-	public static int getHighScore() {
-		return score; //CHANGE NAME
-	}
+	
 }

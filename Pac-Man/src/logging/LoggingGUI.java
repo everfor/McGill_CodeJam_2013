@@ -49,7 +49,7 @@ public class LoggingGUI {
 	public LoggingGUI(){ 
 		//main page
 		masterPage = new JFrame();
-		masterPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		//masterPage.setDefaultCloseOperation(JFrame.);
 		masterPage.setTitle("Pac-Man");
 		masterPage.setSize(510,622 );
 		masterPage.setLocationRelativeTo(null);

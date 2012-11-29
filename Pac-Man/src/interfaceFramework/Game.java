@@ -1,7 +1,6 @@
 package interfaceFramework;
 
 import java.awt.Graphics;
-import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -9,6 +8,11 @@ import java.awt.event.KeyListener;
 
 import javax.swing.JPanel;
 import javax.swing.Timer;
+
+import frontendDatabase.StatisticsFrontend;
+
+import playerManipulation.Player;
+import profilePageGUI.ProfilePage;
 
 /**
  * The class checks collisions, imports and paints the Pac-Man and Ghost pictures into the Maze
@@ -29,7 +33,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
  static boolean goDown = false;
  static boolean stop = false;
  
- double speed = 0.9;
+ double speed = 1.0;
  static Timer timer;
  /**
   * Constructor which sets the timer to 200 and starts it
@@ -90,14 +94,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
    
    if(map.board[(int) pacman.getX()][(int) pacman.getY()] == 2){
     map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+    //add audio here
+    Audio.SoundPlayer("eatdot.wav");
    }
    
    if(map.board[(int) pacman.getX()][(int) pacman.getY()] == 3){
     map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
    }
    
-   ghost1.movePossible(pacman, map.board, ghost1.moveLeft());
-//   ghost1.move(map.board, ghost1.moveLeft());
+   //ghost1.movePossible(pacman, map.board, ghost1.moveLeft());
+  ghost1.move(map.board, ghost1.moveLeft());
    checkCollision();
   }
   
@@ -121,7 +127,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
   
   else if(((!ghost1.goDown && !ghost1.goUp && !ghost1.goRight && !ghost1.goLeft) || (!stop)) && ((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() == ghost1.getY())) {
    inGame = false;
-  }
+     }
 //  else if(!stop && ((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() == ghost1.getY())) {
 //   inGame = false;
 //  }
@@ -141,9 +147,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
      pacman.move(1, 0);
     }
     inGame = false;
-   }
+      }
   }
-  
+  if (inGame == false){
+	  Audio.SoundPlayer("die.wav");
+	  endOfGame();
+  }
 //  else if ((((int) pacman.getX() + 1 == ghost1.getX() && (int) pacman.getY() == ghost1.getY()) && goLeft)
 //    || (((int) pacman.getX() - 1 == ghost1.getX() && (int) pacman.getY() == ghost1.getY()) && goRight)
 //    || (((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() - 1 == ghost1.getY()) && goDown)
@@ -288,5 +297,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
  @Override
  public void keyTyped(KeyEvent e) { 
  }
- 
+ public static void endOfGame(){
+	 StatisticsFrontend.setHighScores(Player.getUsername(), Score.getScore());
+	 Maze.setMazeVisiblity(false);
+	 ProfilePage.setMasterPageVisiblity(true);
+	 
+ }
 }

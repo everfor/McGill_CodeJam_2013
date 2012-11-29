@@ -13,7 +13,7 @@ import javax.swing.JFrame;
  */
 public class Maze {
 
-	private JFrame frame;
+	private static JFrame frame;
 
 	/**
 	 * Launch the application.
@@ -61,5 +61,7 @@ public class Maze {
 		gbc_panel.gridy = 0;
 		frame.getContentPane().add(panel, gbc_panel);	
 	}
-
+	public static void setMazeVisiblity(boolean choice){
+		frame.setVisible(choice);
+	}
 }
