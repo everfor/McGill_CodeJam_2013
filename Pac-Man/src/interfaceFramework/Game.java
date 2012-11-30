@@ -27,7 +27,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static Blinky ghost1 = new Blinky(20, 5);
 	static int pixel = 18;
 	static boolean inGame = true;
-
+	static String username =Player.getUsername();
 	boolean tunnel = false;
 	static boolean goLeft = false;
 	static boolean goRight = true;
@@ -114,8 +114,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
 			}
 
-			// ghost1.movePossible(pacman, map.board, ghost1.moveLeft());
-			ghost1.move(map.board, ghost1.moveLeft());
+			ghost1.movePossible(pacman, map.board, ghost1.moveLeft());
+			//ghost1.move(map.board, ghost1.moveLeft());
 			checkCollision();
 		}
 
@@ -331,8 +331,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public static void endOfGame() {
-		StatisticsFrontend
-				.setHighScores(Player.getUsername(), Score.getScore());
+		
+		StatisticsFrontend.setHighScores(username, Score.getScore());
+		Player currentPlayer = new Player(username);
 		Maze.setMazeVisiblity(false);
 		ProfilePage.setMasterPageVisiblity(true);
 

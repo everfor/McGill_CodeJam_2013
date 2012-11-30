@@ -15,7 +15,7 @@ public class Ghost {
 	int x, y;
 	File path;
 	Image image1;
-	boolean goLeft, goRight, goUp, goDown;
+	boolean goLeft, goRight, goUp, goDown,stopped;
 	boolean ghostDirection[] = new boolean[4]; 
 
 	public Ghost(int x, int y) {
@@ -44,8 +44,10 @@ public class Ghost {
 			if(board[x - 1][y] == 1){
 				x += 0;                                                              
 				goLeft = false;
+				stopped = true;
 			}
 			else {
+				stopped = false;
 				x -= 1;
 			}
 		}
@@ -54,9 +56,11 @@ public class Ghost {
 			if(board[x + 1][y] == 1){
 				x += 0;
 				goRight = false;
+				stopped = true;
 			}
 			else {
 				x += 1;
+				stopped = false;
 			}
 		}
 		
@@ -64,9 +68,12 @@ public class Ghost {
 			if(board[x][y - 1] == 1){
 				y += 0;
 				goUp = false;
+				stopped = true;
+
 			}
 			else {
 				y -= 1;
+				stopped = false;
 			}
 		}
 		
@@ -74,9 +81,11 @@ public class Ghost {
 			if(board[x][y + 1] == 1){
 				y += 0;
 				goDown = false;
+				stopped = true;
 			}
 			else {
 				y += 1;
+				stopped = false;
 			}
 		}
 }
@@ -174,9 +183,11 @@ public class Ghost {
 	 * 		
 	 */	
 	
-	public double distance(Pacman pacman, int x, int y) {
-		double distance = 0;
-		distance = Math.pow(pacman.getX() - x, 2) + Math.pow(pacman.getY() - y, 2);
-		return distance;
-	}
+
+
+	public double distance(double tileX, double tileY, int x, int y) {
+		  double distance = 0;
+		  distance = Math.pow(tileX - x, 2) + Math.pow(tileY - y, 2);
+		  return distance;
+		 }
 }

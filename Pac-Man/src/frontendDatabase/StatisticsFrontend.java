@@ -1,8 +1,10 @@
 package frontendDatabase;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
-import backendDatabase.*;
+import backendDatabase.StatisticsBackend;
 
 /**
  * The class communicates with statistics backend class in order to perform
@@ -68,31 +70,22 @@ public class StatisticsFrontend {
 		StatisticsBackend database = new StatisticsBackend();
 
 		boolean set = false;
-		int[] topHighScores = new int[10];
+		int[] topHighScores = new int[11];
 		int i = 0;
 		// getting the current top 10 high scores from the database
-		for (i = 0; i < topHighScores.length; i++) {
+		for (i = 0; i < topHighScores.length - 1; i++) {
 			topHighScores[i] = database.getScore(username, i);
 		}
-
-		i = topHighScores.length - 1;
-
-		// checking the top 10 highscores, and updating it if newScore should be
-		// placed in the top10
-		while (i >= 0) {
-			if (topHighScores[i] < newScore) {
-				topHighScores[i] = newScore;
-				set = true;
-				break;
-			} else {
-				i--;
-			}
+		// adding new score
+		topHighScores[10] = newScore;
+		// sort in ascending order
+		Arrays.sort(topHighScores);
+		//write the last ten to database
+		for (int j = topHighScores.length - 1; j > 0; j--){
+			System.out.println(topHighScores[j]);
+			database.setScore(username, "personalHighscore" + (11-j),topHighScores[j]);
 		}
 
-		// saving the updated scores into the database
-		for (i = 0; i < topHighScores.length; i++) {
-			database.setScore(username, i, topHighScores[i]);
-		}
 		return set;
 
 	}
@@ -122,7 +115,7 @@ public class StatisticsFrontend {
 	public boolean removePlayerStats(String username) {
 		StatisticsBackend database = new StatisticsBackend();
 		boolean result = false;
-		//trying to remove the player
+		// trying to remove the player
 		result = database.removePlayerStats(username);
 		return result;
 	}
