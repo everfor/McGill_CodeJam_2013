@@ -25,7 +25,8 @@ public class ProfilePage extends LoggingGUI {
 	private static JPanel profilePageGUI;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
-	static JButton playGame, highscores, logout, changeProfileDetails;
+	static JButton playGame, highscores, logout, changeProfileDetails,
+			settings;
 
 	/**
 	 * This method creates a JPanel for the player's profile page this is where
@@ -83,7 +84,15 @@ public class ProfilePage extends LoggingGUI {
 		logout.setOpaque(false);
 		logout.setFocusPainted(false);
 		profilePageGUI.add(logout);
-
+		// settings button
+		ImageIcon settingImage = new ImageIcon(path
+				+ "\\resources\\settings.gif");// TODO make a method to
+		JButton settings = new JButton(settingImage);
+		settings.setBackground(Color.BLACK);
+		settings.setBorderPainted(false);
+		settings.setOpaque(false);
+		settings.setFocusPainted(false);
+		profilePageGUI.add(settings);
 		// set button actions
 		// playGame button
 		playGame.setActionCommand("playGame");
@@ -123,12 +132,21 @@ public class ProfilePage extends LoggingGUI {
 				pages.show(pagePanels, "highscores");
 			}
 		});
-
-		
+		// settings button
+		settings.setActionCommand("settings");
+		settings.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent event) {
+						pagePanels.add(
+								Settings.settingsPage(),"settingsPage");
+						pages.show(pagePanels, "settingsPage");
+					}
+				});
 		return profilePageGUI;
 
 	}
-	public static void setMasterPageVisiblity(boolean choice){
+
+	public static void setMasterPageVisiblity(boolean choice) {
 		masterPage.setVisible(choice);
 	}
 }
