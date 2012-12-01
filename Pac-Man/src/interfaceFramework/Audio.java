@@ -28,7 +28,7 @@ public class Audio {
 	public static void SoundPlayer(String fileName) {
 
 		File path = new File("").getAbsoluteFile();
-		File audio = new File(path + "\\resources\\" + fileName);
+		File audio = new File(path + "\\res\\" + fileName);
 		AudioInputStream audioInputStream = null;
 
 		try {

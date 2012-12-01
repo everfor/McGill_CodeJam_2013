@@ -38,14 +38,14 @@ public class Map extends JPanel {
 	 */
 	public Map() {
 		path = new File("").getAbsoluteFile();		
-		wall = new ImageIcon(path + "\\resources\\wall.jpg").getImage();
-		space = new ImageIcon(path + "\\resources\\space.jpg").getImage();
-		dot = new ImageIcon(path + "\\resources\\dot.jpg").getImage();
-		energizer = new ImageIcon(path + "\\resources\\energizer.jpg").getImage();
-		score = new ImageIcon(path + "\\resources\\score.jpg").getImage();
-		lives = new ImageIcon(path + "\\resources\\lives.jpg").getImage();
-		door = new ImageIcon(path + "\\resources\\door.jpg").getImage();
-		life = new ImageIcon(path + "\\resources\\life.jpg").getImage();
+		wall = new ImageIcon(path + "\\res\\wall.jpg").getImage();
+		space = new ImageIcon(path + "\\res\\space.jpg").getImage();
+		dot = new ImageIcon(path + "\\res\\dot.jpg").getImage();
+		energizer = new ImageIcon(path + "\\res\\energizer.jpg").getImage();
+		score = new ImageIcon(path + "\\res\\score.jpg").getImage();
+		lives = new ImageIcon(path + "\\res\\lives.jpg").getImage();
+		door = new ImageIcon(path + "\\res\\door.jpg").getImage();
+		life = new ImageIcon(path + "\\res\\life.jpg").getImage();
 		
 		open();
 		read();
@@ -58,7 +58,7 @@ public class Map extends JPanel {
 	 */	
 	public void open(){
 		try {
-			reader = new Scanner(new File(path + "\\resources\\Map.txt"));
+			reader = new Scanner(new File(path + "\\res\\Map.txt"));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();

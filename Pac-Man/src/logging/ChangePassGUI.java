@@ -64,7 +64,7 @@ public class ChangePassGUI extends ResetGUI {
 		reenterRecoverNewPassword.setColumns(10);
 		File path = new File("").getAbsoluteFile();
 		ImageIcon background = new ImageIcon(path
-				+ "\\resources\\background.gif");
+				+ "\\res\\background.gif");
 		JLabel changePassBG = new JLabel(background);
 		changePassBG.setBounds(47, 11, 400, 150);
 		changePasswordPage.add(changePassBG);

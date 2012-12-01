@@ -43,7 +43,7 @@ public class ChangePassword extends ChangeProfileDetailsGUI {
 		// heading gif
 		File path = new File("").getAbsoluteFile();
 		ImageIcon changePassIcon = new ImageIcon(path
-				+ "\\resources\\changePassword.gif");
+				+ "\\res\\changePassword.gif");
 		changePasswordPage.setLayout(null);
 		JLabel changePassHeading = new JLabel();
 		changePassHeading.setBounds(74, 11, 350, 38);

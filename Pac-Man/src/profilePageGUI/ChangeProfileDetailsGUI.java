@@ -48,7 +48,7 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 		// background gif
 		File path = new File("").getAbsoluteFile();
 		ImageIcon background = new ImageIcon(path
-				+ "\\resources\\changePorfileDetails.gif");
+				+ "\\res\\changePorfileDetails.gif");
 		changePasswordPage.setLayout(null);
 		JLabel profileDetailsBackground = new JLabel();
 		profileDetailsBackground.setBounds(74, 11, 350, 38);

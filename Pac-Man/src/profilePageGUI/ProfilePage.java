@@ -44,14 +44,14 @@ public class ProfilePage extends LoggingGUI {
 		// The following gif and all its occurences were extracted from:
 		// http://www.thepcmanwebsite.com/media/pacman_flash/
 		ImageIcon background = new ImageIcon(path
-				+ "\\resources\\profileBackground.gif");// TODO make a method to
+				+ "\\res\\profileBackground.gif");// TODO make a method to
 														// do this
 		JLabel profilePageBackground = new JLabel();
 		profilePageBackground.setIcon(background);
 		profilePageGUI.add(profilePageBackground);
 		// initialize playGame button
 		ImageIcon playGameBG = new ImageIcon(path
-				+ "\\resources\\playgamebutton.gif");
+				+ "\\res\\playgamebutton.gif");
 		JButton playGame = new JButton(playGameBG);
 		playGame.setBackground(Color.BLACK);
 		playGame.setBorderPainted(false);
@@ -60,7 +60,7 @@ public class ProfilePage extends LoggingGUI {
 		profilePageGUI.add(playGame);
 		// initialize highscores button
 		ImageIcon highscoresBG = new ImageIcon(path
-				+ "\\resources\\highscores.gif");
+				+ "\\res\\highscores.gif");
 		JButton highscores = new JButton(highscoresBG);
 		highscores.setBackground(Color.BLACK);
 		highscores.setBorderPainted(false);
@@ -69,7 +69,7 @@ public class ProfilePage extends LoggingGUI {
 		profilePageGUI.add(highscores);
 		// initialize change profile details button
 		ImageIcon changeProfileDetailsBG = new ImageIcon(path
-				+ "\\resources\\changePorfileDetails.gif");
+				+ "\\res\\changePorfileDetails.gif");
 		JButton changeProfileDetails = new JButton(changeProfileDetailsBG);
 		changeProfileDetails.setBackground(Color.BLACK);
 		changeProfileDetails.setBorderPainted(false);
@@ -77,7 +77,7 @@ public class ProfilePage extends LoggingGUI {
 		changeProfileDetails.setFocusPainted(false);
 		profilePageGUI.add(changeProfileDetails);
 		// initialize logout button
-		ImageIcon logoutBG = new ImageIcon(path + "\\resources\\logout.gif");
+		ImageIcon logoutBG = new ImageIcon(path + "\\res\\logout.gif");
 		JButton logout = new JButton(logoutBG);
 		logout.setBackground(Color.BLACK);
 		logout.setBorderPainted(false);
@@ -86,7 +86,7 @@ public class ProfilePage extends LoggingGUI {
 		profilePageGUI.add(logout);
 		// settings button
 		ImageIcon settingImage = new ImageIcon(path
-				+ "\\resources\\settings.gif");// TODO make a method to
+				+ "\\res\\settings.gif");// TODO make a method to
 		JButton settings = new JButton(settingImage);
 		settings.setBackground(Color.BLACK);
 		settings.setBorderPainted(false);

@@ -19,7 +19,7 @@ public class Ghost {
 		this.y = y;
 		
 		path = new File("").getAbsoluteFile();
-		image1 = new ImageIcon(path + "\\resources\\ghost1.gif").getImage();
+		image1 = new ImageIcon(path + "\\res\\ghost1.gif").getImage();
 	}
 /**
  * This is the method that controls the ghosts movement. It is set to random,

@@ -40,7 +40,7 @@ public class Settings extends ProfilePage {
 		// Heading
 		File path = new File("").getAbsoluteFile();
 		ImageIcon settingImage = new ImageIcon(path
-				+ "\\resources\\settings.gif");// TODO make a method to
+				+ "\\res\\settings.gif");// TODO make a method to
 		settingHeader = new JLabel();
 		settingHeader.setLocation(140, 11);
 		settingHeader.setSize(230, 25);

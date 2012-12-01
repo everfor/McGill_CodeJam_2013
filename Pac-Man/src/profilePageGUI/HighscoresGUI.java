@@ -42,14 +42,14 @@ public class HighscoresGUI extends ProfilePage {
 		// Heading
 		File path = new File("").getAbsoluteFile();
 		ImageIcon highscoresImage = new ImageIcon(path
-				+ "\\resources\\globalHS.gif");// TODO make a method to
+				+ "\\res\\globalHS.gif");// TODO make a method to
 		globalHSBackground = new JLabel();
 		globalHSBackground.setLocation(250, 11);
 		globalHSBackground.setSize(230, 25);
 		globalHSBackground.setIcon(highscoresImage);
 		highscoresGUI.add(globalHSBackground);
 		// line
-		ImageIcon lineImage = new ImageIcon(path + "\\resources\\line.jpg");// TODO
+		ImageIcon lineImage = new ImageIcon(path + "\\res\\line.jpg");// TODO
 																			// make
 																			// a
 																			// method
@@ -61,7 +61,7 @@ public class HighscoresGUI extends ProfilePage {
 		highscoresGUI.add(line);
 		// personal Highscores subheading
 		ImageIcon subHeading = new ImageIcon(path
-				+ "\\resources\\personalHS.gif");
+				+ "\\res\\personalHS.gif");
 		personalHSBackground = new JLabel();
 		personalHSBackground.setBounds(10, 11, 230, 25);
 		personalHSBackground.setIcon(subHeading);

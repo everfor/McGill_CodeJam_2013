@@ -42,7 +42,7 @@ public class ChangeSecurity extends ChangeProfileDetailsGUI {
 		// heading gif
 		File path = new File("").getAbsoluteFile();
 		ImageIcon changeSecurityIcon = new ImageIcon(path
-				+ "\\resources\\changeSecurity.gif");
+				+ "\\res\\changeSecurity.gif");
 		changeSecurityPage.setLayout(null);
 		JLabel changeSecurityHeading = new JLabel();
 		changeSecurityHeading.setBounds(35, 11, 439, 38);
