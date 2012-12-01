@@ -241,8 +241,11 @@ public class PlayerBackend {
 			// Username inserted in query
 			myStatement.setString(1, username);
 			// executes the prepared statement
-			myStatement.executeUpdate();
-			deleted = true;
+			int deletedEntries = myStatement.executeUpdate();
+			System.out.println(deletedEntries);
+			if(deletedEntries==1){
+				deleted = true;
+			}
 		} catch (Exception e) {
 			System.out
 					.println("Error while searching username in the database");
