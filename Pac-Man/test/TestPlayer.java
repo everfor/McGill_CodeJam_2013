@@ -1,5 +1,3 @@
-package test;
-
 import static org.junit.Assert.*;
 
 import javax.swing.JPasswordField;
