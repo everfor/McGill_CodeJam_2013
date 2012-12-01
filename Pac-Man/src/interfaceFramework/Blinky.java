@@ -20,9 +20,9 @@ public class Blinky extends Ghost{
 
 		possibleExit(board);
 
-		System.out.println("Go -    LDUR: " + goLeftGhost + " " + goDownGhost + " " +goUpGhost + " "+ goRightGhost);
-		System.out.println("Exit -  LDUR: " + exitLeft + " " + exitDown + " " +exitUp + " "+ exitRight);
-		System.out.println("Dist -  LDUR: " + distanceLeft + " " + distanceDown + " " + distanceUp + " " + distanceRight);
+//		System.out.println("Go -    LDUR: " + goLeftGhost + " " + goDownGhost + " " +goUpGhost + " "+ goRightGhost);
+//		System.out.println("Exit -  LDUR: " + exitLeft + " " + exitDown + " " +exitUp + " "+ exitRight);
+//		System.out.println("Dist -  LDUR: " + distanceLeft + " " + distanceDown + " " + distanceUp + " " + distanceRight);
 		
 		if(goLeftGhost && (exitLeft || exitUp || exitDown)) {
 //				((exitLeft && exitUp) || (exitLeft && exitDown) || (exitUp && exitDown))) {

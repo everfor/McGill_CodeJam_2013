@@ -2,14 +2,13 @@ package interfaceFramework;
 
 import java.awt.Image;
 import java.io.File;
-import java.util.Random;
 
 import javax.swing.ImageIcon;
 
 public class Ghost {
 	int x, y;
 	File path;
-	Image image1;
+	Image blinky;
 	boolean goLeftGhost = true;
 	boolean goRightGhost, goUpGhost, goDownGhost, stopped;
 	boolean ghostDirection[] = new boolean[4]; 
@@ -19,7 +18,7 @@ public class Ghost {
 		this.y = y;
 		
 		path = new File("").getAbsoluteFile();
-		image1 = new ImageIcon(path + "\\res\\ghost1.gif").getImage();
+		blinky = new ImageIcon(path + "\\res\\blinky.gif").getImage();
 	}
 /**
  * This is the method that controls the ghosts movement. It is set to random,

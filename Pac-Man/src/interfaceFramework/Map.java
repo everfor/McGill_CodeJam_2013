@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * The class creates the Map with a specific size and 

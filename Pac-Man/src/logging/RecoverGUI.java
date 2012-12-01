@@ -12,9 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import frontendDatabase.PlayerFrontend;
-
 import playerManipulation.Player;
+import frontendDatabase.PlayerFrontend;
 
 /**
  * The class deals with the entire graphical user interface related to
