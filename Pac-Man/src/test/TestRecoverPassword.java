@@ -1,96 +1,89 @@
 package test;
 
+import static org.junit.Assert.assertEquals;
+
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import playerManipulation.*;
-import static org.junit.Assert.*;
-
 import org.junit.Test;
 
+import playerManipulation.RecoverPassword;
 import frontendDatabase.PlayerFrontend;
 
 /**
  * This class tests the methods required in order to Recover a Password
  * 
- * @author Arjun
- * 
  */
 public class TestRecoverPassword {
-	String[] username = {"PlayerName", "PlayerName2", "PlayerName3", "PlayerName5"};
-	String[] passwords = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
-	String[] securityQuestions = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
-	String[] securityAnswers = {"A myUsernameii", "B myUsernameii", "C myUsernameii", "D myUsernameii"};
 
-	
-	JTextField usernameTextFields[] = new JTextField[]{ 
-			new JTextField("PlayerName"),  
-			new JTextField("PlayerName2"),  
-			new JTextField("PlayerName3"),  
-			new JTextField("PlayerName5")  
-	}; 
+	// variables needed for testing
+	String[] username = { "teamBlABLA", "Team33333", "My Team", "One More3" };
+	String[] passwords = { "12345678", "myTeam333", "ohis isthis3",
+			"TeamArjun3" };
+	String[] securityQuestions = { "Is 2+2=4?", "what is this project",
+			"did you scream pacman 3 times?", "in what month were you born" };
+	String[] securityAnswers = { "yes it isss",
+			"the best project in the world", "i did once, maybe twice",
+			"1st one lets say january" };
 
-	JPasswordField passwordsTextField[] =new JPasswordField[]{
-			new JPasswordField ("A myUsernameii"),
-			new JPasswordField ("B myUsernameii"),
-			new JPasswordField ("C myUsernameii"),
-			new JPasswordField ("D myUsernameii")
-	};
+	String[] securityQuestions2 = { "Who is Best Actor?",
+			"Who is Worst Actor?", "Who is best Director?",
+			"Who is worst Director?" };
+	String[] securityAnswers2 = { "Robert Downey Jr.", "Robert Pattinson",
+			"Chris Nolan", "Michael Bay" };
 
-	JTextField securityQuestionTextField[] = new JTextField[]{
-			new JTextField("A myUsernameii"),  
-			new JTextField("B myUsernameii"),  
-			new JTextField("C myUsernameii"),  
-			new JTextField("D myUsernameii")  
-	};  
-	JTextField securityAnswerTextField[] = new JTextField[]{ 
-			new JTextField("A myUsernameii"),  
-			new JTextField("B myUsernameii"),  
-			new JTextField("C myUsernameii"),  
-			new JTextField("D myUsernameii")   
-	};  
-	
-	
-	JPasswordField OriginalPass[] =new JPasswordField[]{
-			new JPasswordField ("A myUsernameii"),
-			new JPasswordField ("B myUsernameii"),
-			new JPasswordField ("C myUsernameii"),
-			new JPasswordField ("D myUsernameii")
-	};
-	
-	JPasswordField NewPass[] =new JPasswordField[]{
-			new JPasswordField ("A Password"),
-			new JPasswordField ("B Password"),
-			new JPasswordField ("C Password"),
-			new JPasswordField ("D Password")
-	};
-	
+	String[] newusername = { "group232302", "Two More4", "teamRaRa",
+			"Your Team" };
+
+	JTextField usernameTextFields[] = new JTextField[] {
+			new JTextField("teamBlABlA"), new JTextField("Team33333"),
+			new JTextField("My Team"), new JTextField("One More3") };
+
+	JPasswordField passwordsTextField[] = new JPasswordField[] {
+			new JPasswordField("12345678"), new JPasswordField("myTeam333"),
+			new JPasswordField("ohis isthis3"),
+			new JPasswordField("TeamArjun3") };
+
+	JTextField securityQuestionTextField[] = new JTextField[] {
+			new JTextField("Is 2+2=4?"),
+			new JTextField("what is this project"),
+			new JTextField("did you scream pacman 3 times?"),
+			new JTextField("in what month were you born") };
+	JTextField securityAnswerTextField[] = new JTextField[] {
+			new JTextField("yes it isss"),
+			new JTextField("the best project in the world"),
+			new JTextField("i did once, maybe twice"),
+			new JTextField("1st one lets say january") };
 
 	PlayerFrontend database = new PlayerFrontend();
 	RecoverPassword profile = new RecoverPassword();
-	
+
 	/**
-	 * Tests whether the checkSecurityQuestion method successfully matches the correct answer with the correct security question
+	 * Tests whether the checkSecurityQuestion method successfully matches the
+	 * correct answer with the correct security question
 	 * 
 	 */
 	@Test
 	public void testCheckSecurityQuestion() {
-		for (int i = 0; i < usernameTextFields.length; i++) {	
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i], securityQuestionTextField[i], securityAnswerTextField[i]);
-				}
-					
-		for (int i = 0; i < usernameTextFields.length; i++) {	
-				assertEquals(profile.checkSecurityQuestion(username[i], securityAnswerTextField[i]), true);
-				assertEquals(profile.checkSecurityQuestion(username[i], securityAnswerTextField[3-i]), false);
-				
+		for (int i = 0; i < usernameTextFields.length; i++) {
+			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
+					securityQuestionTextField[i], securityAnswerTextField[i]);
 		}
-				
-				for (int i = 0; i < usernameTextFields.length; i++) {	
-				database.deleteProfile(new JTextField(username[i]));
-				database.deleteProfile(usernameTextFields[i]);
-				
-				
-				}
+
+		for (int i = 0; i < usernameTextFields.length; i++) {
+			assertEquals(profile.checkSecurityQuestion(username[i],
+					securityAnswerTextField[i]), true);
+			// false cases
+			assertEquals(profile.checkSecurityQuestion(username[i],
+					securityAnswerTextField[3 - i]), false);
+
+		}
+
+		for (int i = 0; i < usernameTextFields.length; i++) {
+			database.deleteProfile(new JTextField(username[i]));
+			database.deleteProfile(usernameTextFields[i]);
+
+		}
 	}
 
 }
