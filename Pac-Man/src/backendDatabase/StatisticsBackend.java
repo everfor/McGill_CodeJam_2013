@@ -81,7 +81,6 @@ public class StatisticsBackend {
 			myStatement.setString(1, username); // Username inserted in query
 			// executes the prepared statement
 			int deletedEntries = myStatement.executeUpdate();
-			System.out.println(deletedEntries);
 			if(deletedEntries==1){
 				deleted = true;
 			}

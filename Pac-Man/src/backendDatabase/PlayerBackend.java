@@ -242,7 +242,6 @@ public class PlayerBackend {
 			myStatement.setString(1, username);
 			// executes the prepared statement
 			int deletedEntries = myStatement.executeUpdate();
-			System.out.println(deletedEntries);
 			if(deletedEntries==1){
 				deleted = true;
 			}
