@@ -82,7 +82,7 @@ public class StatisticsFrontend {
 		Arrays.sort(topHighScores);
 		//write the last ten to database
 		for (int j = topHighScores.length - 1; j > 0; j--){
-			System.out.println(topHighScores[j]);
+			
 			database.setScore(username, "personalHighscore" + (11-j),topHighScores[j]);
 		}
 
@@ -112,7 +112,7 @@ public class StatisticsFrontend {
 	 *            the username whose statistics needs to be deleted permantly
 	 * @return true if the player was removed, false otherwise
 	 */
-	public boolean removePlayerStats(String username) {
+	public static boolean removePlayerStats(String username) {
 		StatisticsBackend database = new StatisticsBackend();
 		boolean result = false;
 		// trying to remove the player

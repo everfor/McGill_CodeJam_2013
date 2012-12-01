@@ -16,6 +16,7 @@ import javax.swing.JTextField;
 import logging.LoginLogout;
 import playerManipulation.Player;
 import frontendDatabase.PlayerFrontend;
+import frontendDatabase.StatisticsFrontend;
 /**
  * The class deals with the entire graphical user interface related to changing profile details
  * here a player is given an option via a comboBox to which details of their account 
@@ -98,7 +99,7 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 						"Are you sure you want to delete your account?",
 						"Warning", button);
 				if (button == JOptionPane.YES_OPTION) {
-					if (PlayerFrontend.deleteProfile(usernameJText)) {
+					if (StatisticsFrontend.removePlayerStats(currentPlayer.getUsername())&&PlayerFrontend.deleteProfile(usernameJText)) {
 						JOptionPane.showMessageDialog(null,
 								"Your account has been deleted",
 								"Username Deleted",
