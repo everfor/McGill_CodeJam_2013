@@ -112,7 +112,7 @@ public class StatisticsFrontend {
 	 *            the username whose statistics needs to be deleted permantly
 	 * @return true if the player was removed, false otherwise
 	 */
-	public static boolean removePlayerStats(String username) {
+	public boolean removePlayerStats(String username) {
 		StatisticsBackend database = new StatisticsBackend();
 		boolean result = false;
 		// trying to remove the player

@@ -1,9 +1,6 @@
 package profilePageGUI;
 
 import java.awt.Color;
-import java.awt.Font;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
@@ -11,7 +8,11 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import java.awt.Font;
+import javax.swing.JToggleButton;
 import javax.swing.JRadioButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class Settings extends ProfilePage {
 	private static boolean soundOn = true;
@@ -39,7 +40,7 @@ public class Settings extends ProfilePage {
 		// Heading
 		File path = new File("").getAbsoluteFile();
 		ImageIcon settingImage = new ImageIcon(path
-				+ "\\res\\settings.gif");// TODO make a method to
+				+ "\\resources\\settings.gif");// TODO make a method to
 		settingHeader = new JLabel();
 		settingHeader.setLocation(140, 11);
 		settingHeader.setSize(230, 25);

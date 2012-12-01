@@ -12,8 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
-import playerManipulation.Player;
 import frontendDatabase.PlayerFrontend;
+
+import playerManipulation.Player;
 
 /**
  * The class deals with the entire graphical user interface related to
@@ -59,7 +60,7 @@ public class RecoverGUI extends LoggingGUI {
 		// sets what happens when the login button is pressed
 		File path = new File("").getAbsoluteFile();
 		ImageIcon background = new ImageIcon(path
-				+ "\\res\\background.gif");
+				+ "\\resources\\background.gif");
 		JLabel recoverBackground = new JLabel();
 		recoverBackground.setBounds(47, 11, 400, 150);
 		recoverBackground.setIcon(background);

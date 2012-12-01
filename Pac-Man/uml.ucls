@@ -1,0 +1,79 @@
+<class-diagram version="1.0.11" icons="true" automaticImage="JPEG" always-add-relationships="false" 
+  generalizations="true" realizations="true" associations="true" dependencies="true" nesting-relationships="true">  
+  <package id="1" corner="BOTTOM_RIGHT" language="java" name="backendDatabase" project="Pac-Man" 
+    file="/Pac-Man/src/backendDatabase" binary="false">    
+    <position height="-1" width="-1" x="173" y="158"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="2" corner="BOTTOM_RIGHT" language="java" name="frontendDatabase" project="Pac-Man" 
+    file="/Pac-Man/src/frontendDatabase" binary="false">    
+    <position height="-1" width="-1" x="484" y="152"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="3" corner="BOTTOM_RIGHT" language="java" name="interfaceFramework" project="Pac-Man" 
+    file="/Pac-Man/src/interfaceFramework" binary="false">    
+    <position height="-1" width="-1" x="199" y="260"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="4" corner="BOTTOM_RIGHT" language="java" name="playerManipulation" project="Pac-Man" 
+    file="/Pac-Man/src/playerManipulation" binary="false">    
+    <position height="-1" width="-1" x="541" y="259"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="5" corner="BOTTOM_RIGHT" language="java" name="logging" project="Pac-Man" file="/Pac-Man/src/logging" 
+    binary="false">    
+    <position height="-1" width="-1" x="740" y="254"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <package id="6" corner="BOTTOM_RIGHT" language="java" name="profilePageGUI" project="Pac-Man" 
+    file="/Pac-Man/src/profilePageGUI" binary="false">    
+    <position height="-1" width="-1" x="408" y="394"/>    
+    <display autosize="true" stereotype="true"/>  
+  </package>  
+  <dependency id="7">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="8">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="5"/>  
+  </dependency>  
+  <dependency id="9">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="10">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="3"/>  
+  </dependency>  
+  <dependency id="11">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="12">    
+    <end type="SOURCE" refId="5"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="13">    
+    <end type="SOURCE" refId="6"/>    
+    <end type="TARGET" refId="4"/>  
+  </dependency>  
+  <dependency id="14">    
+    <end type="SOURCE" refId="2"/>    
+    <end type="TARGET" refId="1"/>  
+  </dependency>  
+  <dependency id="15">    
+    <end type="SOURCE" refId="4"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <dependency id="16">    
+    <end type="SOURCE" refId="3"/>    
+    <end type="TARGET" refId="2"/>  
+  </dependency>  
+  <classifier-display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    visibility="true">    
+    <attributes public="true" package="true" protected="true" private="true"/>    
+    <operations public="true" package="true" protected="true" private="true"/>  
+  </classifier-display>  
+  <association-display labels="true" multiplicity="true"/>
+</class-diagram>

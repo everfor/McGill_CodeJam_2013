@@ -23,14 +23,14 @@ public class Pacman {
 	 *
 	 */
 	public Pacman() {
-		x = 5; 			//14 starting position x
-		y = 15;			//23 starting position y
+		x = 4; 			//14 starting position x
+		y = 5;			//23 starting position y
 	
 		path = new File("").getAbsoluteFile();
-		image1 = new ImageIcon(path + "\\res\\pacman1.gif").getImage();
-		image2 = new ImageIcon(path + "\\res\\pacman2.gif").getImage();
-		image3 = new ImageIcon(path + "\\res\\pacman3.gif").getImage();
-		image4 = new ImageIcon(path + "\\res\\pacman4.gif").getImage();
+		image1 = new ImageIcon(path + "\\resources\\pacman1.gif").getImage();
+		image2 = new ImageIcon(path + "\\resources\\pacman2.gif").getImage();
+		image3 = new ImageIcon(path + "\\resources\\pacman3.gif").getImage();
+		image4 = new ImageIcon(path + "\\resources\\pacman4.gif").getImage();
 
 	}
 	/**

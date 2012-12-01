@@ -2,7 +2,6 @@ package interfaceFramework;
 
 import java.io.File;
 import java.io.IOException;
-
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
@@ -29,7 +28,7 @@ public class Audio {
 	public static void SoundPlayer(String fileName) {
 
 		File path = new File("").getAbsoluteFile();
-		File audio = new File(path + "\\res\\" + fileName);
+		File audio = new File(path + "\\resources\\" + fileName);
 		AudioInputStream audioInputStream = null;
 
 		try {
