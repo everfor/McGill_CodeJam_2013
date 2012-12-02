@@ -20,17 +20,16 @@ public class Pacman {
 	 * This constructor defines the starting position of PacMan 
 	 * and the image paths which show the four direction-based images of Pac-Man
 	 * 
-	 *
 	 */
 	public Pacman() {
-		x = 4; 			//14 starting position x
+		x = 1; 			//14 starting position x
 		y = 5;			//23 starting position y
 	
 		path = new File("").getAbsoluteFile();
-		image1 = new ImageIcon(path + "\\resources\\pacman1.gif").getImage();
-		image2 = new ImageIcon(path + "\\resources\\pacman2.gif").getImage();
-		image3 = new ImageIcon(path + "\\resources\\pacman3.gif").getImage();
-		image4 = new ImageIcon(path + "\\resources\\pacman4.gif").getImage();
+		image1 = new ImageIcon(path + "\\res\\pacman1.gif").getImage();
+		image2 = new ImageIcon(path + "\\res\\pacman2.gif").getImage();
+		image3 = new ImageIcon(path + "\\res\\pacman3.gif").getImage();
+		image4 = new ImageIcon(path + "\\res\\pacman4.gif").getImage();
 
 	}
 	/**
@@ -45,7 +44,6 @@ public class Pacman {
 	/**
 	 * This method deals with the change x and y coordinates corresponding to a movement by Pac-Man
 	 * 
-	 *
 	 */
 	public void move(int dx, int dy){
 		x += dx;
@@ -94,14 +92,12 @@ public class Pacman {
 	/**
 	 * This method sets x coordinates Pac-Man
 	 * 
-	 *
 	 */
 		public void setX(double x) {
 			this.x = x;
 		}
 	/**
 	 * This method sets y coordinates Pac-Man
-	 * 
 	 *
 	 */
 	
@@ -111,15 +107,13 @@ public class Pacman {
 		
 		/**
 		 * This method gets x coordinates Pac-Man
-		 * 
 		 *
-		 */
+		 **/
 		public double getX() {
 			return x;
 		}
 		/**
 		 * This method gets y coordinates Pac-Man
-		 * 
 		 *
 		 */
 

@@ -1,43 +1,46 @@
 package interfaceFramework;
 
-public class Blinky extends Ghost{
+public class Pinky extends Ghost {
 
 	boolean exitLeft = false;
 	boolean exitRight = false;
 	boolean exitUp = false;
 	boolean exitDown = false;
-	
+	static int xOffset = 0;
+	static int yOffset = 0;
 	double distanceUp = 9999;
 	double distanceLeft = 9999;
 	double distanceDown = 9999;
 	double distanceRight = 9999;
-	
-	public Blinky(int x, int y) {
+
+	public Pinky(int x, int y) {
 		super(x, y);
 	}
 
 	public void movePossible(Pacman pacman, int[][] board) {
-		
+
 		possibleExit(board);
+		
 //		System.out.println("Go -    LDUR: " + goLeftGhost + " " + goDownGhost + " " +goUpGhost + " "+ goRightGhost);
 //		System.out.println("Exit -  LDUR: " + exitLeft + " " + exitDown + " " +exitUp + " "+ exitRight);
 //		System.out.println("Dist -  LDUR: " + distanceLeft + " " + distanceDown + " " + distanceUp + " " + distanceRight);
 		
 		if(goLeftGhost && (exitLeft || exitUp || exitDown)) {
+			changeOffset();
 			if(exitUp){
-				distanceUp = distance(pacman.getX(), pacman.getY(), x, y - 1);
+				distanceUp = distance(pacman.getX()+ xOffset, pacman.getY()+ yOffset, x , y - 1 );
 			}
 			else {
 				distanceUp = 9999;
 			}
 			if(exitLeft){
-				distanceLeft = distance(pacman.getX(), pacman.getY(), x - 1, y);
+				distanceLeft = distance(pacman.getX()+ xOffset, pacman.getY()+ yOffset, x - 1 , y);
 			}
 			else {
 				distanceLeft = 9999;
 			}
 			if(exitDown){
-				distanceDown = distance(pacman.getX(), pacman.getY(), x, y + 1);
+				distanceDown = distance(pacman.getX()+ xOffset, pacman.getY()+ yOffset, x , y + 1 );
 			}
 			else {
 				distanceDown = 9999;
@@ -70,21 +73,22 @@ public class Blinky extends Ghost{
 		}
 		
 		if(goRightGhost && (exitRight || exitUp || exitDown)) {
+			changeOffset();
 			System.out.println("right");
 			if(exitUp){
-				distanceUp = distance(pacman.getX(), pacman.getY(), x, y - 1);
+				distanceUp = distance(pacman.getX()+ xOffset, pacman.getY()+ yOffset, x , y - 1 );
 			}	
 			else {
 				distanceUp = 9999;
 			}
 			if(exitRight){
-				distanceRight = distance(pacman.getX(), pacman.getY(), x + 1, y);
+				distanceRight = distance(pacman.getX()+ xOffset, pacman.getY()+ yOffset, x + 1 , y );
 			}
 			else {
 				distanceRight = 9999;
 			}
 			if(exitDown){
-				distanceDown = distance(pacman.getX(), pacman.getY(), x, y + 1);
+				distanceDown = distance(pacman.getX()+ xOffset, pacman.getY()+ yOffset, x , y + 1 );
 			}
 			else {
 				distanceDown = 9999;
@@ -112,20 +116,21 @@ public class Blinky extends Ghost{
 		}
 		
 		if(goUpGhost && (exitLeft || exitRight || exitUp)) {
+			changeOffset();
 			if(exitUp){
-				distanceUp = distance(pacman.getX(), pacman.getY(), x, y - 1);
+				distanceUp = distance(pacman.getX() + xOffset, pacman.getY()+ yOffset, x , y - 1 );
 			}
 			else {
 				distanceUp = 9999;
 			}
 			if(exitLeft){
-				distanceLeft = distance(pacman.getX(), pacman.getY(), x - 1, y);
+				distanceLeft = distance(pacman.getX() + xOffset, pacman.getY()+ yOffset, x - 1 , y );
 			}
 			else {
 				distanceLeft = 9999;
 			}
 			if(exitRight){
-				distanceRight = distance(pacman.getX(), pacman.getY(), x + 1, y);
+				distanceRight = distance(pacman.getX() + xOffset, pacman.getY()+ yOffset, x + 1 , y );
 			}
 			else {
 				distanceRight = 9999;
@@ -149,21 +154,22 @@ public class Blinky extends Ghost{
 		}
 		
 		if(goDownGhost && (exitLeft || exitUp || exitRight)) {
+			changeOffset();
 			System.out.println("down");
 			if(exitRight){
-				distanceRight = distance(pacman.getX(), pacman.getY(), x + 1, y);
+				distanceRight = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x + 1, y );
 			}
 			else {
 				distanceRight = 9999;
 			}
 			if(exitLeft){
-				distanceLeft = distance(pacman.getX(), pacman.getY(), x - 1, y);
+				distanceLeft = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x - 1, y );
 			}
 			else {
 				distanceLeft = 9999;
 			}
 			if(exitDown){
-				distanceDown = distance(pacman.getX(), pacman.getY(), x, y + 1);
+				distanceDown = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x, y + 1 );
 			}
 			else {
 				distanceDown = 9999;
@@ -185,11 +191,12 @@ public class Blinky extends Ghost{
 				move(board, moveUp());
 			}
 		}
+		
 		if(!goDownGhost && !goUpGhost && !goLeftGhost && !goRightGhost) {
-			distanceRight = distance(pacman.getX(), pacman.getY(), x + 1, y);
-			distanceLeft = distance(pacman.getX(), pacman.getY(), x - 1, y);
-			distanceUp = distance(pacman.getX(), pacman.getY(), x, y - 1);
-			distanceDown = distance(pacman.getX(), pacman.getY(), x, y + 1);
+			distanceRight = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x + 1, y );
+			distanceLeft = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x - 1, y );
+			distanceUp = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x, y - 1 );
+			distanceDown = distance(pacman.getX()+xOffset, pacman.getY()+ yOffset, x, y + 1 );
 			
 			if(distanceLeft <= Math.min(Math.min(distanceRight, distanceDown), distanceUp) && exitLeft) {
 				goLeftGhost = true;
@@ -205,7 +212,6 @@ public class Blinky extends Ghost{
 			}
 		}
 	}
-	
 	public void possibleExit(int[][] board) {
 		if(board[x - 1][y] != 1){
 			exitLeft = true;
@@ -232,4 +238,23 @@ public class Blinky extends Ghost{
 			exitDown = false;
 		}
 	}
+	public static void changeOffset(){
+		if(Game.goRight){
+			xOffset=4;
+			yOffset = 0;
+		}
+		else if(Game.goLeft){
+			xOffset=-4;
+			yOffset = 0;
+		}
+		else if(Game.goDown){
+			xOffset=0;
+			yOffset = 4;
+		}
+		else if(Game.goUp){
+			xOffset=-4;
+			yOffset = -4;
+		}
+	}
+	
 }

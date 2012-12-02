@@ -9,7 +9,6 @@ import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
-import javax.swing.Timer;
 
 /**
  * The class creates the Map with a specific size and 
@@ -24,10 +23,11 @@ public class Map extends JPanel {
 
 	final static int width = 28;
 	final static int height = 33; //2 more for extra space at bottom
-	
+	static boolean fruitVisible = false; 
+
 	int board[][] = new int[width][height];
 	
-	Image wall, space, dot, energizer, score, lives, door, life;
+	Image wall, space, dot, energizer, score, lives, door, life, cherry;
 
 	File path;
 	static Scanner reader;
@@ -38,14 +38,15 @@ public class Map extends JPanel {
 	 */
 	public Map() {
 		path = new File("").getAbsoluteFile();		
-		wall = new ImageIcon(path + "\\resources\\wall.jpg").getImage();
-		space = new ImageIcon(path + "\\resources\\space.jpg").getImage();
-		dot = new ImageIcon(path + "\\resources\\dot.jpg").getImage();
-		energizer = new ImageIcon(path + "\\resources\\energizer.jpg").getImage();
-		score = new ImageIcon(path + "\\resources\\score.jpg").getImage();
-		lives = new ImageIcon(path + "\\resources\\lives.jpg").getImage();
-		door = new ImageIcon(path + "\\resources\\door.jpg").getImage();
-		life = new ImageIcon(path + "\\resources\\life.jpg").getImage();
+		wall = new ImageIcon(path + "\\res\\wall.jpg").getImage();
+		space = new ImageIcon(path + "\\res\\space.jpg").getImage();
+		dot = new ImageIcon(path + "\\res\\dot.jpg").getImage();
+		energizer = new ImageIcon(path + "\\res\\energizer.jpg").getImage();
+		score = new ImageIcon(path + "\\res\\score.jpg").getImage();
+		lives = new ImageIcon(path + "\\res\\lives.jpg").getImage();
+		door = new ImageIcon(path + "\\res\\door.jpg").getImage();
+		life = new ImageIcon(path + "\\res\\life.jpg").getImage();
+		cherry = new ImageIcon(path + "\\res\\cherry.jpg").getImage();
 		
 		open();
 		read();
@@ -58,7 +59,7 @@ public class Map extends JPanel {
 	 */	
 	public void open(){
 		try {
-			reader = new Scanner(new File(path + "\\resources\\Map.txt"));
+			reader = new Scanner(new File(path + "\\res\\Map.txt"));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -121,6 +122,9 @@ public class Map extends JPanel {
 				else if(board[x][y] == 0  || board[x][y] == 4){
 					g.drawImage(space, x*Game.pixel, y*Game.pixel, null);
 				}
+				else if (board[x][y] == 6){					
+					g.drawImage(cherry, 14*Game.pixel, 17*Game.pixel, null);
+				}
 			}
 		}
 	}
@@ -159,8 +163,6 @@ public class Map extends JPanel {
 		if(!Game.inGame){
 			if(pacman.livesLeft == 3){
 				g.drawImage(life, 18*Game.pixel, (int) (31.2*Game.pixel), null);
-//				pacman.livesLeft = 2;
-//				Game.inGame = true;
 			}
 			
 			else if(pacman.livesLeft == 2){
@@ -176,4 +178,16 @@ public class Map extends JPanel {
 		 }
 	}
 	
+	/**
+	 * Method that check whether the fruit has been eaten and sets fruitVisible accordingly
+	 * @param board
+	 * 
+	 * @return void
+	 */	
+	public void fruitVisibility(int[][] board){
+		if(Score.getScore(board) >= 100 && Game.fruitEaten == false){	
+			board[14][17] = 6;
+			fruitVisible = true;
+		}
+	}
 }

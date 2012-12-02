@@ -9,6 +9,8 @@ public class Score {
 	static int energizers = 4;
 	static int energizersLeft;
 	static int score;
+	static int fruitConsumed;
+	static int fruit;
 
 	/**
 	 * This method gets the Score based on a formula calculation using the
@@ -24,6 +26,7 @@ public class Score {
 		score = 0;
 		dotsLeft = countDots(board);
 		energizersLeft = countEnergizers(board);
+		fruit = countFruit();
 		
 		score = 10*(dots - dotsLeft) + 50*(energizers - energizersLeft);
 		return score;
@@ -77,4 +80,19 @@ public class Score {
 		return energizersLeft;
 	}
 	
+	/**
+	 * This method counts the amount of fruit eaten by Pac-Man
+	 * 
+	 * @return fruitconsumed
+	 * 		returns the number of fruits consumed
+	 */
+	public static int countFruit(){
+		if (Game.fruitEaten == false){
+			fruitConsumed = 0;
+		}
+		else{
+			fruitConsumed = 1;
+		}
+		return fruitConsumed;
+	}
 }

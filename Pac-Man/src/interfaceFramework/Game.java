@@ -9,22 +9,21 @@ import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 
-import frontendDatabase.StatisticsFrontend;
-
 import playerManipulation.Player;
 import profilePageGUI.ProfilePage;
-import profilePageGUI.Settings;
+import frontendDatabase.StatisticsFrontend;
 
-/**
- * The class checks collisions, imports and paints the Pac-Man and Ghost
- * pictures into the Maze It also deals with the Pause and Resume and Pac-Man's
- * movement
- */
 public class Game extends JPanel implements ActionListener, KeyListener {
+	/**
+	 * 
+	 */
 	private static final long serialVersionUID = 1L;
 	Pacman pacman = new Pacman();
 	Map map = new Map();
-	static Blinky ghost1 = new Blinky(20, 5);
+	static Inky inky = new Inky(14, 14);
+	static Blinky blinky = new Blinky(20, 5);
+	static Pinky pinky = new Pinky(12, 14);
+	static Clyde clyde = new Clyde(13, 14);
 	static int pixel = 18;
 	static boolean inGame = true;
 	static String username = Player.getUsername();
@@ -34,13 +33,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean goUp = false;
 	static boolean goDown = false;
 	static boolean stop = false;
-	static boolean isBeginning = true;
+	static boolean fruitEaten = false; 
+
 	double speed = 1.0;
 	static Timer timer;
 
-	/**
-	 * Constructor which sets the timer to 200 and starts it
-	 */
 	public Game() {
 		timer = new Timer(200, this);
 		timer.start();
@@ -49,75 +46,66 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	}
 
-	/**
-	 * Constructor which sets the timer to 200 and starts it Calls invalidate
-	 * and then adds this component's validateRoot to a list of components that
-	 * need to be validated. Validation will occur after all currently pending
-	 * events have been dispatched. In other words after this method is called,
-	 * the first validateRoot (if any) found when walking up the containment
-	 * hierarchy of this component will be validated. Also Repaints this
-	 * component.
-	 */
 	public void actionPerformed(ActionEvent e) {
 		revalidate();
 		repaint();
 	}
 
-	/**
-	 * The method imports and paints the Pac-Man and Ghost pictures into the
-	 * Maze. It paints the map that is created in the Map class It paints a
-	 * different picture of Pac-Man depending on the direction in which Pac-Man
-	 * is going Finally, it moves Pac-Man and Ghost based on the results of the
-	 * checkCollision method
-	 * 
-	 * @param g
-	 *            an object of Graphics
-	 * 
-	 * @return void
-	 */
 	public void paint(Graphics g) {
 		super.paint(g);
 		map.addMap(g);
 
 		if (goRight) {
-			g.drawImage(pacman.image1, (int) pacman.getX() * pixel,
-					(int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image1, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
 		} else if (goLeft) {
-			g.drawImage(pacman.image2, (int) pacman.getX() * pixel,
-					(int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image2, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
 		} else if (goUp) {
-			g.drawImage(pacman.image3, (int) pacman.getX() * pixel,
-					(int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image3, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
 		} else if (goDown) {
-			g.drawImage(pacman.image4, (int) pacman.getX() * pixel,
-					(int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image4, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
 		}
 
-		g.drawImage(ghost1.image1, ghost1.getX() * pixel,
-				ghost1.getY() * pixel, null);
+		g.drawImage(inky.inkyImg, inky.getX() * pixel, inky.getY() * pixel, null);
+		g.drawImage(pinky.pinkyImg, pinky.getX() * pixel, pinky.getY() * pixel, null);
+		g.drawImage(blinky.blinkyImg, blinky.getX() * pixel, blinky.getY() * pixel, null);
+		g.drawImage(clyde.clydeImg, clyde.getX() * pixel, clyde.getY() * pixel, null);
+
+		//TODO remove for debugging
+		g.drawImage(blinky.temp, (int)Ghost.debugX * pixel,(int)Ghost.debugY * pixel, null);
 		map.addExtras(pacman, g);
 
 		if (inGame) {
-
 			if (UserControls.checkMove(pacman, map.board, tunnel)) {
 				pacman.move(tunnel, speed);
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 2) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				// add audio here
-				if (Settings.isSoundOn()) {
-					Audio.SoundPlayer("eatdot.wav");
-				}
+				Audio.SoundPlayer("eatdot.wav");
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 3) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+				Audio.SoundPlayer("eatdot.wav");
 			}
-
-			ghost1.movePossible(pacman, map.board, ghost1.moveLeft());
-			// ghost1.move(map.board, ghost1.moveLeft());
-			checkCollision();
+			
+			map.fruitVisibility(map.board);
+			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 6) {
+				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+				fruitEaten = true;
+				map.fruitVisible  = false; 
+				
+				Audio.SoundPlayer("eatdot.wav");
+				
+			}
+			inky.movePossible(pacman, map.board);
+			checkCollision(inky);
+			pinky.movePossible(pacman, map.board);
+			checkCollision(pinky);			
+			blinky.movePossible(pacman, map.board);
+			checkCollision(blinky);			
+			clyde.movePossible(pacman, map.board);
+			checkCollision(clyde);
 		}
 
 		else {
@@ -125,30 +113,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	/**
-	 * The method checks for potential collisions and impediments to the
-	 * progress of the characters if there are impediments to the character's
-	 * movement such as a wall or another character, this method changes the
-	 * boolean ingame to false This boolean is then painted in using the
-	 * aforementioned paint method
-	 * 
-	 * @return void
-	 */
-	public void checkCollision() {
+	public void checkCollision(Ghost ghost) {
 
-		if (!ghost1.goDown
-				&& !ghost1.goUp
-				&& !ghost1.goRight
-				&& !ghost1.goLeft
-				&& !stop
-				&& ((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() == ghost1
-						.getY())) {
+		if (!ghost.goDownGhost && !ghost.goUpGhost && !ghost.goRightGhost && !ghost.goLeftGhost
+				&& !stop && ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost.getY())) {
 			inGame = false;
 		}
 
-		else if (((!ghost1.goDown && !ghost1.goUp && !ghost1.goRight && !ghost1.goLeft) || (!stop))
-				&& ((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() == ghost1
-						.getY())) {
+		else if (((!ghost.goDownGhost && !ghost.goUpGhost && !ghost.goRightGhost && !ghost.goLeftGhost) || (!stop))
+				&& ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost.getY())) {
 			inGame = false;
 		}
 		// else if(!stop && ((int) pacman.getX() == ghost1.getX() && (int)
@@ -156,10 +129,17 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		// inGame = false;
 		// }
 
-		else if ((goDown && ghost1.goUp) || (goUp && ghost1.goDown)
-				|| (goRight && ghost1.goLeft) || (goLeft && ghost1.goRight)) {
-			if (Math.abs(pacman.getX() - Game.ghost1.getX()) < 1.1
-					&& Math.abs(pacman.getY() - Game.ghost1.getY()) < 1.1) {
+		// else if(goRight && ghost1.goLeft && (ghost1.getX() - pacman.getX() ==
+		// 1)){
+		// System.out.println("Hi");
+		// inGame = false;
+		// }
+		// System.out.println(pacman.getX() + " " + ghost1.getX());
+		// System.out.println(goRight + " " + ghost1.goLeft);
+
+		else if ((goDown && ghost.goUpGhost) || (goUp && ghost.goDownGhost) || (goRight && ghost.goLeftGhost)
+				|| (goLeft && ghost.goRightGhost)) {
+			if (Math.abs(pacman.getX() - ghost.getX()) < 1.1 && Math.abs(pacman.getY() - ghost.getY()) < 1.1) {
 				if (goDown) {
 					pacman.move(0, 1);
 				} else if (goUp) {
@@ -171,13 +151,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				}
 				inGame = false;
 			}
+
 		}
 		if (inGame == false) {
-			if (Settings.isSoundOn()) {
-				Audio.SoundPlayer("die.wav");
-			}
+			Audio.SoundPlayer("die.wav");
 			endOfGame();
 		}
+	}
 		// else if ((((int) pacman.getX() + 1 == ghost1.getX() && (int)
 		// pacman.getY() == ghost1.getY()) && goLeft)
 		// || (((int) pacman.getX() - 1 == ghost1.getX() && (int) pacman.getY()
@@ -200,15 +180,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		// Math.abs(pacman.getY() - Game.ghost1.getY()) < 1.75){
 		// inGame = false;
 		// }
-	}
 
-	/**
-	 * The method creates the Pause for the game using p It uses a stopped timer
-	 * to implement the Pause It also prints "There is a problem" if an
-	 * exception is found
-	 * 
-	 * @return void
-	 */
+	// method that pauses game (used by p keypress)
 	public void pauseSession() {
 		try {
 			timer.stop();
@@ -217,13 +190,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	/**
-	 * The method is the one that resumes game using the r keypress It starts
-	 * the timer stopped by the pauseSession method It also prints
-	 * "There is a problem" if an exception is found
-	 * 
-	 * @return void
-	 */
+	// method that resumes game (used by r keypress)
 	public void resumeSession() {
 		try {
 			timer.start();
@@ -232,14 +199,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	/**
-	 * this method, utilizing case statements, checks if pacman can move in the
-	 * inputted direction, and then moves pacman accordingly
-	 * 
-	 * @param e
-	 *            takes the keystroke of the player as a parameter
-	 * @return void
-	 */
+	// this method checks if pacman can move in the inputted direction, and
+	// then moves pacman
 	@Override
 	public void keyPressed(KeyEvent e) {
 		int key = e.getKeyCode();
@@ -331,21 +292,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void keyTyped(KeyEvent e) {
 	}
 
-	public static void startOfGame() {
-		if (isBeginning) {
-			isBeginning = false;
-			try {
-				Thread.sleep(4000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			Audio.SoundPlayer("pacman_beginning.wav");
-		}
-	}
-
 	public static void endOfGame() {
-
 		StatisticsFrontend.setHighScores(username, Score.getScore());
 		Player currentPlayer = new Player(username);
 		Maze.setMazeVisiblity(false);
