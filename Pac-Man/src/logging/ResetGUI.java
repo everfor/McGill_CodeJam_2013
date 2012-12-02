@@ -76,7 +76,7 @@ public class ResetGUI extends RecoverGUI {
 
 		File path = new File("").getAbsoluteFile();
 		ImageIcon background = new ImageIcon(path
-				+ "\\resources\\background.gif");
+				+ "\\res\\image\\background.gif");
 		JLabel resetBG = new JLabel(background);
 		resetBG.setBounds(47, 11, 400, 150);
 

@@ -14,8 +14,6 @@ import javax.swing.JPanel;
  * The class creates the Map with a specific size and 
  * includes the wall, space, dot, energizer, score, lives, door and life icons
  * 
- * 
- * 
  */
 public class Map extends JPanel {
 
@@ -38,15 +36,15 @@ public class Map extends JPanel {
 	 */
 	public Map() {
 		path = new File("").getAbsoluteFile();		
-		wall = new ImageIcon(path + "\\res\\wall.jpg").getImage();
-		space = new ImageIcon(path + "\\res\\space.jpg").getImage();
-		dot = new ImageIcon(path + "\\res\\dot.jpg").getImage();
-		energizer = new ImageIcon(path + "\\res\\energizer.jpg").getImage();
-		score = new ImageIcon(path + "\\res\\score.jpg").getImage();
-		lives = new ImageIcon(path + "\\res\\lives.jpg").getImage();
-		door = new ImageIcon(path + "\\res\\door.jpg").getImage();
-		life = new ImageIcon(path + "\\res\\life.jpg").getImage();
-		cherry = new ImageIcon(path + "\\res\\cherry.jpg").getImage();
+		wall = new ImageIcon(path + "\\res\\image\\wall.jpg").getImage();
+		space = new ImageIcon(path + "\\res\\image\\space.jpg").getImage();
+		dot = new ImageIcon(path + "\\res\\image\\dot.jpg").getImage();
+		energizer = new ImageIcon(path + "\\res\\image\\energizer.jpg").getImage();
+		score = new ImageIcon(path + "\\res\\image\\score.jpg").getImage();
+		lives = new ImageIcon(path + "\\res\\image\\lives.jpg").getImage();
+		door = new ImageIcon(path + "\\res\\image\\door.jpg").getImage();
+		life = new ImageIcon(path + "\\res\\image\\life.jpg").getImage();
+		cherry = new ImageIcon(path + "\\res\\image\\cherry.jpg").getImage();
 		
 		open();
 		read();
@@ -59,7 +57,7 @@ public class Map extends JPanel {
 	 */	
 	public void open(){
 		try {
-			reader = new Scanner(new File(path + "\\res\\Map.txt"));
+			reader = new Scanner(new File(path + "\\res\\raw\\Map.txt"));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -131,7 +129,7 @@ public class Map extends JPanel {
 	/**
 	 * Method that creates additional graphics:  score and lives
 	 * It also sets fonts, colours and appropriate images for these particular graphics
-	
+	 * 
 	 * @param g
 	 * 		Graphics object 
 	 * 
@@ -170,12 +168,13 @@ public class Map extends JPanel {
 				pacman.livesLeft = 1;
 				Game.inGame = true;
 			}
+			
 			else if(pacman.livesLeft == 1) {
 				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 				g.setColor(Color.RED);
 				g.drawString("Game Over", (int) (125), (int) (250));
 			}
-		 }
+		}
 	}
 	
 	/**

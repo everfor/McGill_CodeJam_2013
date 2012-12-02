@@ -26,10 +26,10 @@ public class Pacman {
 		y = 5;			//23 starting position y
 	
 		path = new File("").getAbsoluteFile();
-		image1 = new ImageIcon(path + "\\res\\pacman1.gif").getImage();
-		image2 = new ImageIcon(path + "\\res\\pacman2.gif").getImage();
-		image3 = new ImageIcon(path + "\\res\\pacman3.gif").getImage();
-		image4 = new ImageIcon(path + "\\res\\pacman4.gif").getImage();
+		image1 = new ImageIcon(path + "\\res\\image\\pacman1.gif").getImage();
+		image2 = new ImageIcon(path + "\\res\\image\\pacman2.gif").getImage();
+		image3 = new ImageIcon(path + "\\res\\image\\pacman3.gif").getImage();
+		image4 = new ImageIcon(path + "\\res\\image\\pacman4.gif").getImage();
 
 	}
 	/**

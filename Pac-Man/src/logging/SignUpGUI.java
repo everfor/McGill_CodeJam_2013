@@ -87,7 +87,7 @@ public class SignUpGUI extends LoggingGUI {
 		signUpPage.add(registerButton);
 		File path = new File("").getAbsoluteFile();
 		ImageIcon background = new ImageIcon(path
-				+ "\\resources\\background.gif");
+				+ "\\res\\image\\background.gif");
 		JLabel signUpBackground = new JLabel();
 		signUpBackground.setBounds(55, 10, 400, 150);
 		signUpBackground.setIcon(background);

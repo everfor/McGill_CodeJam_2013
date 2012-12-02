@@ -43,7 +43,7 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 		// heading gif
 		File path = new File("").getAbsoluteFile();
 		ImageIcon changeUsernameIcon = new ImageIcon(path
-				+ "\\resources\\changeUsername.gif");
+				+ "\\res\\image\\changeUsername.gif");
 		JLabel changeUsernameHeading = new JLabel();
 		changeUsernameHeading.setIcon(changeUsernameIcon);
 		changeUsernamePage.add(changeUsernameHeading);

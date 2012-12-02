@@ -13,7 +13,7 @@ public class Ghost {
 	boolean goLeftGhost = true;
 	boolean goRightGhost, goUpGhost, goDownGhost, stopped;
 	boolean ghostDirection[] = new boolean[4]; 
-	boolean scatter;
+	boolean scatter = true;
 	boolean chase;
 	boolean frightened;
 	
@@ -22,11 +22,11 @@ public class Ghost {
 		this.y = y;
 		
 		path = new File("").getAbsoluteFile();
-		inkyImg = new ImageIcon(path + "\\res\\inky.gif").getImage();
-		blinkyImg = new ImageIcon(path + "\\res\\blinky.gif").getImage();
-		pinkyImg = new ImageIcon(path + "\\res\\pinky.gif").getImage();
-		clydeImg = new ImageIcon(path + "\\res\\clyde.gif").getImage();
-		temp = new ImageIcon(path + "\\res\\target.gif").getImage();
+		inkyImg = new ImageIcon(path + "\\res\\image\\inky.gif").getImage();
+		blinkyImg = new ImageIcon(path + "\\res\\image\\blinky.gif").getImage();
+		pinkyImg = new ImageIcon(path + "\\res\\image\\pinky.gif").getImage();
+		clydeImg = new ImageIcon(path + "\\res\\image\\clyde.gif").getImage();
+		temp = new ImageIcon(path + "\\res\\image\\target.gif").getImage();
 
 	}
 /**
@@ -40,9 +40,7 @@ public class Ghost {
 		this.x += x;
 		this.y += y;
 	}
-	public void setLeft(){
-		goLeftGhost = false;
-	}
+	
 	public void move(int board[][], boolean[] ghostDirection) {
 		goLeftGhost = ghostDirection[0];
 		goRightGhost = ghostDirection[1];
@@ -160,6 +158,7 @@ public class Ghost {
 	
 	public double distance(double tileX, double tileY, int x, int y) {
 		double distance = 0;
+		//TODO remove
 		debugX = tileX;
 		debugY = tileY;
 		distance = Math.pow(tileX - x, 2) + Math.pow(tileY - y, 2);

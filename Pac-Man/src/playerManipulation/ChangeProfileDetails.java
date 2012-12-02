@@ -65,12 +65,12 @@ public class ChangeProfileDetails {
 	 * @return true if the changes have been made in the database, false
 	 *         otherwise
 	 */
-	public static boolean changeSecurity(String securityQuestion,
+	public static boolean changeSecurity(String username, String securityQuestion,
 			String securityAnswer) {
 		boolean updated = false;
-		if ((PlayerFrontend.changeProfileDetails(Player.getUsername(),
+		if ((PlayerFrontend.changeProfileDetails(username,
 				"securityQuestion", securityQuestion))
-				&& (PlayerFrontend.changeProfileDetails(Player.getUsername(),
+				&& (PlayerFrontend.changeProfileDetails(username,
 						"securityAnswer", securityAnswer))) {
 			updated = true;
 		}

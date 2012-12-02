@@ -42,7 +42,7 @@ public class ChangeSecurity extends ChangeProfileDetailsGUI {
 		// heading gif
 		File path = new File("").getAbsoluteFile();
 		ImageIcon changeSecurityIcon = new ImageIcon(path
-				+ "\\resources\\changeSecurity.gif");
+				+ "\\res\\image\\changeSecurity.gif");
 		changeSecurityPage.setLayout(null);
 		JLabel changeSecurityHeading = new JLabel();
 		changeSecurityHeading.setBounds(35, 11, 439, 38);
@@ -100,7 +100,7 @@ public class ChangeSecurity extends ChangeProfileDetailsGUI {
 				JTextField usernameJTextfield = new JTextField(currentPlayer
 						.getUsername());
 				if (VerifyPlayer.loginCheck(password, usernameJTextfield)) {
-					if (ChangeProfileDetails.changeSecurity(
+					if (ChangeProfileDetails.changeSecurity(currentPlayer.getUsername(),
 							securityQuestion.getText(),
 							securityAnswer.getText())) {
 						if (Player.clearPlayer()) {

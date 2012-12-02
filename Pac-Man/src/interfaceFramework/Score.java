@@ -28,7 +28,7 @@ public class Score {
 		energizersLeft = countEnergizers(board);
 		fruit = countFruit();
 		
-		score = 10*(dots - dotsLeft) + 50*(energizers - energizersLeft);
+		score = 10*(dots - dotsLeft) + 50*(energizers - energizersLeft) +100*fruit;
 		return score;
 	}
 	/**

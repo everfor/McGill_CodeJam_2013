@@ -29,7 +29,7 @@ public class Audio {
 	public static void SoundPlayer(String fileName) {
 
 		File path = new File("").getAbsoluteFile();
-		File audio = new File(path + "\\res\\" + fileName);
+		File audio = new File(path + "\\res\\raw\\" + fileName);
 		AudioInputStream audioInputStream = null;
 
 		try {
@@ -66,7 +66,7 @@ public class Audio {
 			}
 
 			if (bytesRead >= 0) {
-				int nBytesWritten = line.write(data, 0, bytesRead);
+				int numberOfBytesWritten = line.write(data, 0, bytesRead);
 			}
 		}
 	}

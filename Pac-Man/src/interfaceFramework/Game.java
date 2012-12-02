@@ -98,14 +98,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				Audio.SoundPlayer("eatdot.wav");
 				
 			}
-			inky.movePossible(pacman, map.board);
-			checkCollision(inky);
+//			inky.movePossible(pacman, map.board);
+//			checkCollision(inky);
 			pinky.movePossible(pacman, map.board);
 			checkCollision(pinky);			
-			blinky.movePossible(pacman, map.board);
-			checkCollision(blinky);			
-			clyde.movePossible(pacman, map.board);
-			checkCollision(clyde);
+//			blinky.movePossible(pacman, map.board);
+//			checkCollision(blinky);			
+//			clyde.movePossible(pacman, map.board);
+//			checkCollision(clyde);
 		}
 
 		else {

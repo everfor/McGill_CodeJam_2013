@@ -67,7 +67,7 @@ public class LoggingGUI {
 		pagePanels.add(RecoverGUI.recoverPasswordGUI(), "recover");
 		//add gif
 		File path = new File("").getAbsoluteFile();		
-		ImageIcon background = new ImageIcon(path+ "\\resources\\background.gif");
+		ImageIcon background = new ImageIcon(path+ "\\res\\image\\background.gif");
 		// This image and all other occurences of it were taken from:
 		//http://i889.photobucket.com/albums/ac94/xHeyJuicex/th_biz4.gif
 		JLabel loginBackground = new JLabel();
