@@ -21,7 +21,11 @@ public class UserControls {
 		boolean result = true;
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
-		
+		checkCollision(pacman, Game.blinky);
+		checkCollision(pacman, Game.pinky);
+		checkCollision(pacman, Game.inky);
+		checkCollision(pacman, Game.clyde);
+
 		if (board[x - 1][y] == 1 && Game.goLeft == true) {
 			result = false;
 			Game.stop = false;
@@ -68,7 +72,11 @@ public class UserControls {
 		boolean result = true;
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
-		
+		checkCollision(pacman, Game.blinky);
+		checkCollision(pacman, Game.pinky);
+		checkCollision(pacman, Game.inky);
+		checkCollision(pacman, Game.clyde);
+
 		if (board[x - 1][y] == 1 && Game.storedLeft == true) {
 			result = false;
 			
@@ -97,6 +105,25 @@ public class UserControls {
 		}
 		return result;
 	}
+	
+	public static void checkCollision(Pacman pacman, Ghost ghost){
+		if(ghost.goLeftGhost && Game.goRight && (pacman.getX() + 1 == ghost.getX() && pacman.getY() == ghost.getY())){
+			Game.inGame = false;
+		}
+		else if(ghost.goRightGhost && Game.goLeft && (pacman.getX() - 1 == ghost.getX() && pacman.getY() == ghost.getY())){
+			Game.inGame = false;
+		}
+		else if(ghost.goUpGhost && Game.goDown && (pacman.getX() == ghost.getX() && pacman.getY() + 1 == ghost.getY())){
+			Game.inGame = false;
+		}
+		else if(ghost.goDownGhost && Game.goUp && (pacman.getX() == ghost.getX() && pacman.getY() - 1 == ghost.getY())){
+			Game.inGame = false;
+		}
+		else if(pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY()){
+			Game.inGame = false;
+		}
+	}
+	
 	/**
 	 * The moveLeft() method checks if it is possible for pacman to move left
 	 * by ensuring that there is no wall in his upcoming
