@@ -33,7 +33,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean goUp = false;
 	static boolean goDown = false;
 	static boolean stop = false;
-	static boolean fruitEaten = false; 
+
+	static boolean storedLeft = false;
+	static boolean storedRight = true;
+	static boolean storedUp = false;
+	static boolean storedDown = false;
+
+	static boolean fruitEaten = false;
 
 	double speed = 1.0;
 	static Timer timer;
@@ -56,26 +62,40 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		map.addMap(g);
 
 		if (goRight) {
-			g.drawImage(pacman.image1, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image1, (int) pacman.getX() * pixel,
+					(int) pacman.getY() * pixel, null);
 		} else if (goLeft) {
-			g.drawImage(pacman.image2, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image2, (int) pacman.getX() * pixel,
+					(int) pacman.getY() * pixel, null);
 		} else if (goUp) {
-			g.drawImage(pacman.image3, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image3, (int) pacman.getX() * pixel,
+					(int) pacman.getY() * pixel, null);
 		} else if (goDown) {
-			g.drawImage(pacman.image4, (int) pacman.getX() * pixel, (int) pacman.getY() * pixel, null);
+			g.drawImage(pacman.image4, (int) pacman.getX() * pixel,
+					(int) pacman.getY() * pixel, null);
 		}
 
-		g.drawImage(inky.inkyImg, inky.getX() * pixel, inky.getY() * pixel, null);
-		g.drawImage(pinky.pinkyImg, pinky.getX() * pixel, pinky.getY() * pixel, null);
-		g.drawImage(blinky.blinkyImg, blinky.getX() * pixel, blinky.getY() * pixel, null);
-		g.drawImage(clyde.clydeImg, clyde.getX() * pixel, clyde.getY() * pixel, null);
+		g.drawImage(inky.inkyImg, inky.getX() * pixel, inky.getY() * pixel,
+				null);
+		g.drawImage(pinky.pinkyImg, pinky.getX() * pixel, pinky.getY() * pixel,
+				null);
+		g.drawImage(blinky.blinkyImg, blinky.getX() * pixel, blinky.getY()
+				* pixel, null);
+		g.drawImage(clyde.clydeImg, clyde.getX() * pixel, clyde.getY() * pixel,
+				null);
 
-		//TODO remove for debugging
-		g.drawImage(blinky.temp, (int)Ghost.debugX * pixel,(int)Ghost.debugY * pixel, null);
+		// TODO remove for debugging
+		g.drawImage(blinky.temp, (int) Ghost.debugX * pixel, (int) Ghost.debugY
+				* pixel, null);
 		map.addExtras(pacman, g);
 
 		if (inGame) {
-			if (UserControls.checkMove(pacman, map.board, tunnel)) {
+			if (UserControls.checkMoveForStored(pacman, map.board, tunnel)) {
+				setCurrentToStored();
+				pacman.move(tunnel, speed);
+			}
+
+			else if (UserControls.checkMove(pacman, map.board, tunnel)) {
 				pacman.move(tunnel, speed);
 			}
 
@@ -88,24 +108,24 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
 				Audio.SoundPlayer("eatdot.wav");
 			}
-			
+
 			map.fruitVisibility(map.board);
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 6) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
 				fruitEaten = true;
-				map.fruitVisible  = false; 
-				
+				map.fruitVisible = false;
+
 				Audio.SoundPlayer("eatdot.wav");
-				
+
 			}
-//			inky.movePossible(pacman, map.board);
-			checkCollision(inky);
-			pinky.movePossible(pacman, map.board);
-			checkCollision(pinky);			
-//			blinky.movePossible(pacman, map.board);
-			checkCollision(blinky);			
-//			clyde.movePossible(pacman, map.board);
-			checkCollision(clyde);
+			 inky.movePossible(pacman, map.board);
+			 checkCollision(inky);
+			 pinky.movePossible(pacman, map.board);
+			 checkCollision(pinky);
+			 blinky.movePossible(pacman, map.board);
+			 checkCollision(blinky);
+			 clyde.movePossible(pacman, map.board);
+			 checkCollision(clyde);
 		}
 
 		else {
@@ -115,31 +135,28 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	public void checkCollision(Ghost ghost) {
 
-		if (!ghost.goDownGhost && !ghost.goUpGhost && !ghost.goRightGhost && !ghost.goLeftGhost
-				&& !stop && ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost.getY())) {
+		if (!ghost.goDownGhost
+				&& !ghost.goUpGhost
+				&& !ghost.goRightGhost
+				&& !ghost.goLeftGhost
+				&& !stop
+				&& ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost
+						.getY())) {
 			inGame = false;
 		}
 
-		else if (((!ghost.goDownGhost && !ghost.goUpGhost && !ghost.goRightGhost && !ghost.goLeftGhost) || (!stop))
-				&& ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost.getY())) {
+		else if (((!ghost.goDownGhost && !ghost.goUpGhost
+				&& !ghost.goRightGhost && !ghost.goLeftGhost) || (!stop))
+				&& ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost
+						.getY())) {
 			inGame = false;
 		}
-		// else if(!stop && ((int) pacman.getX() == ghost1.getX() && (int)
-		// pacman.getY() == ghost1.getY())) {
-		// inGame = false;
-		// }
 
-		// else if(goRight && ghost1.goLeft && (ghost1.getX() - pacman.getX() ==
-		// 1)){
-		// System.out.println("Hi");
-		// inGame = false;
-		// }
-		// System.out.println(pacman.getX() + " " + ghost1.getX());
-		// System.out.println(goRight + " " + ghost1.goLeft);
-
-		else if ((goDown && ghost.goUpGhost) || (goUp && ghost.goDownGhost) || (goRight && ghost.goLeftGhost)
+		else if ((goDown && ghost.goUpGhost) || (goUp && ghost.goDownGhost)
+				|| (goRight && ghost.goLeftGhost)
 				|| (goLeft && ghost.goRightGhost)) {
-			if (Math.abs(pacman.getX() - ghost.getX()) < 1.1 && Math.abs(pacman.getY() - ghost.getY()) < 1.1) {
+			if (Math.abs(pacman.getX() - ghost.getX()) < 1.1
+					&& Math.abs(pacman.getY() - ghost.getY()) < 1.1) {
 				if (goDown) {
 					pacman.move(0, 1);
 				} else if (goUp) {
@@ -153,32 +170,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
-		
+
 	}
-		// else if ((((int) pacman.getX() + 1 == ghost1.getX() && (int)
-		// pacman.getY() == ghost1.getY()) && goLeft)
-		// || (((int) pacman.getX() - 1 == ghost1.getX() && (int) pacman.getY()
-		// == ghost1.getY()) && goRight)
-		// || (((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() - 1
-		// == ghost1.getY()) && goDown)
-		// || (((int) pacman.getX() == ghost1.getX() && (int) pacman.getY() + 1
-		// == ghost1.getY()) && goUp)) {
-		// inGame = false;
-		// }
 
-		// if((ghost1.goUp || ghost1.goDown) && (goLeft || goRight) ||
-		// (ghost1.goLeft || ghost1.goRight) && (goUp || goDown) ){
-		// if(Math.abs(pacman.getX()-Game.ghost1.getX()) < 0.75 &&
-		// Math.abs(pacman.getY() - Game.ghost1.getY()) < 0.75){
-		// inGame = false;
-		// }
-		// }
-		// else if(Math.abs(pacman.getX()-Game.ghost1.getX()) < 1.75 &&
-		// Math.abs(pacman.getY() - Game.ghost1.getY()) < 1.75){
-		// inGame = false;
-		// }
-
-	// method that pauses game (used by p keypress)
 	public void pauseSession() {
 		try {
 			timer.stop();
@@ -211,6 +205,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goRight = false;
 				goUp = false;
 				goDown = false;
+				setStoredToCurrent();
 			}
 
 			else if (UserControls.moveLeft(pacman, map.board)) {
@@ -219,6 +214,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goRight = false;
 				goUp = false;
 				goDown = false;
+				setStoredToCurrent();
+			} else {
+				storedLeft = true;
+				storedRight = false;
+				storedUp = false;
+				storedDown = false;
 			}
 
 			break;
@@ -231,6 +232,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goRight = true;
 				goUp = false;
 				goDown = false;
+				setStoredToCurrent();
 			}
 
 			else if (UserControls.moveRight(pacman, map.board)) {
@@ -239,6 +241,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goRight = true;
 				goUp = false;
 				goDown = false;
+				setStoredToCurrent();
+			} else {
+				storedLeft = false;
+				storedRight = true;
+				storedUp = false;
+				storedDown = false;
 			}
 
 			break;
@@ -251,6 +259,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goRight = false;
 				goUp = true;
 				goDown = false;
+				setStoredToCurrent();
+			} else {
+				storedLeft = false;
+				storedRight = false;
+				storedUp = true;
+				storedDown = false;
 			}
 
 			break;
@@ -263,6 +277,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goRight = false;
 				goUp = false;
 				goDown = true;
+				setStoredToCurrent();
+			} else {
+				storedLeft = false;
+				storedRight = false;
+				storedUp = false;
+				storedDown = true;
 			}
 
 			break;
@@ -288,6 +308,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
+
 	public static void restartGame(Pacman pacman, Graphics g) {
 		pacman.setX(14);
 		pacman.setY(23);
@@ -297,9 +318,24 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public static void pauseTime(Graphics g) {
-		
 
 	}
+
+	public void setCurrentToStored() {
+		goLeft = storedLeft;
+		goRight = storedRight;
+		goUp = storedUp;
+		goDown = storedDown;
+
+	}
+
+	public void setStoredToCurrent() {
+		storedLeft = goLeft;
+		storedRight = goRight;
+		storedUp = goUp;
+		storedDown = goDown;
+	}
+
 	public static void endOfGame() {
 		StatisticsFrontend.setHighScores(username, Score.getScore());
 		Player currentPlayer = new Player(username);
@@ -307,5 +343,5 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		ProfilePage.setMasterPageVisiblity(true);
 
 	}
-	
+
 }

@@ -50,6 +50,53 @@ public class UserControls {
 		}
 		return result;
 	}
+	
+	
+	/** 
+	 * The checkMoveForStored() method checks if it is possible for pacman to move in 
+	 * a direction that has previously been inputted, by ensuring that there is no wall 
+	 * in his upcoming position. If a wall exists the method returns a false 
+	 * boolean to prevent pacman from changing directions.
+	 * 
+	 * @param pacman used to find his coordinates
+	 * @param board used to check upcoming coordinates for walls
+	 * @param tunnel boolean that indicates if the specified coordinate is a tunnel
+	 * @return a boolean specifying whether Pac-Man can move in a specfic direction or not
+	 */
+	
+	public static boolean checkMoveForStored(Pacman pacman, int board[][], boolean tunnel){
+		boolean result = true;
+		int x = (int) pacman.getX();
+		int y = (int) pacman.getY();
+		
+		if (board[x - 1][y] == 1 && Game.storedLeft == true) {
+			result = false;
+			
+		}
+		else if (board[x - 1][y] == 4 && Game.storedLeft == true){
+			pacman.moveTo(27,14);
+		}
+		
+		else if ((board[x + 1][y] == 1  || board[x + 1][y] == 5) && Game.storedRight == true) {
+			result = false;
+			
+		}
+		
+		else if (board[x + 1][y] == 4 && Game.storedRight == true) {
+			pacman.moveTo(0,14);
+		}
+		
+		else if (board[x][y - 1] == 1 && Game.storedUp == true) {
+			result = false;
+			
+		}
+		
+		else if ((board[x][y + 1] == 1 || board[x][y + 1] == 5) && Game.storedDown == true) {
+			result = false;
+
+		}
+		return result;
+	}
 	/**
 	 * The moveLeft() method checks if it is possible for pacman to move left
 	 * by ensuring that there is no wall in his upcoming
