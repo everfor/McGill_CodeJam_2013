@@ -21,11 +21,11 @@ public class Map extends JPanel {
 
 	final static int width = 28;
 	final static int height = 33; //2 more for extra space at bottom
-	static boolean fruitVisible = false; 
+	boolean fruitVisible = false; 
 
 	int board[][] = new int[width][height];
 	
-	Image wall, space, dot, energizer, score, lives, door, life, cherry;
+	Image wall, space, dot, energizer, tunnel, score, lives, door, life, cherry;
 
 	File path;
 	static Scanner reader;
@@ -40,6 +40,7 @@ public class Map extends JPanel {
 		space = new ImageIcon(path + "\\res\\image\\space.jpg").getImage();
 		dot = new ImageIcon(path + "\\res\\image\\dot.jpg").getImage();
 		energizer = new ImageIcon(path + "\\res\\image\\energizer.jpg").getImage();
+		tunnel = new ImageIcon(path + "\\res\\image\\tunnel.jpg").getImage();
 		score = new ImageIcon(path + "\\res\\image\\score.jpg").getImage();
 		lives = new ImageIcon(path + "\\res\\image\\lives.jpg").getImage();
 		door = new ImageIcon(path + "\\res\\image\\door.jpg").getImage();
@@ -105,7 +106,10 @@ public class Map extends JPanel {
 	public void addMap(Graphics g){
 		for(int y=0; y<height; y++){
 			for(int x=0; x<width; x++){
-				if(board[x][y] == 1){
+				if(board[x][y] == 0){
+					g.drawImage(space, x*Game.pixel, y*Game.pixel, null);
+				}
+				else if(board[x][y] == 1){
 					g.drawImage(wall, x*Game.pixel, y*Game.pixel, null);
 				}
 				else if(board[x][y] == 2){
@@ -117,8 +121,8 @@ public class Map extends JPanel {
 				else if(board[x][y] == 5){
 					g.drawImage(door, x*Game.pixel, y*Game.pixel, null);
 				}
-				else if(board[x][y] == 0  || board[x][y] == 4){
-					g.drawImage(space, x*Game.pixel, y*Game.pixel, null);
+				else if(board[x][y] == 4){
+					g.drawImage(tunnel, x*Game.pixel, y*Game.pixel, null);
 				}
 				else if (board[x][y] == 6){					
 					g.drawImage(cherry, 14*Game.pixel, 17*Game.pixel, null);

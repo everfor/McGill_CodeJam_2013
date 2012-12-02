@@ -2,6 +2,7 @@ package interfaceFramework;
 
 import java.awt.Image;
 import java.io.File;
+import java.util.Random;
 
 import javax.swing.ImageIcon;
 
@@ -13,9 +14,9 @@ public class Ghost {
 	boolean goLeftGhost = true;
 	boolean goRightGhost, goUpGhost, goDownGhost, stopped;
 	boolean ghostDirection[] = new boolean[4]; 
-	boolean scatter = true;
+	boolean scatter = false;
 	boolean chase;
-	boolean frightened;
+	boolean frightened = true;
 	
 	public Ghost(int x, int y) {
 		this.x = x;
@@ -27,7 +28,6 @@ public class Ghost {
 		pinkyImg = new ImageIcon(path + "\\res\\image\\pinky.gif").getImage();
 		clydeImg = new ImageIcon(path + "\\res\\image\\clyde.gif").getImage();
 		temp = new ImageIcon(path + "\\res\\image\\target.gif").getImage();
-
 	}
 /**
  * This is the method that controls the ghosts movement. It is set to random,
@@ -50,16 +50,12 @@ public class Ghost {
 		if(goLeftGhost) {
 			if(board[x - 1][y] == 1){
 				x += 0;
-//				setLeft();
 				goLeftGhost = false;
-//				goDownGhost = true;
-//				stopped = true;
 			}
 			else if(board[x - 1][y] == 4){
-				x += 27;
+				x += 25;
 			}
 			else {
-//				stopped = false;
 				x -= 1;
 			}
 		}
@@ -68,13 +64,11 @@ public class Ghost {
 			if(board[x + 1][y] == 1){
 				x += 0;
 				goRightGhost = false;
-//				stopped = true;
 			}
 			else if(board[x + 1][y] == 4){
-				x -= 27;
+				x -= 25;
 			}
 			else {
-//				stopped = false;
 				x += 1;
 			}
 		}
@@ -83,10 +77,8 @@ public class Ghost {
 			if(board[x][y - 1] == 1){
 				y += 0;
 				goUpGhost = false;
-//				stopped = true;
 			}
 			else {
-//				stopped = false;
 				y -= 1;
 			}
 		}
@@ -95,11 +87,8 @@ public class Ghost {
 			if(board[x][y + 1] == 1 || board[x][y + 1] == 5){
 				y += 0;
 				goDownGhost = false;
-//				goRightGhost = true;
-//				stopped = true;
 			}
 			else {
-//				stopped = false;
 				y += 1;
 			}
 		}
@@ -158,7 +147,6 @@ public class Ghost {
 	
 	public double distance(double tileX, double tileY, int x, int y) {
 		double distance = 0;
-		//TODO remove
 		debugX = tileX;
 		debugY = tileY;
 		distance = Math.pow(tileX - x, 2) + Math.pow(tileY - y, 2);
