@@ -36,6 +36,7 @@ public class Clyde extends Ghost {
 			insideProximityScatter(board);
 		}
 		else if(frightened){
+			possibleExit(board);
 			if (goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
 				Random generator = new Random();
 				int randomMove = generator.nextInt(3);
