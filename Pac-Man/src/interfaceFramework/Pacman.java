@@ -22,8 +22,8 @@ public class Pacman {
 	 * 
 	 */
 	public Pacman() {
-		x = 1; 			//14 starting position x
-		y = 5;			//23 starting position y
+		x = 14; 			//14 starting position x
+		y = 23;			//23 starting position y
 	
 		path = new File("").getAbsoluteFile();
 		image1 = new ImageIcon(path + "\\res\\image\\pacman1.gif").getImage();

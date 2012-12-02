@@ -1,7 +1,5 @@
-
-backendDatabase
-frontendDatabase
+BackendDatabase
+FrontendDatabase
 interfaceFramework
 logging
 playerManipulation
-profilePageGUI
