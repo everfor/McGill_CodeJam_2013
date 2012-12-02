@@ -52,14 +52,16 @@ public class StatisticsBackend {
 			myStatement = myConnection.prepareStatement(query);
 			// inputting the username and executing the query
 			myStatement.setString(1, newUsername);
-			myStatement.executeUpdate();
-			return true;
+			int createdEntries = myStatement.executeUpdate();
+			if (createdEntries == 1) {
+				created = true;
+			}
 		} catch (Exception e) {
 			System.out
 					.println("Error while creating player statistics in the database");
 			e.printStackTrace();
-			return false;
 		}
+		return created;
 	}
 
 	/**
@@ -81,7 +83,7 @@ public class StatisticsBackend {
 			myStatement.setString(1, username); // Username inserted in query
 			// executes the prepared statement
 			int deletedEntries = myStatement.executeUpdate();
-			if(deletedEntries==1){
+			if (deletedEntries == 1) {
 				deleted = true;
 			}
 		} catch (Exception e) {
@@ -104,7 +106,7 @@ public class StatisticsBackend {
 	 * @return the score currently saved in the field
 	 */
 	public int getScore(String username, int rank) {
-		String databaseField = "personalHighScore" + Integer.toString(rank+1);
+		String databaseField = "personalHighScore" + Integer.toString(rank + 1);
 		int score = -1;
 		try {
 			// Checks username and password in database
@@ -138,28 +140,6 @@ public class StatisticsBackend {
 	 *            highscores
 	 * @return true if the score was set correctly, false otherwise
 	 */
-	// public boolean setScore(String username, int rank, int score) {
-	// boolean updatedScore = false;
-	// try {
-	// String databaseField = "personalHighScore" + Integer.toString(rank);
-	// // query to be sent through the connection with the database
-	// myStatement = myConnection.prepareStatement("UPDATE "
-	// + databaseName + " SET " + databaseField + " = "
-	// + "CASE WHEN VALUES(" + databaseField + ") < " + score
-	// + " " + "THEN " + score + " " + "ELSE " + databaseField
-	// + " " + "END " + "WHERE USERNAME=?");
-	// // Username inserted in query
-	// myStatement.setString(1, username);
-	// // executes the prepared statement
-	// myStatement.executeUpdate();
-	// updatedScore = true;
-	// } catch (Exception e) {
-	// System.out
-	// .println("Error while setting the personal highscore into the database");
-	// updatedScore = false;
-	// }
-	// return updatedScore;
-	// }
 
 	public boolean setScore(String username, String databaseField, int score) {
 		boolean updatedScore = false;
@@ -171,11 +151,12 @@ public class StatisticsBackend {
 			// statement
 			myStatement.setInt(1, score); // set input parameter 1
 			myStatement.setString(2, username); // set input parameter 2
-			myStatement.executeUpdate(); // execute update statement
+			int updatedEntries=myStatement.executeUpdate(); // execute update statement
+			if(updatedEntries==1){
 			updatedScore = true;
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			updatedScore = false;
 		}
 
 		return updatedScore;
