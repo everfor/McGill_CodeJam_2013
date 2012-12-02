@@ -44,7 +44,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static Timer timer;
 
 	public Game() {
-		timer = new Timer(120, this);
+		timer = new Timer(200, this);
 		timer.start();
 		addKeyListener(this);
 		setFocusable(true);
@@ -56,12 +56,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		revalidate();
 		repaint();
+		Ghost.ghostModes();
 	}
 
 	public void paint(Graphics g) {
 		super.paint(g);
 		map.addMap(g);
-
 		if (goRight) {
 			g.drawImage(pacman.image1, (int) pacman.getX() * pixel,
 					(int) pacman.getY() * pixel, null);
@@ -118,13 +118,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 
 			inky.movePossible(pacman, map.board);
-			checkCollision(inky);
 			pinky.movePossible(pacman, map.board);
-			checkCollision(pinky);
 			blinky.movePossible(pacman, map.board);
-			checkCollision(blinky);
 			clyde.movePossible(pacman, map.board);
-			checkCollision(clyde);
+
 		}
 
 		else {
@@ -132,42 +129,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 	}
 
-	public void checkCollision(Ghost ghost) {
-
-		if (!ghost.goDownGhost
-				&& !ghost.goUpGhost
-				&& !ghost.goRightGhost
-				&& !ghost.goLeftGhost
-				&& !stop
-				&& ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost
-						.getY())) {
-			inGame = false;
-		}
-
-		else if (((!ghost.goDownGhost && !ghost.goUpGhost
-				&& !ghost.goRightGhost && !ghost.goLeftGhost) || (!stop))
-				&& ((int) pacman.getX() == ghost.getX() && (int) pacman.getY() == ghost
-						.getY())) {
-			inGame = false;
-		} else if ((goDown && ghost.goUpGhost) || (goUp && ghost.goDownGhost)
-				|| (goRight && ghost.goLeftGhost)
-				|| (goLeft && ghost.goRightGhost)) {
-			if (Math.abs(pacman.getX() - ghost.getX()) < 1.1
-					&& Math.abs(pacman.getY() - ghost.getY()) < 1.1) {
-				if (goDown) {
-					pacman.move(0, 1);
-				} else if (goUp) {
-					pacman.move(0, -1);
-				} else if (goLeft) {
-					pacman.move(-1, 0);
-				} else if (goRight) {
-					pacman.move(1, 0);
-				}
-				inGame = false;
-			}
-
-		}
-	}
 
 	// method that pauses game (used by p keypress)
 	public void pauseSession() {
@@ -310,10 +271,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		pacman.livesLeft--;
 		Audio.SoundPlayer("pacman_beginning.wav");
 		Game.inGame = true;
-	}
-
-	public static void pauseTime(Graphics g) {
-
 	}
 
 	public void setCurrentToStored() {

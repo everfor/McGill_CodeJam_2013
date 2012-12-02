@@ -21,6 +21,7 @@ public class UserControls {
 		boolean result = true;
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
+		
 		checkCollision(pacman, Game.blinky);
 		checkCollision(pacman, Game.pinky);
 		checkCollision(pacman, Game.inky);
@@ -72,6 +73,7 @@ public class UserControls {
 		boolean result = true;
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
+		
 		checkCollision(pacman, Game.blinky);
 		checkCollision(pacman, Game.pinky);
 		checkCollision(pacman, Game.inky);
