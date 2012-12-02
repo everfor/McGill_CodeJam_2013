@@ -161,18 +161,22 @@ public class Map extends JPanel {
 		if(!Game.inGame){
 			if(pacman.livesLeft == 3){
 				g.drawImage(life, 18*Game.pixel, (int) (31.2*Game.pixel), null);
+				Audio.SoundPlayer("die.wav");
+				Game.restartGame(pacman, g);
 			}
 			
 			else if(pacman.livesLeft == 2){
 				g.drawImage(null, 18*Game.pixel, (int) (31.2*Game.pixel), null);
-				pacman.livesLeft = 1;
-				Game.inGame = true;
+				Audio.SoundPlayer("die.wav");
+				Game.restartGame(pacman, g);
 			}
 			
 			else if(pacman.livesLeft == 1) {
 				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 				g.setColor(Color.RED);
 				g.drawString("Game Over", (int) (125), (int) (250));
+				Audio.SoundPlayer("die.wav");
+				Game.endOfGame();
 			}
 		}
 	}

@@ -99,13 +99,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				
 			}
 //			inky.movePossible(pacman, map.board);
-//			checkCollision(inky);
+			checkCollision(inky);
 			pinky.movePossible(pacman, map.board);
 			checkCollision(pinky);			
 //			blinky.movePossible(pacman, map.board);
-//			checkCollision(blinky);			
+			checkCollision(blinky);			
 //			clyde.movePossible(pacman, map.board);
-//			checkCollision(clyde);
+			checkCollision(clyde);
 		}
 
 		else {
@@ -153,10 +153,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 
 		}
-		if (inGame == false) {
-			Audio.SoundPlayer("die.wav");
-			endOfGame();
-		}
+		
 	}
 		// else if ((((int) pacman.getX() + 1 == ghost1.getX() && (int)
 		// pacman.getY() == ghost1.getY()) && goLeft)
@@ -291,7 +288,18 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 	}
+	public static void restartGame(Pacman pacman, Graphics g) {
+		pacman.setX(14);
+		pacman.setY(23);
+		pacman.livesLeft--;
+		Audio.SoundPlayer("pacman_beginning.wav");
+		Game.inGame = true;
+	}
 
+	public static void pauseTime(Graphics g) {
+		
+
+	}
 	public static void endOfGame() {
 		StatisticsFrontend.setHighScores(username, Score.getScore());
 		Player currentPlayer = new Player(username);
@@ -299,4 +307,5 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		ProfilePage.setMasterPageVisiblity(true);
 
 	}
+	
 }
