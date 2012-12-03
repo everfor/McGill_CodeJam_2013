@@ -28,17 +28,17 @@ public class TestVerifyPlayer {
 			new JTextField("teamBlABlA"), new JTextField("Team33333"),
 			new JTextField("My Team"), new JTextField("One More3") };
 
-	JPasswordField passwordsTextField[] = new JPasswordField[] {
+	JPasswordField passwordsTextFields[] = new JPasswordField[] {
 			new JPasswordField("12345678"), new JPasswordField("myTeam333"),
 			new JPasswordField("ohis isthis3"),
 			new JPasswordField("TeamArjun3") };
 
-	JTextField securityQuestionTextField[] = new JTextField[] {
+	JTextField securityQuestionTextFields[] = new JTextField[] {
 			new JTextField("Is 2+2=4?"),
 			new JTextField("what is this project"),
 			new JTextField("did you scream pacman 3 times?"),
 			new JTextField("in what month were you born") };
-	JTextField securityAnswerTextField[] = new JTextField[] {
+	JTextField securityAnswerTextFields[] = new JTextField[] {
 			new JTextField("yes it isss"),
 			new JTextField("the best project in the world"),
 			new JTextField("i did once, maybe twice"),
@@ -53,8 +53,8 @@ public class TestVerifyPlayer {
 			new JTextField("invalid"), new JTextField("invalid2"),
 			new JTextField("invalid3"), new JTextField("invalid4") };
 
-	PlayerFrontend database = new PlayerFrontend();
-	VerifyPlayer profile = new VerifyPlayer();
+	PlayerFrontend frontendDatabase = new PlayerFrontend();
+	VerifyPlayer vplayer = new VerifyPlayer();
 
 	/**
 	 * Tests whether the login is checked correctly
@@ -65,22 +65,22 @@ public class TestVerifyPlayer {
 	public void testLoginCheck() {
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			frontendDatabase.addNewPlayer(usernameTextFields[i],
+					passwordsTextFields[i], securityQuestionTextFields[i],
+					securityAnswerTextFields[i]);
 		}
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			assertEquals(profile.loginCheck(passwordsTextField[i],
+			assertEquals(vplayer.loginCheck(passwordsTextFields[i],
 					usernameTextFields[i]), true);
-			assertEquals(profile.loginCheck(passwordsTextField[3-i],
+			assertEquals(vplayer.loginCheck(passwordsTextFields[3 - i],
 					usernameTextFields[i]), false);
-			
 
 		}
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(new JTextField(username[i]));
-			database.deleteProfile(usernameTextFields[i]);
+			frontendDatabase.deleteProfile(new JTextField(username[i]));
+			frontendDatabase.deleteProfile(usernameTextFields[i]);
 
 		}
 
@@ -95,20 +95,21 @@ public class TestVerifyPlayer {
 	public void testUsernameExists() {
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			frontendDatabase.addNewPlayer(usernameTextFields[i],
+					passwordsTextFields[i], securityQuestionTextFields[i],
+					securityAnswerTextFields[i]);
 		}
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			assertEquals(profile.usernameExists(usernameTextFields[i]), true);
-			assertEquals(profile.usernameExists(usernameTextFieldsfail[i]),
+			assertEquals(vplayer.usernameExists(usernameTextFields[i]), true);
+			assertEquals(vplayer.usernameExists(usernameTextFieldsfail[i]),
 					false);
 
 		}
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(new JTextField(username[i]));
-			database.deleteProfile(usernameTextFields[i]);
+			frontendDatabase.deleteProfile(new JTextField(username[i]));
+			frontendDatabase.deleteProfile(usernameTextFields[i]);
 
 		}
 

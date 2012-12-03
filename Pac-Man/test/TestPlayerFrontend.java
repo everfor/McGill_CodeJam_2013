@@ -16,13 +16,13 @@ public class TestPlayerFrontend {
 	// JTextField and JPasswordField initializations
 
 	JTextField usernameTextFields[] = new JTextField[] {
-			new JTextField("teamBlaBlA"), new JTextField("Team33333"),
-			new JTextField("My Team"), new JTextField("One More3") };
+			new JTextField("PacMan"), new JTextField("Clique883333"),
+			new JTextField("My Clique88"), new JTextField("Clique Time5") };
 
 	JPasswordField passwordsTextField[] = new JPasswordField[] {
-			new JPasswordField("12345678"), new JPasswordField("myTeam333"),
+			new JPasswordField("12345678"), new JPasswordField("myClique333"),
 			new JPasswordField("ohis isthis3"),
-			new JPasswordField("TeamArjun3") };
+			new JPasswordField("CliqueArjun3") };
 
 	JTextField securityQuestionTextField[] = new JTextField[] {
 			new JTextField("Is 2+2=4?"),
@@ -37,11 +37,16 @@ public class TestPlayerFrontend {
 	JTextField usernameTextFieldsfail[] = new JTextField[] {
 			new JTextField("invalid"), new JTextField("invalid1"),
 			new JTextField("invalid2"), new JTextField("invalid3") };
+
+	JTextField newUsernameTextFields[] = new JTextField[] {
+			new JTextField("Username1"), new JTextField("Group-12131"),
+			new JTextField("Go Slow"), new JTextField("permert 72") };
 	// initializations of string objects
 
-	String[] username = { "teamBlaBLA", "Team33333", "My Team", "One More3" };
-	String[] passwords = { "12345678", "myTeam333", "ohis isthis3",
-			"TeamArjun3" };
+	String[] username = { "PacMan", "Clique883333", "My Clique88",
+			"Clique Time5" };
+	String[] passwords = { "12345678", "myClique333", "ohis isthis3",
+			"CliqueArjun3" };
 	String[] securityQuestions = { "Is 2+2=4?", "what is this project",
 			"did you scream pacman 3 times?", "in what month were you born" };
 	String[] securityAnswers = { "yes it isss",
@@ -66,10 +71,11 @@ public class TestPlayerFrontend {
 			"permert71sdfasdfdfiukjhkhkjhhkjhkhfdfasfadsfdfasdfsfadffasdfsfasdfasdfas",
 			"username.length353" };
 
-	PlayerFrontend database = new PlayerFrontend();
+	PlayerFrontend frontendDatabase = new PlayerFrontend();
 
 	/**
-	 * This method tests the addition of a player via the frontend database
+	 * This method tests the addition of a player via the frontend
+	 * frontendDatabase
 	 * 
 	 */
 
@@ -80,11 +86,10 @@ public class TestPlayerFrontend {
 																// string or
 																// JTextField
 																// arrays
-			assertEquals(database.addNewPlayer(usernameTextFields[i],
+			assertEquals(frontendDatabase.addNewPlayer(usernameTextFields[i],
 					passwordsTextField[i], securityQuestionTextField[i],
 					securityAnswerTextField[i]), true);
-			
-			
+
 		}
 	}
 
@@ -95,21 +100,24 @@ public class TestPlayerFrontend {
 	@Test
 	public void testLoginOperator() {
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			assertEquals(database.loginOperator(passwordsTextField[i],
+			assertEquals(frontendDatabase.loginOperator(passwordsTextField[i],
 					usernameTextFields[i]), true);
-			assertEquals(database.loginOperator(passwordsTextField[i],
+			assertEquals(frontendDatabase.loginOperator(passwordsTextField[i],
 					usernameTextFields[3 - i]), false);
 		}
 	}
 
 	/**
-	 * utilizes the username to check if the added player exists in the database
+	 * utilizes the username to check if the added player exists in the
+	 * frontendDatabase
 	 */
 	@Test
 	public void testPlayerExists() {
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			assertEquals(database.playerExists(usernameTextFields[i]), true);
-			assertEquals(database.playerExists(usernameTextFieldsfail[i]),
+			assertEquals(frontendDatabase.playerExists(usernameTextFields[i]),
+					true);
+			assertEquals(
+					frontendDatabase.playerExists(usernameTextFieldsfail[i]),
 					false);
 
 		}
@@ -117,14 +125,14 @@ public class TestPlayerFrontend {
 
 	/**
 	 * checks whether the given security answer for a given username matches the
-	 * security answer for the player in the database
+	 * security answer for the player in the frontendDatabase
 	 */
 	@Test
 	public void testChecksecurityAnswer() {
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			assertEquals(database.checkSecurityAnswer(username[i],
+			assertEquals(frontendDatabase.checkSecurityAnswer(username[i],
 					securityAnswerTextField[i]), true);
-			assertEquals(database.checkSecurityAnswer(username[i],
+			assertEquals(frontendDatabase.checkSecurityAnswer(username[i],
 					securityAnswerTextField[3 - i]), false);
 		}
 	}
@@ -140,16 +148,13 @@ public class TestPlayerFrontend {
 																// each of the
 																// string array
 
-			assertEquals(database.changeProfileDetails(username[i],
-					databaseField[0], newUsername[i]), true);
-			assertEquals(database.changeProfileDetails(username[i],
+			assertEquals(frontendDatabase.changeProfileDetails(username[i],
 					databaseField[1], newPassword[i]), true);
-			assertEquals(database.changeProfileDetails(username[i],
+			assertEquals(frontendDatabase.changeProfileDetails(username[i],
 					databaseField[2], newSecurityQuestions[i]), true);
-			assertEquals(database.changeProfileDetails(username[i],
+			assertEquals(frontendDatabase.changeProfileDetails(username[i],
 					databaseField[3], newSecurityAnswers[i]), true);
-		
-			
+
 		}
 	}
 
@@ -159,12 +164,11 @@ public class TestPlayerFrontend {
 	@Test
 	public void testDeleteProfile() {
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			assertEquals(
-					database.deleteProfile(new JTextField(newUsername[i])),
+			assertEquals(frontendDatabase.deleteProfile(usernameTextFields[i]),
 					true);
-			assertEquals(
-					database.deleteProfile(new JTextField(newPassword[i])),
-					false);
+			assertEquals(frontendDatabase.deleteProfile(new JTextField(
+					newPassword[i])), false);
+
 		}
 	}
 }

@@ -50,7 +50,7 @@ public class TestGetInfo {
 			assertEquals(
 					database.getInfo(existingUsername[i], databaseField[3]),
 					esecurityAnswers[i]);
-			assertFalse(database.getInfo(existingUsername[i], databaseField[2])== esecurityAnswers[i]);
+			assertFalse(database.getInfo(existingUsername[i], databaseField[2]) == esecurityAnswers[i]);
 			backdatabase.removePlayer(existingUsername[i]);
 		}
 	}

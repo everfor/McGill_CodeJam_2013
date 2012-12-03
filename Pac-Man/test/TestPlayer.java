@@ -6,8 +6,8 @@ import javax.swing.JTextField;
 import org.junit.Test;
 
 import playerManipulation.Player;
-import frontendDatabase.PlayerFrontend;
-import frontendDatabase.StatisticsFrontend;
+import frontendDatabase.*;
+import backendDatabase.*;
 
 /**
  * This class tests the methods in the Player class
@@ -31,17 +31,17 @@ public class TestPlayer {
 			new JTextField("teamBlaGla"), new JTextField("Team34443"),
 			new JTextField("Your Team"), new JTextField("Two More3") };
 
-	JPasswordField passwordsTextField[] = new JPasswordField[] {
+	JPasswordField passwordsTextFields[] = new JPasswordField[] {
 			new JPasswordField("12345678"), new JPasswordField("myTeam333"),
 			new JPasswordField("ohis isthis3"),
 			new JPasswordField("TeamArjun3") };
 
-	JTextField securityQuestionTextField[] = new JTextField[] {
+	JTextField securityQuestionTextFields[] = new JTextField[] {
 			new JTextField("Is 2+2=4?"),
 			new JTextField("what is this project"),
 			new JTextField("did you scream pacman 3 times?"),
 			new JTextField("in what month were you born") };
-	JTextField securityAnswerTextField[] = new JTextField[] {
+	JTextField securityAnswerTextFields[] = new JTextField[] {
 			new JTextField("yes it isss"),
 			new JTextField("the best project in the world"),
 			new JTextField("i did once, maybe twice"),
@@ -54,8 +54,10 @@ public class TestPlayer {
 	int[] zerohighscores2 = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
 	int[] verifyHighScores;
-	PlayerFrontend database = new PlayerFrontend();
-	StatisticsFrontend profile = new StatisticsFrontend();
+	PlayerFrontend frontendDatabase = new PlayerFrontend();
+	PlayerBackend backendDatabase = new PlayerBackend();
+	StatisticsFrontend frontStats = new StatisticsFrontend();
+	StatisticsBackend backStats = new StatisticsBackend();
 
 	/**
 	 * Tests whether the getUsername method successfully pulls the appropriate
@@ -66,15 +68,16 @@ public class TestPlayer {
 	public void testGetUsername() {
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			frontendDatabase.addNewPlayer(usernameTextFields[i],
+					passwordsTextFields[i], securityQuestionTextFields[i],
+					securityAnswerTextFields[i]);
 
 		}
 		Player profile = new Player(username[0]);
 		assertEquals(profile.getUsername(), username[0]);
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
+			frontendDatabase.deleteProfile(usernameTextFields[i]);
 		}
 
 	}
@@ -88,15 +91,16 @@ public class TestPlayer {
 	public void testGetSecurityQuestion() {
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			frontendDatabase.addNewPlayer(usernameTextFields[i],
+					passwordsTextFields[i], securityQuestionTextFields[i],
+					securityAnswerTextFields[i]);
 
 		}
 		Player profile = new Player(username[0]);
 		assertEquals(profile.getSecurityQuestion(), securityQuestions[0]);
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
+			frontendDatabase.deleteProfile(usernameTextFields[i]);
 		}
 	}
 
@@ -109,15 +113,16 @@ public class TestPlayer {
 	public void testGetSecurityAnswer() {
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			frontendDatabase.addNewPlayer(usernameTextFields[i],
+					passwordsTextFields[i], securityQuestionTextFields[i],
+					securityAnswerTextFields[i]);
 
 		}
 		Player profile = new Player(username[0]);
 		assertEquals(profile.getSecurityAnswer(), securityAnswers[0]);
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
+			frontendDatabase.deleteProfile(usernameTextFields[i]);
 		}
 	}
 
@@ -131,15 +136,18 @@ public class TestPlayer {
 	public void testGetLevelAchieved() {
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			// frontendDatabase.addNewPlayer(usernameTextFields[i],
+			// passwordsTextFields[i],
+			// securityQuestionTextFields[i], securityAnswerTextFields[i]);
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
 
 		}
 		Player profile = new Player(username[0]);
 		assertEquals(profile.getLevelAchieved(), 1);
 
-		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.removePlayer(username[i]);
 		}
 	}
 
@@ -151,45 +159,18 @@ public class TestPlayer {
 	@Test
 	public void testClearPlayer() {
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
+			frontendDatabase.addNewPlayer(usernameTextFields[i],
+					passwordsTextFields[i], securityQuestionTextFields[i],
+					securityAnswerTextFields[i]);
 
 		}
 		Player profile = new Player(username[0]);
 		assertEquals(profile.clearPlayer(), true);
 
-		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
-		}
-	}
-
-	/**
-	 * Tests whether the getHighScores method returns high scores
-	 * 
-	 */
-	@Test
-	public void testGetHighScores() {
-		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
-			profile.initializePlayerStats(username[i]);
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.removePlayer(username[i]);
 
 		}
-		//
-		Player Myprofile = new Player(username[0]);
-
-		verifyHighScores = Myprofile.getHighScores();
-
-		for (int i = 0; i < highscores.length; i++) {
-			assertEquals(verifyHighScores[i], zerohighscores[i]);
-			assertFalse(verifyHighScores[i] == highscores[i]);
-		}
-
-		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
-			profile.removePlayerStats(username[i]);
-		}
-
 	}
 
 	/**
@@ -199,12 +180,12 @@ public class TestPlayer {
 	 */
 
 	@Test
-	public void testSetNewHighScore() {
+	public void testSetGetNewHighScore() {
 
-		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.addNewPlayer(usernameTextFields[i], passwordsTextField[i],
-					securityQuestionTextField[i], securityAnswerTextField[i]);
-			profile.initializePlayerStats(username[i]);
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+			backStats.createPlayerStats(username[i]);
 
 		}
 
@@ -222,8 +203,9 @@ public class TestPlayer {
 		}
 
 		for (int i = 0; i < usernameTextFields.length; i++) {
-			database.deleteProfile(usernameTextFields[i]);
-			profile.removePlayerStats(username[i]);
+			backStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+			//
 		}
 
 	}

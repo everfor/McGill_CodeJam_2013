@@ -8,6 +8,7 @@ import org.junit.Test;
 import frontendDatabase.PlayerFrontend;
 
 import backendDatabase.PlayerBackend;
+import backendDatabase.StatisticsBackend;
 
 /**
  * This class tests all of the methods of PlayerBackend. Since it is the one
@@ -16,7 +17,7 @@ import backendDatabase.PlayerBackend;
  * 
  * 
  */
-public class TestPlayerBackend {
+public class TestBackendDatabase {
 
 	PlayerBackend backendDatabase = new PlayerBackend();
 
@@ -71,6 +72,11 @@ public class TestPlayerBackend {
 			"permert71sdfasdfdfiukjhkhkjhhkjhkhfdfasfadsfdfasdfsfadffasdfsfasdfasdfas",
 			"username.length353" };
 
+	int[] highscores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	int[] rank = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+
+	StatisticsBackend backStats = new StatisticsBackend();
+
 	PlayerFrontend frontendDatabase = new PlayerFrontend();
 
 	/**
@@ -113,8 +119,7 @@ public class TestPlayerBackend {
 	 */
 	@Test
 	public void testFindPlayer() {
-		for (int i = 0; i < username.length; i++) { // four fields in each of
-													// the string array
+		for (int i = 0; i < username.length; i++) {
 			assertEquals(backendDatabase.findPlayer(username[i]), true);
 			assertEquals(backendDatabase.findPlayer("invalid"), false);
 		}
@@ -127,8 +132,7 @@ public class TestPlayerBackend {
 	@Test
 	public void testCheckSecurityQuestion() {
 
-		for (int i = 0; i < username.length; i++) { // four fields in each of
-													// the string array
+		for (int i = 0; i < username.length; i++) {
 			assertEquals(backendDatabase.checkSecurityQuestion(username[i],
 					securityAnswers[i]), true);
 			assertEquals(backendDatabase.checkSecurityQuestion(username[i],
@@ -142,9 +146,9 @@ public class TestPlayerBackend {
 	 */
 	@Test
 	public void testChangeProfileDetails() {
-		for (int i = 0; i < username.length; i++) { // four fields in each of
-													// the string array
-
+		for (int i = 0; i < username.length; i++) {
+			assertEquals(backendDatabase.changeProfileDetails(username[i],
+					databaseField[0], newUsername[i]), true);
 			assertEquals(backendDatabase.changeProfileDetails(username[i],
 					databaseField[1], newPassword[i]), true);
 			assertEquals(backendDatabase.changeProfileDetails(username[i],
@@ -162,11 +166,115 @@ public class TestPlayerBackend {
 	 */
 	@Test
 	public void testRemovePlayer() {
-		for (int i = 0; i < username.length; i++) { // four fields in each of
-													// the string array
-			assertEquals(backendDatabase.removePlayer(username[i]), true);
+		for (int i = 0; i < username.length; i++) {
+			assertEquals(backendDatabase.removePlayer(newUsername[i]), true);
 			assertEquals(backendDatabase.removePlayer(passwords[i]), false);
 
+		}
+	}
+
+	/**
+	 * Tests whether the method createPlayerStats successfully creates default
+	 * statistics for the profile object
+	 * 
+	 */
+	@Test
+	public void testCreatePlayerStats() {
+
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+			assertEquals(backStats.createPlayerStats(username[i]), true);
+		}
+
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.removePlayer(username[i]);
+			backStats.removePlayerStats(username[i]);
+		}
+	}
+
+	/**
+	 * Tests whether the method removesPlayerStats successfully removes
+	 * statistics for the profile object
+	 * 
+	 */
+	@Test
+	public void testRemovePlayerStats() {
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+			backStats.createPlayerStats(username[i]);
+			assertEquals(backStats.removePlayerStats(username[i]), true);
+			assertFalse(backStats.removePlayerStats(passwords[i]) == true);
+		}
+
+		for (int i = 0; i < username.length; i++) {
+			backStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+
+		}
+	}
+
+	/**
+	 * Tests whether the method getScore successfully returns the correct score
+	 * after it is set by the setScore method
+	 * 
+	 */
+	@Test
+	public void testGetScore() {
+
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+			backStats.createPlayerStats(username[i]);
+		}
+
+		for (int j = 0; j < username.length; j++) {
+			for (int l = 0; l < highscores.length; l++) {
+				assertEquals(backStats.getScore(username[j], rank[l] - 1), 0);
+				assertFalse(backStats.getScore(username[j], rank[l] - 1) == -1);
+
+			}
+		}
+
+		for (int i = 0; i < username.length; i++) {
+
+			backStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+		}
+	}
+
+	/**
+	 * Tests whether the method setScore successfully sets the correct score
+	 * which is then returned by getScore
+	 * 
+	 */
+	@Test
+	public void testSetScore() {
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+			backStats.createPlayerStats(username[i]);
+		}
+
+		for (int j = 0; j < username.length; j++) {
+			for (int k = 0; k < highscores.length; k++) {
+				backStats.setScore(username[j], "personalHighScore" + rank[k],
+						highscores[k]);
+			}
+		}
+
+		for (int j = 0; j < username.length; j++) {
+			for (int l = 0; l < highscores.length; l++) {
+				assertEquals(backStats.getScore(username[j], rank[l] - 1),
+						highscores[l]);
+				assertFalse(backStats.getScore(username[j], rank[l] - 1) == (highscores[9 - l]));
+			}
+		}
+
+		for (int i = 0; i < username.length; i++) {
+			backStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
 		}
 	}
 

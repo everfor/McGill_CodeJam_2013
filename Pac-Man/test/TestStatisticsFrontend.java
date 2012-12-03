@@ -26,9 +26,9 @@ public class TestStatisticsFrontend {
 	int[] highscores2 = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 };
 	int[] zerohighscores2 = { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0 };
 
-	PlayerBackend database = new PlayerBackend();
-	StatisticsFrontend profile = new StatisticsFrontend();
-	StatisticsBackend profileBackend = new StatisticsBackend();
+	PlayerBackend backendDatabase = new PlayerBackend();
+	StatisticsFrontend frontStats = new StatisticsFrontend();
+	StatisticsBackend backStats = new StatisticsBackend();
 
 	/**
 	 * Tests whether the method intializePlayerStats successfully creates
@@ -39,19 +39,20 @@ public class TestStatisticsFrontend {
 	public void testInitializePlayerStats() {
 
 		for (int i = 0; i < username.length; i++) { // four fields in each of
-													// the string array
-			database.createPlayer(username[i], passwords[i],
+			// the string array
+			backendDatabase.createPlayer(username[i], passwords[i],
 					securityQuestions[i], securityAnswers[i]);
 
 		}
 
 		for (int i = 0; i < username.length; i++) {
-			assertEquals(profile.initializePlayerStats(username[i]), true);
+			assertEquals(frontStats.initializePlayerStats(username[i]), true);
 		}
 
 		for (int i = 0; i < username.length; i++) {
-			database.removePlayer(username[i]);
-			profile.removePlayerStats(username[i]);
+			frontStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+
 		}
 	}
 
@@ -64,26 +65,25 @@ public class TestStatisticsFrontend {
 	public void testGetHighScores() {
 
 		for (int i = 0; i < username.length; i++) {
-			database.createPlayer(username[i], passwords[i],
+			backendDatabase.createPlayer(username[i], passwords[i],
 					securityQuestions[i], securityAnswers[i]);
-			profile.initializePlayerStats(username[i]);
+			frontStats.initializePlayerStats(username[i]);
 
 		}
 
 		int x[] = new int[10];
 
-		for (int j = 0; j < username.length; j++) {
-			for (int k = 0; k < highscores.length; k++) {
-				x = profile.getHighScores(username[j]);
+		for (int k = 0; k < highscores.length; k++) {
+			x = frontStats.getHighScores(username[0]);
 
-				assertEquals(x[k], zerohighscores[k]);
-				assertFalse(x[k] == highscores[k]);
-			}
+			assertEquals(x[k], zerohighscores[k]);
+			assertFalse(x[k] == highscores[k]);
 		}
 
 		for (int i = 0; i < username.length; i++) {
-			database.removePlayer(username[i]);
-			profile.removePlayerStats(username[i]);
+			frontStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+
 		}
 	}
 
@@ -96,48 +96,55 @@ public class TestStatisticsFrontend {
 	public void testSetHighScores() {
 
 		for (int i = 0; i < username.length; i++) {
-			database.createPlayer(username[i], passwords[i],
+			backendDatabase.createPlayer(username[i], passwords[i],
 					securityQuestions[i], securityAnswers[i]);
-			profile.initializePlayerStats(username[i]);
+			frontStats.initializePlayerStats(username[i]);
 
 		}
 
-		for (int j = 0; j < username.length; j++) {
-			for (int k = 0; k < highscores2.length; k++) {
-				profile.setHighScores(username[j], highscores2[k]);
-			}
+		for (int k = 0; k < highscores2.length; k++) {
+			frontStats.setHighScores(username[0], highscores2[k]);
+
 		}
 
 		int x[] = new int[10];
 
-		for (int j = 0; j < username.length; j++) {
-			for (int k = 0; k < highscores.length; k++) {
-				x = profile.getHighScores(username[j]);
-				assertEquals(x[k], highscores2[10 - k]);
-				assertFalse(x[k] == zerohighscores2[k]);
-			}
+		x = frontStats.getHighScores(username[0]);
+
+		for (int m = 0; m < highscores.length; m++) {
+			assertEquals(x[m], highscores2[10 - m]);
+			assertFalse(x[m] == zerohighscores2[m]);
 		}
 
 		for (int i = 0; i < username.length; i++) {
-			database.removePlayer(username[i]);
-			profile.removePlayerStats(username[i]);
+			frontStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
 		}
 	}
 
+	/**
+	 * Tests whether the method removePlayerStats successfully removes the
+	 * HighScores
+	 * 
+	 */
 	@Test
 	public void testRemovePlayerStats() {
-		for (int i = 0; i < username.length; i++) { // four fields in each of
-													// the string array
-			database.createPlayer(username[i], passwords[i],
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
 					securityQuestions[i], securityAnswers[i]);
-			profile.initializePlayerStats(username[i]);
 
-			assertEquals(profile.removePlayerStats(username[i]), true);
-			assertFalse(profile.removePlayerStats(passwords[i]) == true);
+			backStats.createPlayerStats(username[i]);
 		}
 
 		for (int i = 0; i < username.length; i++) {
-			database.removePlayer(username[i]);
+			assertEquals(frontStats.removePlayerStats(username[i]), true);
+			assertFalse(frontStats.removePlayerStats(passwords[i]) == true);
+		}
+
+		for (int i = 0; i < username.length; i++) {
+			frontStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+
 		}
 	}
 

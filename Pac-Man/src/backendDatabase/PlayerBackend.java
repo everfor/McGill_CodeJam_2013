@@ -106,7 +106,6 @@ public class PlayerBackend {
 	 */
 	public boolean createPlayer(String newUsername, String newPassword,
 			String securityQuestion, String securityAnswer) {
-		boolean created = false;
 		try {
 			String query = "insert into "
 					+ databaseName
@@ -117,19 +116,14 @@ public class PlayerBackend {
 			myStatement.setString(3, securityQuestion);
 			myStatement.setString(4, securityAnswer);
 			myStatement.setInt(5, 1);
-
-			int deleted = myStatement.executeUpdate();
-			if (deleted == 1) {
-				created = true;
-			}
-
+			myStatement.executeUpdate();
+			return true;
 		} catch (Exception e) {
 			System.out.println("Error while finding player in the database");
 
 			e.printStackTrace();
-
+			return false;
 		}
-		return created;
 	}
 
 	/**
@@ -143,7 +137,6 @@ public class PlayerBackend {
 	 * @return true if the security questions are the same, false otherwise
 	 */
 	public boolean checkSecurityQuestion(String username, String securityAnswer) {
-		boolean checked = false;
 		try {
 			// Checks username and password in database
 			myStatement = myConnection.prepareStatement("select * from "
@@ -154,12 +147,14 @@ public class PlayerBackend {
 			// executes the prepared statement
 			result = myStatement.executeQuery();
 			if (result.next()) {
-				checked =true;
-			} 
+				return true;
+			} else {
+				return false;
+			}
 		} catch (Exception e) {
 			System.out.println("Error while searching database");
-			}
-		return checked;
+			return false;
+		}
 	}
 
 	/**
@@ -179,7 +174,6 @@ public class PlayerBackend {
 	 */
 	public boolean changeProfileDetails(String username, String databaseField,
 			String newInfo) {
-		boolean changed = false;
 		try {
 
 			String query = "update " + databaseName + " set " + databaseField
@@ -189,17 +183,11 @@ public class PlayerBackend {
 			myStatement.setString(1, newInfo); // set input parameter 1
 			myStatement.setString(2, username); // set input parameter 2
 			myStatement.executeUpdate(); // execute update statement
-
-			int changedEntries = myStatement.executeUpdate();
-			if (changedEntries == 1) {
-				changed = true;
-			}
-
+			return true;
 		} catch (Exception e) {
 			e.printStackTrace();
-
+			return false;
 		}
-		return changed;
 	}
 
 	/**
@@ -210,7 +198,7 @@ public class PlayerBackend {
 	 *            the username of the specific user whose information needs to
 	 *            be pulled
 	 * @param databaseField
-	 *            the database field whose information needs to be pulled
+	 *            the string database field whose information needs to be pulled
 	 * @return a string representing the info that is stored inside the database
 	 *         field of the specific user
 	 */
@@ -234,6 +222,43 @@ public class PlayerBackend {
 		}
 		return info;
 	}
+	
+	/**
+	 * The method pulls the specific information from the database field
+	 * specified by the player or the other classes that interact with it
+	 * 
+	 * @param username
+	 *            the username of the specific user whose information needs to
+	 *            be pulled
+	 * @param databaseField
+	 *            the int field whose information needs to be pulled
+	 * @return a string representing the info that is stored inside the database
+	 *         field of the specific user
+	 */
+	 public boolean changeProfileDetails(String username, String databaseField,
+			   int newInfo) {
+			  boolean changed = false;
+			  try {
+
+			   String query = "update " + databaseName + " set " + databaseField
+			     + " = ? where username = ? ";
+			   myStatement = myConnection.prepareStatement(query); // create a
+			   // statement
+			   myStatement.setInt(1, newInfo); // set input parameter 1
+			   myStatement.setString(2, username); // set input parameter 2
+			   myStatement.executeUpdate(); // execute update statement
+
+			   int changedEntries = myStatement.executeUpdate();
+			   if (changedEntries == 1) {
+			    changed = true;
+			   }
+
+			  } catch (Exception e) {
+			   e.printStackTrace();
+
+			  }
+			  return changed;
+			 }
 
 	/**
 	 * The method deletes all the information of a player corresponding to a
@@ -254,7 +279,7 @@ public class PlayerBackend {
 			myStatement.setString(1, username);
 			// executes the prepared statement
 			int deletedEntries = myStatement.executeUpdate();
-			if (deletedEntries == 1) {
+			if(deletedEntries==1){
 				deleted = true;
 			}
 		} catch (Exception e) {

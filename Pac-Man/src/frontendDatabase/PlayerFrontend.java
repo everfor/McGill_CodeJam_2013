@@ -141,7 +141,7 @@ public class PlayerFrontend {
 	 * @param username
 	 *            - the players username
 	 * @param databaseField
-	 *            - Some existing info for a player
+	 *            - Some existing string info for a player
 	 * @return returns the string with the data the field in the database
 	 *         contains
 	 */
@@ -152,6 +152,28 @@ public class PlayerFrontend {
 		String returnText = (database.getInfo(username, databaseField));
 		return returnText;
 	}
+	
+	/**
+	 * Handles getting a specific info from the database for a specific player.
+	 * 
+	 * @param username
+	 *            - the players username
+	 * @param databaseField
+	 *            - Some existing int info for a player
+	 * @return returns the string with the data the field in the database
+	 *         contains
+	 */
+	 public static boolean changeProfileDetails(String username,
+			   String databaseField, int newInfo) {
+			  boolean changesMade = false;
+			  PlayerBackend database;
+			  database = new PlayerBackend();
+			  // trying to perform to make the changes for a username
+			  changesMade = (database.changeProfileDetails(username, databaseField,
+			    newInfo));
+			  return changesMade;
+			 }
+
 
 	/**
 	 * Handles inputting a specific info to the database for a specific player.
