@@ -44,6 +44,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean storedDown = false;
 	static boolean fruitEaten = false;
 
+	boolean pause;
 	long time;
 	static boolean markedTime = true;
 	static int currentLevel;
@@ -183,6 +184,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			blinky.movePossible(pacman, map.board, g);
 			clyde.movePossible(pacman, map.board, g);
 
+			if(pause){
+				pauseSession(g);
+			}
 		} else {
 			g.dispose();
 		}
@@ -191,9 +195,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	/** 
 	 * method that pauses game (used by p keypress)
 	 */	
-	public void pauseSession() {
+	public void pauseSession(Graphics g) {
 		try {
 			timer.stop();
+			g.setFont(new Font("Comic Sans MS", Font.BOLD, 27));
+			g.setColor(Color.yellow);
+			g.drawString("PAUSED", 200, 250);
+			g.setFont(new Font("Comic Sans MS", Font.BOLD, 18));
+			g.drawString("Press 'R' to Resume", 163, 286);
+
 		} catch (Exception e) {
 			System.out.println("There is a problem");
 		}
@@ -205,6 +215,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void resumeSession() {
 		try {
 			timer.start();
+			pause = false;
 		} catch (Exception e) {
 			System.out.println("There is a problem");
 		}
@@ -304,12 +315,12 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			break;
 
-		case KeyEvent.VK_N:
-			inGame = false;
+		case KeyEvent.VK_SPACE:
+			pause = true;
 			break;
 
 		case KeyEvent.VK_P:
-			pauseSession();
+			pause = true;
 			break;
 
 		case KeyEvent.VK_R:

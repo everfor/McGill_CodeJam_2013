@@ -192,8 +192,7 @@ public class Map extends JPanel {
 		int score = Score.getScore(board);
 		g.setFont(new Font("Comic Sans MS", Font.BOLD, 27));
 		g.setColor(Color.yellow);
-		g.drawString("" + score, (int) (5.3 * Game.pixel),
-				(int) (32.5 * Game.pixel));
+		g.drawString("" + score, (int) (5.3 * Game.pixel), (int) (32.5 * Game.pixel));
 		g.drawString("Level:" + Game.getCurrentLevel(), (int) (9.5 * Game.pixel),
 				(int) (32.5 * Game.pixel));
 		

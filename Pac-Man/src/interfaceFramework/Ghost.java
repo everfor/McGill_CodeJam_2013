@@ -7,7 +7,15 @@ import java.util.Random;
 
 import javax.swing.ImageIcon;
 
+/**
+ * The class representing the ghost object and all the attributes a ghost should
+ * have. The class takes care of the movement of the ghosts, and all the
+ * calculations the general ghost AI needs to perform relating to the position,
+ * speed and other factors
+ * 
+ */
 public class Ghost {
+	// initializing all the necessary variables for this object
 	double x, y;
 	File path;
 	Image inkyImg, pinkyImg, blinkyImg, clydeImg;
@@ -16,31 +24,42 @@ public class Ghost {
 	boolean exitRight = false;
 	boolean exitUp = false;
 	boolean exitDown = false;
-	
+
 	double distanceUp = 9999;
 	double distanceLeft = 9999;
 	double distanceDown = 9999;
 	double distanceRight = 9999;
-	
+
 	boolean goLeftGhost = true;
 	boolean goRightGhost, goUpGhost, goDownGhost;
 	boolean ghostDirection[] = new boolean[4];
-	
+	// different mode variables
 	static boolean scatter = true;
 	static boolean chase = false;
+	static boolean infiniteChase;
 	static boolean frightened = false;
 	static boolean scatterWhilefrightened;
 	static boolean chaseWhilefrightened;
 	static boolean turnDirection = false;
 	static int modeCounter = 0;
+	// timing arrays for different levels
 	static long[] level1Timing = { 7000, 20000, 7000, 20000, 5000, 20000, 5000 };
-	static long[] level2To4Timing = { 7000, 20000, 7000, 20000, 5000, 1033000, 1/60 };
-	static long[] level5PlusTiming = { 5000, 20000, 5000, 20000, 5000, 1037000, 1/60 };
+	static long[] level2To4Timing = { 7000, 20000, 7000, 20000, 5000, 1033000,
+			1 / 60 };
+	static long[] level5PlusTiming = { 5000, 20000, 5000, 20000, 5000, 1037000,
+			1 / 60 };
 	static long startTime = System.currentTimeMillis();
-	static boolean infiniteChase;
 	public static long frightenedTimeStart;
-	static double ghostSpeed = 0.9;
+	double ghostSpeed = 1;
 
+	/**
+	 * The constructs creates a ghost object in the given paramaters x and y
+	 * 
+	 * @param x
+	 *            x coordinate of where the object should be placed on the board
+	 * @param y
+	 *            y coordinate of where the object should be placed on the board
+	 */
 	public Ghost(double x, double y) {
 
 		this.x = x;
@@ -69,12 +88,23 @@ public class Ghost {
 		this.y += y;
 	}
 
+	/**
+	 * The method takes care of the movement if the ghost based on its direction
+	 * and relative to the board where all the objects exist
+	 * 
+	 * @param board
+	 *            the board where the game is played by all the objects
+	 * @param ghostDirection
+	 *            the direction where the ghost is going towards, relative to
+	 *            the computer screen
+	 */
 	public void move(int board[][], boolean[] ghostDirection) {
 		goLeftGhost = ghostDirection[0];
 		goRightGhost = ghostDirection[1];
 		goUpGhost = ghostDirection[2];
 		goDownGhost = ghostDirection[3];
-
+		// if the ghost is going left, it will stop if there is a wall, jump of
+		// there is a tunnel or continue with its speed in the current direction
 		if (goLeftGhost) {
 			if (board[(int) (x - 1)][(int) y] == 1) {
 				x += 0;
@@ -86,6 +116,8 @@ public class Ghost {
 			}
 		}
 
+		// if the ghost is going right, it will stop if there is a wall, jump of
+		// there is a tunnel or continue with its speed in the current direction
 		else if (goRightGhost) {
 			if (board[(int) (x + 1)][(int) y] == 1) {
 				x += 0;
@@ -97,6 +129,8 @@ public class Ghost {
 			}
 		}
 
+		// if the ghost is going up, it will stop if there is a wall, or
+		// continue with its speed in the current direction
 		else if (goUpGhost) {
 			if (board[(int) x][(int) (y - 1)] == 1) {
 				y += 0;
@@ -106,8 +140,11 @@ public class Ghost {
 			}
 		}
 
+		// if the ghost is going down, it will stop if there is a wall, or
+		// continue with its speed in the current direction
 		else if (goDownGhost) {
-			if (board[(int) x][(int) (y + 1)] == 1 || board[(int) x][(int) (y + 1)] == 5) {
+			if (board[(int) x][(int) (y + 1)] == 1
+					|| board[(int) x][(int) (y + 1)] == 5) {
 				y += 0;
 				goDownGhost = false;
 			} else {
@@ -116,23 +153,47 @@ public class Ghost {
 		}
 	}
 
-	// getX() and getY() get a ghost's x and y coordinates at a specified time.
+	/**
+	 * The method gets the current x position of the ghost relative to the board
+	 * 
+	 * @return the current x position of the ghost relative to the board
+	 */
 	public double getX() {
 		return x;
 	}
 
+	/**
+	 * The method gets the current y position of the ghost relative to the board
+	 * 
+	 * @return the current y position of the ghost relative to the board
+	 */
 	public double getY() {
 		return y;
 	}
-	
+
+	/**
+	 * The method sets the current x position of the ghost relative to the board
+	 * 
+	 * @return
+	 */
 	public void setX(double newX) {
 		x = newX;
 	}
 
+	/**
+	 * The method sets the current y position of the ghost relative to the board
+	 * 
+	 * @return
+	 */
 	public void setY(double newY) {
-		y = newY; 
+		y = newY;
 	}
 
+	/**
+	 * Setting the four directions' variables so that the ghost can move left *
+	 * 
+	 * @return the array of booleans so that the ghost can move left
+	 */
 	public boolean[] moveLeft() {
 		boolean[] direction = new boolean[4];
 		direction[0] = true;
@@ -142,6 +203,12 @@ public class Ghost {
 
 		return direction;
 	}
+
+	/**
+	 * Setting the four directions' variables so that the ghost can move right
+	 * 
+	 * @return the array of booleans so that the ghost can move right
+	 */
 
 	public boolean[] moveRight() {
 		boolean[] direction = new boolean[4];
@@ -153,6 +220,11 @@ public class Ghost {
 		return direction;
 	}
 
+	/**
+	 * Setting the four directions' variables so that the ghost can move up *
+	 * 
+	 * @return the array of booleans so that the ghost can move up
+	 */
 	public boolean[] moveUp() {
 		boolean[] direction = new boolean[4];
 		direction[0] = false;
@@ -162,6 +234,12 @@ public class Ghost {
 
 		return direction;
 	}
+
+	/**
+	 * Setting the four directions' variables so that the ghost can move down
+	 * 
+	 * @return the array of booleans so that the ghost can move down
+	 */
 
 	public boolean[] moveDown() {
 		boolean[] direction = new boolean[4];
@@ -173,23 +251,46 @@ public class Ghost {
 		return direction;
 	}
 
+	/**
+	 * The method finds the euclidian distance between two coordinates
+	 * 
+	 * @param tileX
+	 *            the tile where the x coordinate is on
+	 * @param tileY
+	 *            the tile where the y coordinate is on
+	 * @param x
+	 *            the x coordinate
+	 * @param y
+	 *            the y coordinate
+	 * @return the distanve between the two tiles
+	 */
 	public double distance(double tileX, double tileY, double x, double y) {
 		double distance = 0;
 		distance = Math.pow(tileX - x, 2) + Math.pow(tileY - y, 2);
 		return distance;
 	}
 
-	public static void ghostModes(long []levelTiming) {
+	/**
+	 * the method ensures the timing in which each ghost needs to stay in
+	 * different modes liek scatter,chase and infinitechase
+	 * 
+	 * @param levelTiming
+	 *            the timing for each mode for the ghost depending on the
+	 *            factors like level
+	 */
+	public static void ghostModes(long[] levelTiming) {
+		// checking if the necessary time has passed
 		if ((System.currentTimeMillis() > (startTime + levelTiming[modeCounter]))
-				&& !infiniteChase&&!frightened) {
-			
+				&& !infiniteChase && !frightened) {
+
 			startTime = System.currentTimeMillis();
 			modeCounter++;
-			
+
 			if (scatter) {
 				scatter = false;
 				chase = true;
-			} else if (chase) {
+			}
+			else if (chase) {
 				chase = false;
 				scatter = true;
 			}
@@ -200,327 +301,347 @@ public class Ghost {
 			}
 		}
 	}
-	
-	public void shortestMovement(double targetX, double targetY, int[][] board){
-		if(goLeftGhost && (exitLeft || exitUp || exitDown)) {
-			if(exitUp){
+
+	/**
+	 * the method finds the shortest movement from where it is to the target x,y
+	 * tile in the board
+	 * 
+	 * @param targetX
+	 *            the target x tile where the ghost should go
+	 * @param targetY
+	 *            the target y tile where the ghost should go
+	 * @param board
+	 *            the board where the objects are placed on
+	 */
+	public void shortestMovement(double targetX, double targetY, int[][] board) {
+		if (goLeftGhost && (exitLeft || exitUp || exitDown)) {
+			if (exitUp) {
 				distanceUp = distance(targetX, targetY, x, y - 1);
-			}
+			} 
 			else {
 				distanceUp = 9999;
 			}
-			if(exitLeft){
+			if (exitLeft) {
 				distanceLeft = distance(targetX, targetY, x - 1, y);
-			}
+			} 
 			else {
 				distanceLeft = 9999;
 			}
-			if(exitDown){
+			if (exitDown) {
 				distanceDown = distance(targetX, targetY, x, y + 1);
-			}
+			} 
 			else {
 				distanceDown = 9999;
 			}
-		
-			if(distanceUp <= Math.min(distanceLeft, distanceDown)) {
+
+			if (distanceUp <= Math.min(distanceLeft, distanceDown)) {
 				move(board, moveUp());
-			}
-			else if(distanceLeft <= Math.min(distanceUp, distanceDown)) {
+			} 
+			else if (distanceLeft <= Math.min(distanceUp, distanceDown)) {
 				move(board, moveLeft());
 			}
-			else if(distanceDown <= Math.min(distanceUp, distanceLeft)) {
+			else if (distanceDown <= Math.min(distanceUp, distanceLeft)) {
 				move(board, moveDown());
-			}
+			} 
 			else {
 				move(board, moveRight());
 			}
 		}
-		
-		if(goRightGhost && (exitRight || exitUp || exitDown)) {
-			if(exitUp){
+
+		if (goRightGhost && (exitRight || exitUp || exitDown)) {
+			if (exitUp) {
 				distanceUp = distance(targetX, targetY, x, y - 1);
-			}	
+			} 
 			else {
 				distanceUp = 9999;
 			}
-			if(exitRight){
+			if (exitRight) {
 				distanceRight = distance(targetX, targetY, x + 1, y);
 			}
 			else {
 				distanceRight = 9999;
 			}
-			if(exitDown){
+			if (exitDown) {
 				distanceDown = distance(targetX, targetY, x, y + 1);
-			}
+			} 
 			else {
 				distanceDown = 9999;
 			}
-		
-			if(distanceUp <= Math.min(distanceRight, distanceDown)) {
+
+			if (distanceUp <= Math.min(distanceRight, distanceDown)) {
 				move(board, moveUp());
-			}
-			else if(distanceDown <= Math.min(distanceUp, distanceRight)) {
+			} 
+			else if (distanceDown <= Math.min(distanceUp, distanceRight)) {
 				move(board, moveDown());
-			}
-			else if(distanceRight <= Math.min(distanceUp, distanceDown)) {
+			} 
+			else if (distanceRight <= Math.min(distanceUp, distanceDown)) {
 				move(board, moveRight());
-			}
+			} 
 			else {
 				move(board, moveLeft());
 			}
 		}
-		
-		if(goUpGhost && (exitLeft || exitRight || exitUp)) {
-			if(exitUp){
+
+		if (goUpGhost && (exitLeft || exitRight || exitUp)) {
+			if (exitUp) {
 				distanceUp = distance(targetX, targetY, x, y - 1);
 			}
 			else {
 				distanceUp = 9999;
 			}
-			if(exitLeft){
+			if (exitLeft) {
 				distanceLeft = distance(targetX, targetY, x - 1, y);
-			}
+			} 
 			else {
 				distanceLeft = 9999;
 			}
-			if(exitRight){
+			if (exitRight) {
 				distanceRight = distance(targetX, targetY, x + 1, y);
-			}
+			} 
 			else {
 				distanceRight = 9999;
 			}
-		
-			if(distanceUp <= Math.min(distanceLeft, distanceRight)) {
+
+			if (distanceUp <= Math.min(distanceLeft, distanceRight)) {
 				move(board, moveUp());
 			}
-			else if(distanceLeft <= Math.min(distanceUp, distanceRight)) {
+			else if (distanceLeft <= Math.min(distanceUp, distanceRight)) {
 				move(board, moveLeft());
-			}
-			else if(distanceRight <= Math.min(distanceUp, distanceLeft)) {
+			} 
+			else if (distanceRight <= Math.min(distanceUp, distanceLeft)) {
 				move(board, moveRight());
 			}
 			else {
 				move(board, moveDown());
 			}
 		}
-		
-		if(goDownGhost && (exitLeft || exitUp || exitRight)) {
-			if(exitRight){
+
+		if (goDownGhost && (exitLeft || exitUp || exitRight)) {
+			if (exitRight) {
 				distanceRight = distance(targetX, targetY, x + 1, y);
-			}
-			else {
+			} else {
 				distanceRight = 9999;
 			}
-			if(exitLeft){
+			if (exitLeft) {
 				distanceLeft = distance(targetX, targetY, x - 1, y);
-			}
-			else {
+			} else {
 				distanceLeft = 9999;
 			}
-			if(exitDown){
+			if (exitDown) {
 				distanceDown = distance(targetX, targetY, x, y + 1);
-			}
-			else {
+			} else {
 				distanceDown = 9999;
 			}
-		
-			if(distanceLeft <= Math.min(distanceRight, distanceDown)) {
+
+			if (distanceLeft <= Math.min(distanceRight, distanceDown)) {
 				move(board, moveLeft());
-			}
-			else if(distanceDown <= Math.min(distanceRight, distanceLeft)) {
+			} 
+			else if (distanceDown <= Math.min(distanceRight, distanceLeft)) {
 				move(board, moveDown());
-			}
-			else if(distanceRight <= Math.min(distanceLeft, distanceDown)) {
+			} 
+			else if (distanceRight <= Math.min(distanceLeft, distanceDown)) {
 				move(board, moveRight());
-			}
+			} 
 			else {
 				move(board, moveUp());
 			}
 		}
-		
-		if(!goDownGhost && !goUpGhost && !goLeftGhost && !goRightGhost) {
+
+		if (!goDownGhost && !goUpGhost && !goLeftGhost && !goRightGhost) {
 			distanceRight = distance(targetX, targetY, x + 1, y);
 			distanceLeft = distance(targetX, targetY, x - 1, y);
 			distanceUp = distance(targetX, targetY, x, y - 1);
 			distanceDown = distance(targetX, targetY, x, y + 1);
-			
-			if(distanceLeft <= Math.min(Math.min(distanceRight, distanceDown), distanceUp) && exitLeft) {
+
+			if (distanceLeft <= Math.min(Math.min(distanceRight, distanceDown),
+					distanceUp) && exitLeft) {
 				goLeftGhost = true;
-			}
-			else if(distanceDown <= Math.min(Math.min(distanceRight, distanceLeft), distanceUp) && exitDown) {
+			} 
+			else if (distanceDown <= Math.min(
+					Math.min(distanceRight, distanceLeft), distanceUp)
+					&& exitDown) {
 				goDownGhost = true;
-			}
-			else if(distanceRight <= Math.min(Math.min(distanceLeft, distanceDown), distanceUp) && exitRight) {
+			} 
+			else if (distanceRight <= Math.min(
+					Math.min(distanceLeft, distanceDown), distanceUp)
+					&& exitRight) {
 				goRightGhost = true;
-			}
-			else if(distanceUp <= Math.min(Math.min(distanceLeft, distanceRight), distanceDown) && exitUp) {
+			} 
+			else if (distanceUp <= Math.min(
+					Math.min(distanceLeft, distanceRight), distanceDown)
+					&& exitUp) {
 				goUpGhost = true;
 			}
 		}
 	}
-	
+
+	/**
+	 * the method generates a random movement on the board for a specific ghost
+	 * 
+	 * @param board
+	 *            the board where the objects are interacting on
+	 * @param g
+	 *            the graphics that draws them
+	 */
 	public void randomMovement(int[][] board, Graphics g) {
-		if (System.currentTimeMillis() > Ghost.frightenedTimeStart+5000){
-			 frightened= false;
-			 chase = Ghost.chaseWhilefrightened;
-			 scatter = Ghost.scatterWhilefrightened;
-			 startTime -= 5000;
-		 }
-		g.drawImage(Ghost.scared, (int) getX()*Game.pixel, (int) getY()*Game.pixel, null);
-		
-		if(goRightGhost && turnDirection){
+		if (System.currentTimeMillis() > Ghost.frightenedTimeStart + 5000) {
+			frightened = false;
+			chase = Ghost.chaseWhilefrightened;
+			scatter = Ghost.scatterWhilefrightened;
+			startTime -= 5000;
+		}
+		g.drawImage(Ghost.scared, (int) getX() * Game.pixel, (int) getY()
+				* Game.pixel, null);
+
+		if (goRightGhost && turnDirection) {
 			move(board, moveLeft());
 			turnDirection = false;
 		}
-		
-		else if(goLeftGhost && turnDirection){
+
+		else if (goLeftGhost && turnDirection) {
 			move(board, moveRight());
 			turnDirection = false;
 		}
-		
-		else if(goUpGhost && turnDirection){
+
+		else if (goUpGhost && turnDirection) {
 			move(board, moveDown());
 			turnDirection = false;
 		}
-		
-		else if(goDownGhost && turnDirection){
+
+		else if (goDownGhost && turnDirection) {
 			move(board, moveUp());
 			turnDirection = false;
 		}
-		
-		else if (goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
+
+		else if (goUpGhost
+				&& ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
 			if (randomMove == 0 && exitLeft) {
 				move(board, moveLeft());
-			} 
-			else if (randomMove == 1 && exitUp) {
+			} else if (randomMove == 1 && exitUp) {
 				move(board, moveUp());
-			} 
-			else if (randomMove == 2 && exitRight) {
+			} else if (randomMove == 2 && exitRight) {
 				move(board, moveRight());
 			}
 		}
-		
-		else if (goUpGhost){
+
+		else if (goUpGhost) {
 			if (exitUp) {
 				move(board, moveUp());
-			} 
-			else if (exitLeft) {
+			} else if (exitLeft) {
 				move(board, moveLeft());
-			} 
-			else if (exitRight) {
+			} else if (exitRight) {
 				move(board, moveRight());
 			}
 		}
-		
-		else if (goLeftGhost && ((exitLeft && exitUp) || (exitLeft && exitDown) || (exitDown && exitUp))) {
+
+		else if (goLeftGhost
+				&& ((exitLeft && exitUp) || (exitLeft && exitDown) || (exitDown && exitUp))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
 			if (randomMove == 0 && exitLeft) {
 				move(board, moveLeft());
-			} 
-			else if (randomMove == 1 && exitUp) {
+			} else if (randomMove == 1 && exitUp) {
 				move(board, moveUp());
-			} 
-			else if (randomMove == 2 && exitDown) {
+			} else if (randomMove == 2 && exitDown) {
 				move(board, moveDown());
 			}
 		}
-		
-		else if (goLeftGhost){
+
+		else if (goLeftGhost) {
 			if (exitUp) {
 				move(board, moveUp());
-			} 
-			else if (exitLeft) {
+			} else if (exitLeft) {
 				move(board, moveLeft());
-			} 
-			else if (exitDown) {
+			} else if (exitDown) {
 				move(board, moveDown());
 			}
 		}
-		
-		else if (goDownGhost && ((exitLeft && exitDown) || (exitLeft && exitRight) || (exitDown && exitRight))) {
+
+		else if (goDownGhost
+				&& ((exitLeft && exitDown) || (exitLeft && exitRight) || (exitDown && exitRight))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
 			if (randomMove == 0 && exitLeft) {
 				move(board, moveLeft());
-			} 
-			else if (randomMove == 1 && exitRight) {
+			} else if (randomMove == 1 && exitRight) {
 				move(board, moveRight());
-			} 
-			else if (randomMove == 2 && exitDown) {
+			} else if (randomMove == 2 && exitDown) {
 				move(board, moveDown());
 			}
 		}
-		
-		else if (goDownGhost){	
+
+		else if (goDownGhost) {
 			if (exitDown) {
 				move(board, moveDown());
-			} 
-			else if (exitLeft) {
+			} else if (exitLeft) {
 				move(board, moveLeft());
-			} 
-			else if (exitRight) {
+			} else if (exitRight) {
 				move(board, moveRight());
 			}
 		}
-		
-		else if (goRightGhost && ((exitRight && exitUp) || (exitRight && exitDown) || (exitDown && exitUp))) {
+
+		else if (goRightGhost
+				&& ((exitRight && exitUp) || (exitRight && exitDown) || (exitDown && exitUp))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
 			if (randomMove == 0 && exitRight) {
 				move(board, moveRight());
-			} 
-			else if (randomMove == 1 && exitUp) {
+			} else if (randomMove == 1 && exitUp) {
 				move(board, moveUp());
-			} 
-			else if (randomMove == 2 && exitDown) {
+			} else if (randomMove == 2 && exitDown) {
 				move(board, moveDown());
 			}
 		}
-		
-		else if (goRightGhost){
+
+		else if (goRightGhost) {
 			if (exitUp) {
 				move(board, moveUp());
-			} 
-			else if (exitRight) {
+			} else if (exitRight) {
 				move(board, moveRight());
-			} 
-			else if (exitDown) {
+			} else if (exitDown) {
 				move(board, moveDown());
 			}
-		}	
+		}
 	}
-	
+
+	/**
+	 * the method finds which possible exits, out of the four ones, are
+	 * available for a ghost
+	 * 
+	 * @param board
+	 *            the board where the objects are interacting on
+	 */
 	public void possibleExit(int[][] board) {
-		if(board[(int) x][(int) y] != 4){
-			if(board[(int) (x - 1)][(int) y] != 1){
+		if (board[(int) x][(int) y] != 4) {
+			if (board[(int) (x - 1)][(int) y] != 1) {
 				exitLeft = true;
 			}
-			if(board[(int) (x - 1)][(int) y] == 1){
+			if (board[(int) (x - 1)][(int) y] == 1) {
 				exitLeft = false;
 			}
-			if(board[(int) (x + 1)][(int) y] != 1){
+			if (board[(int) (x + 1)][(int) y] != 1) {
 				exitRight = true;
 			}
-			if(board[(int) (x + 1)][(int) y] == 1){
+			if (board[(int) (x + 1)][(int) y] == 1) {
 				exitRight = false;
 			}
-			if(board[(int) x][(int) (y - 1)] != 1){
+			if (board[(int) x][(int) (y - 1)] != 1) {
 				exitUp = true;
 			}
-			if(board[(int) x][(int) (y - 1)] == 1){
+			if (board[(int) x][(int) (y - 1)] == 1) {
 				exitUp = false;
 			}
-			if(board[(int) x][(int) (y + 1)] != 1){
+			if (board[(int) x][(int) (y + 1)] != 1) {
 				exitDown = true;
 			}
-			if(board[(int) x][(int) (y + 1)] == 1 || board[(int) x][(int) (y + 1)] == 5){
+			if (board[(int) x][(int) (y + 1)] == 1
+					|| board[(int) x][(int) (y + 1)] == 5) {
 				exitDown = false;
 			}
 		}

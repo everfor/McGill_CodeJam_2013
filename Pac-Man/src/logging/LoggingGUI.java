@@ -16,6 +16,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import playerManipulation.Player;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 /**
  * 
  * The class deals with the entire graphical user interface related to the first
@@ -106,6 +108,16 @@ public class LoggingGUI {
 		usernameInput.setBounds(114, 204, 86, 20);
 		passwordInput = new JPasswordField();
 		passwordInput.setBounds(271, 204, 86, 20);
+		passwordInput.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent arg0) {
+				if(arg0.getKeyCode() == KeyEvent.VK_ENTER){
+					LoginLogout.login(usernameInput, passwordInput);
+					usernameInput.setText("");
+					passwordInput.setText("");
+				}
+			}
+		});
 		loginButton = new JButton("Login");
 		loginButton.setBounds(367, 203, 86, 23);
 		recoverButton = new JButton("Forgot Password?");
