@@ -21,8 +21,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	static int tester = 0;//TODO delete
-	long time;//TODO
+	static int tester = 0;// TODO delete
+	long time;// TODO
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
 	static Inky inky = new Inky(20, 5);
@@ -74,6 +74,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		map.addMap(g);
+
 		if (goRight) {
 			g.drawImage(pacman.image1, (int) pacman.getX() * pixel,
 					(int) pacman.getY() * pixel, null);
@@ -103,20 +104,25 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		map.addExtras(pacman, g);
 
 		if (inGame) {
-			if (Score.dotsLeft == 0) {
+			if (Score.dotsLeft == 235) {
 				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 				g.setColor(Color.green);
-				g.drawString("Level Completed", 60, 260 );
-				
-				if (tester==0){
+				g.drawString("Level Completed", 60, 260);
+
+				if (tester == 0) {
 					time = System.currentTimeMillis();
 					tester++;
 				}
-				
-				else if (System.currentTimeMillis()>(time+5000)&&System.currentTimeMillis()<(time+5500)){
-					System.out.println("new game");
+
+				else if (System.currentTimeMillis() > (time + 5000)
+						&& System.currentTimeMillis() < (time + 5500)) {
+					int levelScore = Score.getScore();
+					Map.board = Map.newBoard;
+					Score.setLevelScore(levelScore);
+					Map.addMap(g);
+
+					inGame = true;
 				}
-				
 
 			} else if (UserControls.checkMoveForStored(pacman, map.board,
 					tunnel)) {
