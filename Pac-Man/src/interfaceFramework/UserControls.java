@@ -112,7 +112,7 @@ public class UserControls {
 				Game.inGame = false;
 			}
 			else{
-				Game.collided++;
+				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);			
 			}
@@ -122,7 +122,7 @@ public class UserControls {
 				Game.inGame = false;
 			}
 			else{
-				Game.collided++;
+				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);			
 			}
@@ -132,7 +132,7 @@ public class UserControls {
 				Game.inGame = false;
 			}
 			else{
-				Game.collided++;
+				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);			
 			}
@@ -142,7 +142,7 @@ public class UserControls {
 				Game.inGame = false;
 			}
 			else{
-				Game.collided++;
+				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);			
 			}
@@ -152,7 +152,7 @@ public class UserControls {
 				Game.inGame = false;
 			}
 			else{
-				Game.collided++;
+				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);			
 			}

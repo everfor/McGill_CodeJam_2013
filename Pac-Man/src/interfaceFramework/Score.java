@@ -8,7 +8,8 @@ public class Score {
 	static int dotsLeft;
 	static int energizers = 4;
 	static int energizersLeft;
-	static int score, levelScore;
+	private static int score;
+	static int levelScore;
 	static int fruitConsumed;
 	static int fruit;
 
@@ -28,7 +29,7 @@ public class Score {
 		energizersLeft = countEnergizers(board);
 		fruit = countFruit();
 		
-		score = levelScore + 10*(dots - dotsLeft) + 50*(energizers - energizersLeft) + 100*fruit + 400*Game.collided;
+		score = levelScore + 10*(dots - dotsLeft) + 50*(energizers - energizersLeft) + 100*fruit + 400*Game.getCollided();
 		return score;
 	}
 	/**
@@ -98,5 +99,8 @@ public class Score {
 			fruitConsumed = 1;
 		}
 		return fruitConsumed;
+	}
+	public static void setScore(int score) {
+		Score.score = score;
 	}
 }

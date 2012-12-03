@@ -41,6 +41,7 @@ public class Clyde extends Ghost {
 				 frightened= false;
 				 Ghost.chase = Ghost.chaseWhilefrightened;
 				 Ghost.scatter = Ghost.scatterWhilefrightened;
+				 Ghost.startTime-= 5000;
 			 }
 			possibleExit(board);
 			g.drawImage(Ghost.scared, getX()*Game.pixel, getY()*Game.pixel, null);

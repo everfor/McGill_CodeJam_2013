@@ -23,10 +23,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
-	static Inky inky = new Inky(20, 5);
-	static Blinky blinky = new Blinky(21, 5);
-	static Pinky pinky = new Pinky(21, 12);
-	static Clyde clyde = new Clyde(2, 1);
+	static Inky inky = new Inky(12, 14);
+	static Blinky blinky = new Blinky(14,14 );
+	static Pinky pinky = new Pinky(14, 14);
+	static Clyde clyde = new Clyde(13, 14);
 	static int pixel = 18;
 	static boolean inGame = true;
 	static String username = Player.getUsername();
@@ -46,7 +46,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	long time;
 	static boolean tester = true;
 	static int currentLevel=1;
-	static int collided = 0;
+	private static int collided = 0;
 	double speed = 1.0;
 	static Timer timer;
 
@@ -349,5 +349,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	public static void setCurrentLevel(int currentLevel) {
 		Game.currentLevel = currentLevel;
+	}
+
+	public static int getCollided() {
+		return collided;
+	}
+
+	public static void setCollided(int collided) {
+		Game.collided = collided;
 	}
 }
