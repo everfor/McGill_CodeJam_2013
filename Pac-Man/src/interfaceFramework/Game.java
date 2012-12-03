@@ -42,10 +42,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean storedUp = false;
 	static boolean storedDown = false;
 	static boolean fruitEaten = false;
-	
+
 	long time;
-	int tester;
-	static int currentLevel;
+	static boolean tester = true;
+	static int currentLevel=1;
 	static int collided = 0;
 	double speed = 1.0;
 	static Timer timer;
@@ -56,8 +56,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		inGame = true;
-		pacman.livesLeft=3;
-	
+		pacman.livesLeft = 3;
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -69,7 +69,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			Ghost.ghostModes(Ghost.level2To4Timing);
 		} else if (currentLevel > 4) {
 			Ghost.ghostModes(Ghost.level5PlusTiming);
-		}	}
+		}
+	}
 
 	public void paint(Graphics g) {
 		super.paint(g);
@@ -103,48 +104,53 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		map.addExtras(pacman, g);
 
 		if (inGame) {
-			if (Score.dotsLeft == 235) {
+			if (Score.dotsLeft == 0) {
 				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 				g.setColor(Color.green);
 				g.drawString("Level Completed", 60, 260);
 
-				if (tester == 0) {
+				if (tester) {
 					time = System.currentTimeMillis();
-					tester++;
+					tester = false;
 				}
-				
+
 				else if (System.currentTimeMillis() > (time + 5000)
 						&& System.currentTimeMillis() < (time + 5500)) {
 					int levelScore = Score.getScore();
+//					System.out.println(System.currentTimeMillis()+"   "+time);
 					Map.board = Map.newLevelBoard;
 					Score.setLevelScore(levelScore);
 					setCurrentLevel(getCurrentLevel() + 1);
 					Map.addMap(g);
-
+					tester = true;
 					inGame = true;
 				}
 
-			}
-			else if (UserControls.checkMoveForStored(pacman, map.board, tunnel)) {
+			} else if (UserControls.checkMoveForStored(pacman, map.board,
+					tunnel)) {
 				setCurrentToStored();
 				pacman.move(tunnel, speed);
-			} 
-			else if (UserControls.checkMove(pacman, map.board, tunnel)) {
+			} else if (UserControls.checkMove(pacman, map.board, tunnel)) {
 				pacman.move(tunnel, speed);
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 2) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				if (Settings.isSoundOn()){
+				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 3) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+				Ghost.scatterWhilefrightened =Ghost.scatter;
+				Ghost.chaseWhilefrightened =Ghost.chase;
+				Ghost.scatter=false;
+				Ghost.chase = false;
 				Ghost.frightened = true;
+				Ghost.frightenedTimeStart= System.currentTimeMillis();
 				Ghost.turnDirection = true;
-				if (Settings.isSoundOn()){
+				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
 			}
@@ -155,7 +161,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				fruitEaten = true;
 				map.fruitVisible = false;
 
-				if (Settings.isSoundOn()){
+				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
 			}
@@ -164,13 +170,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			pinky.movePossible(pacman, map.board, g);
 			blinky.movePossible(pacman, map.board, g);
 			clyde.movePossible(pacman, map.board, g);
-		
-		}
-		else {
+
+		} else {
 			g.dispose();
 		}
 	}
-
 
 	// method that pauses game (used by p keypress)
 	public void pauseSession() {
@@ -215,8 +219,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goUp = false;
 				goDown = false;
 				setStoredToCurrent();
-			} 
-			else {
+			} else {
 				storedLeft = true;
 				storedRight = false;
 				storedUp = false;
@@ -243,8 +246,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goUp = false;
 				goDown = false;
 				setStoredToCurrent();
-			} 
-			else {
+			} else {
 				storedLeft = false;
 				storedRight = true;
 				storedUp = false;
@@ -262,8 +264,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goUp = true;
 				goDown = false;
 				setStoredToCurrent();
-			} 
-			else {
+			} else {
 				storedLeft = false;
 				storedRight = false;
 				storedUp = true;
@@ -280,8 +281,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goUp = false;
 				goDown = true;
 				setStoredToCurrent();
-			} 
-			else {
+			} else {
 				storedLeft = false;
 				storedRight = false;
 				storedUp = false;
@@ -315,7 +315,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		pacman.setX(14);
 		pacman.setY(23);
 		pacman.livesLeft--;
-		if (Settings.isSoundOn()){
+		if (Settings.isSoundOn()) {
 			Audio.SoundPlayer("pacman_beginning.wav");
 		}
 		Game.inGame = true;
@@ -342,7 +342,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		Maze.setMazeVisiblity(false);
 		ProfilePage.setMasterPageVisiblity(true);
 	}
-	
+
 	public static int getCurrentLevel() {
 		return currentLevel;
 	}

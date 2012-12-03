@@ -22,8 +22,8 @@ public class Pacman {
 	 * 
 	 */
 	public Pacman() {
-		x = 14; 			//14 starting position x
-		y = 23;			//23 starting position y
+		x = 13; 			//14 starting position x
+		y = 14;			//23 starting position y
 	
 		path = new File("").getAbsoluteFile();
 		image1 = new ImageIcon(path + "\\res\\image\\pacman1.gif").getImage();
@@ -62,7 +62,7 @@ public class Pacman {
 	 * @param speed 
 	 * 				double that displays the speed of the character
 	 */
-	public void move(boolean tunnel, double speed) {
+	public void move(boolean tunnel, double speed) {		
 		if(Game.goLeft){
 			if(tunnel){
 				x += 27;

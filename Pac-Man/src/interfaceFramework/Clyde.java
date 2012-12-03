@@ -37,6 +37,11 @@ public class Clyde extends Ghost {
 			insideProximityScatter(board);
 		}
 		else if(frightened){
+			if (System.currentTimeMillis() >Ghost.frightenedTimeStart+5000){
+				 frightened= false;
+				 Ghost.chase = Ghost.chaseWhilefrightened;
+				 Ghost.scatter = Ghost.scatterWhilefrightened;
+			 }
 			possibleExit(board);
 			g.drawImage(Ghost.scared, getX()*Game.pixel, getY()*Game.pixel, null);
 			if(goRightGhost && turnDirection){

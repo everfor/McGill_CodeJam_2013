@@ -14,8 +14,10 @@ public class Ghost {
 	boolean goLeftGhost = true;
 	boolean goRightGhost, goUpGhost, goDownGhost;
 	boolean ghostDirection[] = new boolean[4];
-	static boolean scatter = false;
+	static boolean scatter = true;
 	static boolean chase = false;
+	static boolean scatterWhilefrightened;
+	static boolean chaseWhilefrightened;
 	static boolean frightened = false;
 	static boolean turnDirection = false;
 	static int modeCounter = 0;
@@ -24,6 +26,7 @@ public class Ghost {
 	static long[] level5PlusTiming = { 5000, 20000, 5000, 20000, 5000, 1037000, 1/60 };
 	static long startTime = System.currentTimeMillis();
 	static boolean infiniteChase;
+	public static long frightenedTimeStart;
 
 	public Ghost(int x, int y) {
 
@@ -165,8 +168,9 @@ public class Ghost {
 
 	public static void ghostModes(long []levelTiming) {
 		if ((System.currentTimeMillis() > (startTime + levelTiming[modeCounter]))
-				&& !infiniteChase) {
+				&& !infiniteChase&&!frightened) {
 			startTime = System.currentTimeMillis();
+			System.out.println("f");
 			modeCounter++;
 			if (scatter) {
 				scatter = false;

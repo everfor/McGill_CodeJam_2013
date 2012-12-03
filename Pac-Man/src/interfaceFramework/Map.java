@@ -31,7 +31,7 @@ public class Map extends JPanel {
 	static long time2;
 
 	static int board[][] = new int[width][height];
-	static int newLevelBoard[][] = new int[width][height];
+	static final int newLevelBoard[][] = new int[width][height];
 
 	static Image wall, space, dot, energizer, tunnel, score, lives, door, life, cherry;
 
