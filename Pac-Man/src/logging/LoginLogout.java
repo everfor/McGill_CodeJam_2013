@@ -25,22 +25,21 @@ public class LoginLogout extends LoggingGUI {
 	 * @param passwordInput
 	 *            password inputted by player
 	 */
-	public static void login(JTextField usernameInput,
-			JPasswordField passwordInput) {
+	public static void login(JTextField usernameInput, JPasswordField passwordInput) {
 		if (VerifyPlayer.loginCheck(passwordInput, usernameInput)) {
 			// pop-up notification of successful login
 			pagePanels.add(ProfilePage.profilePage(), "profilePage");
 			pages.show(pagePanels, "profilePage");
 		} else {
 			// pop-up notification of unsuccessful login
-			JOptionPane.showMessageDialog(null,
-					"Invalid username or password, please try again", "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, "Invalid username or password, please try again",
+					"Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
-/**
- * The method logs a user out clearing all his info from the program
- */
+
+	/**
+	 * The method logs a user out clearing all his info from the program
+	 */
 	public static void logout() {
 		if (Player.clearPlayer()) {
 			// pop-up notification of successful login
@@ -49,8 +48,7 @@ public class LoginLogout extends LoggingGUI {
 			pages.show(pagePanels, "login");
 		} else {
 			// pop-up notification of unsuccessful login
-			JOptionPane.showMessageDialog(null,
-					"Unsuccessful Logout, please try again", "Error",
+			JOptionPane.showMessageDialog(null, "Unsuccessful Logout, please try again", "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 

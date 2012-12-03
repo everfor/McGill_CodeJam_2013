@@ -24,6 +24,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
+	public static boolean guest;
 	static Inky inky = new Inky(12, 14);
 	static Blinky blinky = new Blinky(15, 14);
 	static Pinky pinky = new Pinky(14, 14);
@@ -400,11 +401,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	 * sets High Scores, shifts Player to profile page
 	 */
 	public static void endOfGame() {
+		if(!guest){
 		StatisticsFrontend.setHighScores(username, Score.getScore());
 		if(Player.getLevelAchieved()<Game.currentLevel){
 			PlayerFrontend.changeProfileDetails(username, "levelAchieved", Game.currentLevel);
 		}
 		Player currentPlayer = new Player(username);
+		}
 		Maze.setMazeVisiblity(false);
 		ProfilePage.setMasterPageVisiblity(true);
 	}

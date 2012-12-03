@@ -17,22 +17,21 @@ import logging.LoginLogout;
 import playerManipulation.Player;
 import frontendDatabase.PlayerFrontend;
 import frontendDatabase.StatisticsFrontend;
+
 /**
- * The class deals with the entire graphical user interface related to changing profile details
- * here a player is given an option via a comboBox to which details of their account 
- * they wish the change.
+ * The class deals with the entire graphical user interface related to changing
+ * profile details here a player is given an option via a comboBox to which
+ * details of their account they wish the change.
  */
 public class ChangeProfileDetailsGUI extends ProfilePage {
 	private static JPanel changePasswordPage;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
-	static JLabel comboBoxSelection, changeUsername, passwordLabel,
-			reenterPasswordLabel;
+	static JLabel comboBoxSelection, changeUsername, passwordLabel, reenterPasswordLabel;
 	static JButton logout, backToProfile, deleteAccount;
 	static JTextField newUsername;
 	public static JComboBox comboBox;
-	static String[] comboBoxSelections = { "", "Username", "Password",
-			"Security Question" };
+	static String[] comboBoxSelections = { "", "Username", "Password", "Security Question" };
 
 	/**
 	 * This method creates a JPanel for the Change Profile Details page. Here a
@@ -47,8 +46,7 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 		changePasswordPage.setBackground(Color.BLACK);
 		// background gif
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\changePorfileDetails.gif");
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\changePorfileDetails.gif");
 		changePasswordPage.setLayout(null);
 		JLabel profileDetailsBackground = new JLabel();
 		profileDetailsBackground.setBounds(74, 11, 350, 38);
@@ -84,8 +82,7 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 			}
 		});
 		// delete Account button
-		final JTextField usernameJText = new JTextField(
-				currentPlayer.getUsername());
+		final JTextField usernameJText = new JTextField(currentPlayer.getUsername());
 		deleteAccount = new JButton("Delete Account");
 		deleteAccount.setBounds(177, 120, 134, 23);
 		deleteAccount.setBackground(Color.RED);
@@ -96,14 +93,12 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 			public void actionPerformed(ActionEvent event) {
 				int button = JOptionPane.YES_NO_OPTION;
 				button = JOptionPane.showConfirmDialog(null,
-						"Are you sure you want to delete your account?",
-						"Warning", button);
+						"Are you sure you want to delete your account?", "Warning", button);
 				if (button == JOptionPane.YES_OPTION) {
-					if (StatisticsFrontend.removePlayerStats(currentPlayer.getUsername())&&PlayerFrontend.deleteProfile(usernameJText)) {
-						JOptionPane.showMessageDialog(null,
-								"Your account has been deleted",
-								"Username Deleted",
-								JOptionPane.INFORMATION_MESSAGE);
+					if (StatisticsFrontend.removePlayerStats(currentPlayer.getUsername())
+							&& PlayerFrontend.deleteProfile(usernameJText)) {
+						JOptionPane.showMessageDialog(null, "Your account has been deleted",
+								"Username Deleted", JOptionPane.INFORMATION_MESSAGE);
 						LoginLogout.logout();
 					}
 				}
@@ -122,16 +117,13 @@ public class ChangeProfileDetailsGUI extends ProfilePage {
 	 */
 	public static void implementSelection(String comboBoxChoice) {
 		if (comboBoxChoice.equals("Username")) {
-			pagePanels.add(ChangeUsername.changeUsernamePage(),
-					"changeUsernamePage");
+			pagePanels.add(ChangeUsername.changeUsernamePage(), "changeUsernamePage");
 			pages.show(pagePanels, "changeUsernamePage");
 		} else if (comboBoxChoice.equals("Password")) {
-			pagePanels.add(ChangePassword.changePasswordPage(),
-					"changePassPage");
+			pagePanels.add(ChangePassword.changePasswordPage(), "changePassPage");
 			pages.show(pagePanels, "changePassPage");
 		} else if (comboBoxChoice.equals("Security Question")) {
-			pagePanels.add(ChangeSecurity.changeSecurityPage(),
-					"changeSecurityPage");
+			pagePanels.add(ChangeSecurity.changeSecurityPage(), "changeSecurityPage");
 			pages.show(pagePanels, "changeSecurityPage");
 		}
 	}

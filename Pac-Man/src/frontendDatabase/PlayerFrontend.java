@@ -163,16 +163,14 @@ public class PlayerFrontend {
 	 * @return returns the string with the data the field in the database
 	 *         contains
 	 */
-	 public static boolean changeProfileDetails(String username,
-			   String databaseField, int newInfo) {
-			  boolean changesMade = false;
-			  PlayerBackend database;
-			  database = new PlayerBackend();
-			  // trying to perform to make the changes for a username
-			  changesMade = (database.changeProfileDetails(username, databaseField,
-			    newInfo));
-			  return changesMade;
-			 }
+	public static boolean changeProfileDetails(String username, String databaseField, int newInfo) {
+		boolean changesMade = false;
+		PlayerBackend database;
+		database = new PlayerBackend();
+		// trying to perform to make the changes for a username
+		changesMade = (database.changeProfileDetails(username, databaseField, newInfo));
+		return changesMade;
+	}
 
 
 	/**

@@ -19,9 +19,10 @@ import logging.SignUp;
 import playerManipulation.ChangeProfileDetails;
 import playerManipulation.Player;
 import playerManipulation.VerifyPlayer;
+
 /**
- * The class deals with the entire graphical user interface related to
- * changing a players username.
+ * The class deals with the entire graphical user interface related to changing
+ * a players username.
  */
 public class ChangeUsername extends ChangeProfileDetailsGUI {
 	private static JPanel changeUsernamePage;
@@ -44,8 +45,7 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 		changeUsernamePage.setBackground(Color.BLACK);
 		// heading gif
 		File path = new File("").getAbsoluteFile();
-		ImageIcon changeUsernameIcon = new ImageIcon(path
-				+ "\\res\\image\\changeUsername.gif");
+		ImageIcon changeUsernameIcon = new ImageIcon(path + "\\res\\image\\changeUsername.gif");
 		JLabel changeUsernameHeading = new JLabel();
 		changeUsernameHeading.setIcon(changeUsernameIcon);
 		changeUsernamePage.add(changeUsernameHeading);
@@ -58,8 +58,7 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 		newUsernameLabel.setForeground(Color.WHITE);
 		newUsername = new JTextField();
 
-		usernameLabel = new JLabel("Your current Username is : "
-				+ Player.getUsername());
+		usernameLabel = new JLabel("Your current Username is : " + Player.getUsername());
 		usernameLabel.setForeground(Color.WHITE);
 
 		// set password field sizes
@@ -88,49 +87,42 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 		changeUsername.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				JTextField usernameJTextfield = new JTextField(currentPlayer
-						.getUsername());
+				JTextField usernameJTextfield = new JTextField(currentPlayer.getUsername());
 				if (VerifyPlayer.loginCheck(password, usernameJTextfield)) {
 					if (!VerifyPlayer.usernameExists(newUsername)) {
 						if (SignUp.usernameLength(newUsername)) {
-							if (ChangeProfileDetails.changeUsername(
-									Player.getUsername(), newUsername.getText())) {
-								if(StatisticsFrontend.changeUsernameForStatistics(Player.getUsername(), newUsername.getText())){
-								if (Player.clearPlayer()) {
-									Player currentPlayer = new Player(
-											newUsername.getText());
+							if (ChangeProfileDetails.changeUsername(Player.getUsername(),
+									newUsername.getText())) {
+								if (StatisticsFrontend.changeUsernameForStatistics(
+										Player.getUsername(), newUsername.getText())) {
+									if (Player.clearPlayer()) {
+										Player currentPlayer = new Player(newUsername.getText());
+									}
+									JOptionPane.showMessageDialog(null,
+											"Your Username have been successfully changed",
+											"Username Changed", JOptionPane.INFORMATION_MESSAGE);
+									newUsername.setText("");
+									password.setText("");
+									pages.show(pagePanels, "profilePage");
 								}
-								JOptionPane
-										.showMessageDialog(
-												null,
-												"Your Username have been successfully changed",
-												"Username Changed",
-												JOptionPane.INFORMATION_MESSAGE);
-								newUsername.setText("");
-								password.setText("");
-								pages.show(pagePanels, "profilePage");
-							}
 							}
 						} else {
-							JOptionPane
-									.showMessageDialog(
-											null,
-											"Username is not between 6-16 characters, please try again",
-											"Error", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null,
+									"Username is not between 6-16 characters, please try again",
+									"Error", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 
 					else {
 						JOptionPane.showMessageDialog(null,
-								"Username is already taken, please try again",
-								"Error", JOptionPane.ERROR_MESSAGE);
+								"Username is already taken, please try again", "Error",
+								JOptionPane.ERROR_MESSAGE);
 						newUsername.setText("");
 						password.setText("");
 					}
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Incorrect Password, please try again", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Incorrect Password, please try again",
+							"Error", JOptionPane.ERROR_MESSAGE);
 					newUsername.setText("");
 					password.setText("");
 				}

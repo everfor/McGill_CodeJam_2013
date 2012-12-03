@@ -21,10 +21,9 @@ public class RecoverPassword {
 	 * @return true if the given username has the given security answer, false
 	 *         otherwise
 	 */
-	public static boolean checkSecurityQuestion(String usernameInput,
-			JTextField securityAnswerInput) {
-		boolean correctAnswer = (PlayerFrontend.checkSecurityAnswer(
-				usernameInput, securityAnswerInput));
+	public static boolean checkSecurityQuestion(String usernameInput, JTextField securityAnswerInput) {
+		boolean correctAnswer = (PlayerFrontend.checkSecurityAnswer(usernameInput,
+				securityAnswerInput));
 		return correctAnswer;
 	}
 

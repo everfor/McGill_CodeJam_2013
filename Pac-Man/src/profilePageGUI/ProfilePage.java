@@ -1,9 +1,5 @@
 package profilePageGUI;
 
-import interfaceFramework.Game;
-import interfaceFramework.Maze;
-import interfaceFramework.Score;
-
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -27,8 +23,7 @@ public class ProfilePage extends LoggingGUI {
 	private static JPanel profilePageGUI;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
-	static JButton playGame, highscores, logout, changeProfileDetails,
-			settings;
+	static JButton playGame, highscores, logout, changeProfileDetails, settings;
 
 	/**
 	 * This method creates a JPanel for the player's profile page this is where
@@ -45,15 +40,13 @@ public class ProfilePage extends LoggingGUI {
 		File path = new File("").getAbsoluteFile();
 		// The following gif and all its occurences were extracted from:
 		// http://www.thepcmanwebsite.com/media/pacman_flash/
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\profileBackground.gif");// TODO make a method to
-														// do this
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\profileBackground.gif");
+																							
 		JLabel profilePageBackground = new JLabel();
 		profilePageBackground.setIcon(background);
 		profilePageGUI.add(profilePageBackground);
 		// initialize playGame button
-		ImageIcon playGameBG = new ImageIcon(path
-				+ "\\res\\image\\playgamebutton.gif");
+		ImageIcon playGameBG = new ImageIcon(path + "\\res\\image\\playgamebutton.gif");
 		JButton playGame = new JButton(playGameBG);
 		playGame.setBackground(Color.BLACK);
 		playGame.setBorderPainted(false);
@@ -61,8 +54,7 @@ public class ProfilePage extends LoggingGUI {
 		playGame.setFocusPainted(false);
 		profilePageGUI.add(playGame);
 		// initialize highscores button
-		ImageIcon highscoresBG = new ImageIcon(path
-				+ "\\res\\image\\highscores.gif");
+		ImageIcon highscoresBG = new ImageIcon(path + "\\res\\image\\highscores.gif");
 		JButton highscores = new JButton(highscoresBG);
 		highscores.setBackground(Color.BLACK);
 		highscores.setBorderPainted(false);
@@ -87,8 +79,9 @@ public class ProfilePage extends LoggingGUI {
 		logout.setFocusPainted(false);
 		profilePageGUI.add(logout);
 		// settings button
-		ImageIcon settingImage = new ImageIcon(path
-				+ "\\res\\image\\settings.gif");// TODO make a method to
+		ImageIcon settingImage = new ImageIcon(path + "\\res\\image\\settings.gif");
+		
+																					
 		JButton settings = new JButton(settingImage);
 		settings.setBackground(Color.BLACK);
 		settings.setBorderPainted(false);
@@ -101,8 +94,7 @@ public class ProfilePage extends LoggingGUI {
 		playGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				pagePanels.add(
-						LevelSelectGUI.levelSelectPage(),"LevelSelectGUI");
+				pagePanels.add(LevelSelectGUI.levelSelectPage(), "LevelSelectGUI");
 				pages.show(pagePanels, "LevelSelectGUI");
 
 			}
@@ -121,8 +113,7 @@ public class ProfilePage extends LoggingGUI {
 		changeProfileDetails.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				pagePanels.add(
-						ChangeProfileDetailsGUI.changeProfileDetailsPage(),
+				pagePanels.add(ChangeProfileDetailsGUI.changeProfileDetailsPage(),
 						"changeProfileDetailsPage");
 				pages.show(pagePanels, "changeProfileDetailsPage");
 			}
@@ -139,13 +130,12 @@ public class ProfilePage extends LoggingGUI {
 		// settings button
 		settings.setActionCommand("settings");
 		settings.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent event) {
-						pagePanels.add(
-								Settings.settingsPage(),"settingsPage");
-						pages.show(pagePanels, "settingsPage");
-					}
-				});
+			@Override
+			public void actionPerformed(ActionEvent event) {
+				pagePanels.add(Settings.settingsPage(), "settingsPage");
+				pages.show(pagePanels, "settingsPage");
+			}
+		});
 		return profilePageGUI;
 
 	}

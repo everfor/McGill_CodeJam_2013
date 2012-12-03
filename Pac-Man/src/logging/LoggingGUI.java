@@ -1,4 +1,8 @@
 package logging;
+import interfaceFramework.Game;
+import interfaceFramework.Maze;
+import interfaceFramework.Score;
+
 import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.awt.Color;
@@ -16,6 +20,8 @@ import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import playerManipulation.Player;
+import profilePageGUI.ProfilePage;
+
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 /**
@@ -32,7 +38,7 @@ public class LoggingGUI {
 	private JTextField usernameInput;
 	private JPasswordField passwordInput; 
 	private JLabel usernameLabel, passwordLabel;
-	private JButton loginButton, signUp,recoverButton;
+	private JButton loginButton, signUp,recoverButton,playAsGuest;
 	Player currentPlayer;
 	String securityQuestionDisplayed;
 
@@ -54,6 +60,7 @@ public class LoggingGUI {
 		//masterPage.setDefaultCloseOperation(JFrame.);
 		masterPage.setTitle("Pac-Man");
 		masterPage.setSize(510,622 );
+		masterPage.setResizable(false);
 		masterPage.setLocationRelativeTo(null);
 		masterPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Building the card layout to switch between pages
@@ -122,6 +129,10 @@ public class LoggingGUI {
 		loginButton.setBounds(367, 203, 86, 23);
 		recoverButton = new JButton("Forgot Password?");
 		recoverButton.setBounds(114, 252, 145, 23);
+		playAsGuest = new JButton ("Play As Guest");
+		playAsGuest.setSize(131, 23);
+		playAsGuest.setLocation(186, 307);
+		recoverButton.setBounds(114, 252, 145, 23);
 		login.setLayout(null);
 
 		//displays all components in login screen
@@ -131,6 +142,7 @@ public class LoggingGUI {
 		login.add(passwordInput);
 		login.add(loginButton);
 		login.add(recoverButton);
+		login.add(playAsGuest);
 		//sets display size of input textfields
 		usernameInput.setColumns(10);
 		passwordInput.setColumns(10);
@@ -146,6 +158,21 @@ public class LoggingGUI {
 				pages.next(pagePanels);
 			}
 		});
+		//sets what happens when the Play as guest button is pressed
+		playAsGuest.setActionCommand("playAsGuest");
+		playAsGuest.addActionListener(new ActionListener(){
+					@Override
+					public void actionPerformed(ActionEvent event){
+						ProfilePage.setMasterPageVisiblity(false);
+						Score.setScore(0);
+						Score.setLevelScore(0);
+						Game.setCollided(0);
+						Game.guest = true;
+						Game.setCurrentLevel(1);
+						Maze.main(null);
+						Game.resetPositions();
+					}
+				});
 
 		//sets what happens when the login button is pressed
 		recoverButton.setActionCommand("recover");
@@ -170,6 +197,10 @@ public class LoggingGUI {
 		}
 				);
 
+	
+	
+	
+	
 	}
 
 

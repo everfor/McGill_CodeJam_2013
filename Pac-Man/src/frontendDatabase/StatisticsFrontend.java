@@ -47,8 +47,9 @@ public class StatisticsFrontend {
 		// the rest of the program
 		ArrayList<String> finalGlobalHighScores = new ArrayList<String>();
 		while (i < globalHighScores.size() - 2) {
-			finalGlobalHighScores.add(j, (globalHighScores.get(i)
-					+ "                      " + globalHighScores.get(i + 1)));
+			finalGlobalHighScores.add(j,
+					(globalHighScores.get(i) + "                      " + globalHighScores
+							.get(i + 1)));
 			i += 2;
 			j++;
 		}
@@ -80,10 +81,10 @@ public class StatisticsFrontend {
 		topHighScores[10] = newScore;
 		// sort in ascending order
 		Arrays.sort(topHighScores);
-		//write the last ten to database
-		for (int j = topHighScores.length - 1; j > 0; j--){
-			
-			database.setScore(username, "personalHighscore" + (11-j),topHighScores[j]);
+		// write the last ten to database
+		for (int j = topHighScores.length - 1; j > 0; j--) {
+
+			database.setScore(username, "personalHighscore" + (11 - j), topHighScores[j]);
 		}
 
 		return set;
@@ -119,18 +120,22 @@ public class StatisticsFrontend {
 		result = database.removePlayerStats(username);
 		return result;
 	}
+
 	/**
 	 * Changes a players username in the statistics database
-	 * @param username Player's old username
-	 * @param newInfo Player's new username
+	 * 
+	 * @param username
+	 *            Player's old username
+	 * @param newInfo
+	 *            Player's new username
 	 * @return true if change has been made, false otherwise
 	 */
-	 public static boolean changeUsernameForStatistics(String username, String newInfo) {
-			  boolean changesMade = false;
-			  StatisticsBackend database;
-			  database = new StatisticsBackend();
-			  // trying to perform to make the changes for a username
-			  changesMade = (database.changeUsername(username, newInfo));
-			  return changesMade;
-			 }
+	public static boolean changeUsernameForStatistics(String username, String newInfo) {
+		boolean changesMade = false;
+		StatisticsBackend database;
+		database = new StatisticsBackend();
+		// trying to perform to make the changes for a username
+		changesMade = (database.changeUsername(username, newInfo));
+		return changesMade;
+	}
 }

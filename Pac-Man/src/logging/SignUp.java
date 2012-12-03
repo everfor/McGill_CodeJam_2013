@@ -17,17 +17,17 @@ import playerManipulation.VerifyPlayer;
  * up a player into the game
  * 
  */
-public class SignUp extends SignUpGUI{
-	static JLabel usernameLabel, passwordLabel, reenterPasswordLabel,
-			securityQuestionLabel, securityAnswerLabel;
+public class SignUp extends SignUpGUI {
+	static JLabel usernameLabel, passwordLabel, reenterPasswordLabel, securityQuestionLabel,
+			securityAnswerLabel;
 	static JTextField newUsername, securityQuestion, securityAnswer;
 	static JPasswordField newPassword, reenterPassword;
 
 	// A personalized error message for signup problems
 	static String errorMessage;
 	// determines which errors occured during signup
-	static boolean usernameTaken, badPassLength, badUsernameLength,
-			differentPasswords, usernameCharacters;
+	static boolean usernameTaken, badPassLength, badUsernameLength, differentPasswords,
+			usernameCharacters;
 
 	/**
 	 * Checks if two passwords are equal
@@ -38,14 +38,13 @@ public class SignUp extends SignUpGUI{
 	 *            Second password entered (re-enter password field)
 	 * @return true if equals, false otherwise
 	 */
-	public static boolean passwordMatch(JPasswordField password1,
-			JPasswordField password2) {
+	public static boolean passwordMatch(JPasswordField password1, JPasswordField password2) {
 		boolean match = false;
 		char[] tempPassword1 = password1.getPassword();
 		String pass1 = new String(tempPassword1);
 		char[] tempPassword2 = password2.getPassword();
 		String pass2 = new String(tempPassword2);
-		//checking if the two passwords inputted are equal
+		// checking if the two passwords inputted are equal
 		if (pass1.equals(pass2)) {
 			match = true;
 		}
@@ -63,7 +62,7 @@ public class SignUp extends SignUpGUI{
 		boolean goodLength = false;
 		char[] tempPassword = password.getPassword();
 		String pass = new String(tempPassword);
-		//verifying the length allowed for the game
+		// verifying the length allowed for the game
 		if (pass.length() <= 45 && pass.length() >= 8) {
 			goodLength = true;
 		}
@@ -81,7 +80,7 @@ public class SignUp extends SignUpGUI{
 	public static boolean usernameLength(JTextField usernameInput) {
 		boolean goodLength = false;
 		String username = usernameInput.getText();
-		//verifying the length allowed for the game
+		// verifying the length allowed for the game
 		if (username.length() <= 16 && username.length() >= 6) {
 			goodLength = true;
 		}
@@ -99,8 +98,7 @@ public class SignUp extends SignUpGUI{
 	 */
 	public static boolean invalidCharacters(JTextField usernameInput) {
 		String username = usernameInput.getText();
-		Pattern myPattern = Pattern.compile("[^.-._-_---A-Za-z0-9 ]",
-				Pattern.CASE_INSENSITIVE);
+		Pattern myPattern = Pattern.compile("[^.-._-_---A-Za-z0-9 ]", Pattern.CASE_INSENSITIVE);
 		Matcher myMatcher = myPattern.matcher(username);
 		return myMatcher.find();
 	}
@@ -116,9 +114,8 @@ public class SignUp extends SignUpGUI{
 	 * The method then calls giveErrorMessage() which uses these booleans to
 	 * generate an appropriate error message for the player.
 	 */
-	public static void signupErrors(JTextField newUsername,
-			JPasswordField newPassword, JTextField securityQuestion,
-			JTextField securityAnswer, JPasswordField reenterPassword) {
+	public static void signupErrors(JTextField newUsername, JPasswordField newPassword,
+			JTextField securityQuestion, JTextField securityAnswer, JPasswordField reenterPassword) {
 		// true meanse there is an error false means there isnt
 		usernameTaken = badPassLength = badUsernameLength = differentPasswords = usernameCharacters = false;
 		errorMessage = "";
@@ -185,29 +182,25 @@ public class SignUp extends SignUpGUI{
 	 * @param reenterPassword
 	 *            the password re-entered by the player
 	 */
-	public static void register(JTextField newUsername,
-			JPasswordField newPassword, JTextField securityQuestion,
-			JTextField securityAnswer, JPasswordField reenterPassword) {
+	public static void register(JTextField newUsername, JPasswordField newPassword,
+			JTextField securityQuestion, JTextField securityAnswer, JPasswordField reenterPassword) {
 		// checking for errors
-		signupErrors(newUsername, newPassword, securityQuestion,
-				securityAnswer, reenterPassword);
+		signupErrors(newUsername, newPassword, securityQuestion, securityAnswer, reenterPassword);
 		if (errorMessage.equals("")) {
-			if (PlayerFrontend.addNewPlayer(newUsername, newPassword,
-					securityQuestion, securityAnswer)) {
+			if (PlayerFrontend.addNewPlayer(newUsername, newPassword, securityQuestion,
+					securityAnswer)) {
 				StatisticsFrontend.initializePlayerStats(newUsername.getText());
-				JOptionPane.showMessageDialog(null, "SignUp Successful",
-						"Welcome", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, "SignUp Successful", "Welcome",
+						JOptionPane.INFORMATION_MESSAGE);
 				pages.show(pagePanels, "login");
-				
+
 			} else {
-				JOptionPane.showMessageDialog(null,
-						"SignUp UnSuccessful, try again", "Error",
+				JOptionPane.showMessageDialog(null, "SignUp UnSuccessful, try again", "Error",
 						JOptionPane.ERROR_MESSAGE);
 				clearFields();
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, errorMessage, "Error",
-					JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(null, errorMessage, "Error", JOptionPane.ERROR_MESSAGE);
 		}
 	}
 }

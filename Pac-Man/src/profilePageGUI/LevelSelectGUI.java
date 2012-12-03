@@ -22,8 +22,7 @@ public class LevelSelectGUI extends ProfilePage {
 	private static JPanel levelSelected;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
-	static JLabel comboBoxSelection, changeUsername, passwordLabel,
-			reenterPasswordLabel;
+	static JLabel comboBoxSelection, changeUsername, passwordLabel, reenterPasswordLabel;
 	static JButton logout, backToProfile;
 	public static JComboBox comboBoxLevels;
 	static String[] comboBoxSelectionsLevels = new String[101];
@@ -34,23 +33,22 @@ public class LevelSelectGUI extends ProfilePage {
 	 * selected information.
 	 * 
 	 * @return the JPanel for the change username page
+	 * 
 	 */
 	public static JPanel levelSelectPage() {
 		// Create changeProfileDetailsPage Panel
-		comboBoxSelectionsLevels[0] = "";
-		for (int i = 1; i < comboBoxSelectionsLevels.length; i++) {
-			comboBoxSelectionsLevels[i] = Integer.toString(i);
+		for (int i = 0; i < comboBoxSelectionsLevels.length; i++) {
+			comboBoxSelectionsLevels[i] = Integer.toString(i+1);
 		}
 
 		levelSelected = new JPanel();
 		levelSelected.setBackground(Color.BLACK);
 		// background gif
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\changePorfileDetails.gif");
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\playgamebutton.gif");
 		levelSelected.setLayout(null);
 		JLabel levelBackground = new JLabel();
-		levelBackground.setBounds(74, 11, 350, 38);
+		levelBackground.setBounds(150, 11, 350, 38);
 		levelBackground.setIcon(background);
 		levelSelected.add(levelBackground);
 		// levels unlocked
@@ -59,11 +57,11 @@ public class LevelSelectGUI extends ProfilePage {
 		}
 		// dropdown list
 		comboBoxSelection = new JLabel("Choose Level: ");
-		comboBoxSelection.setBounds(53, 77, 209, 14);
+		comboBoxSelection.setBounds(109, 77, 209, 14);
 		comboBoxSelection.setForeground(Color.WHITE);
 		levelSelected.add(comboBoxSelection);
 		comboBoxLevels = new JComboBox(comboBoxSelectionsLevels);
-		comboBoxLevels.setBounds(245, 74, 110, 20);
+		comboBoxLevels.setBounds(203, 74, 110, 20);
 		levelSelected.add(comboBoxLevels);
 
 		comboBoxLevels.addActionListener(new ActionListener() {
@@ -76,7 +74,7 @@ public class LevelSelectGUI extends ProfilePage {
 
 		// back button
 		backToProfile = new JButton("Back");
-		backToProfile.setBounds(367, 73, 74, 23);
+		backToProfile.setBounds(328, 73, 74, 23);
 		levelSelected.add(backToProfile);
 		backToProfile.setActionCommand("Back");
 		backToProfile.addActionListener(new ActionListener() {
@@ -106,12 +104,11 @@ public class LevelSelectGUI extends ProfilePage {
 			Game.setCollided(0);
 			Game.setCurrentLevel(Integer.parseInt(comboBoxChoice));
 			Maze.main(null);
+			Game.guest=false;
 			Game.resetPositions();
 		} else {
-			JOptionPane.showMessageDialog(
-					null,
-					"Your highest unlocked level is: "
-							+ Player.getLevelAchieved(), "Error",
+			JOptionPane.showMessageDialog(null,
+					"Your highest unlocked level is: " + Player.getLevelAchieved(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}

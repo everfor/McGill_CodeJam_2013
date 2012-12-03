@@ -22,8 +22,8 @@ public class PlayerBackend {
 		try {
 			// Here the connection with database will occur
 			Class.forName("com.mysql.jdbc.Driver");
-			myConnection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/mydatabase", "root", "123456");
+			myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase",
+					"root", "123456");
 		} catch (Exception e) {
 			System.out.println("Connection could not be established");
 		}
@@ -42,8 +42,8 @@ public class PlayerBackend {
 	public boolean checkLogin(String username, String password) {
 		try {
 			// Checks username and password in database
-			myStatement = myConnection.prepareStatement("select * from "
-					+ databaseName + " where username=? and password=?");
+			myStatement = myConnection.prepareStatement("select * from " + databaseName
+					+ " where username=? and password=?");
 			myStatement.setString(1, username); // Username and password
 			// inserted in query
 			myStatement.setString(2, password);
@@ -72,8 +72,8 @@ public class PlayerBackend {
 	public boolean findPlayer(String username) {
 		try {
 			// Checks username and password in database
-			myStatement = myConnection.prepareStatement("select * from "
-					+ databaseName + " where username=?");
+			myStatement = myConnection.prepareStatement("select * from " + databaseName
+					+ " where username=?");
 			myStatement.setString(1, username); // Username and password
 			// inserted in query
 			// executes the prepared statement
@@ -104,8 +104,8 @@ public class PlayerBackend {
 	 *            player inputted Answer to
 	 * @return true if an entry has been created, false otherwise
 	 */
-	public boolean createPlayer(String newUsername, String newPassword,
-			String securityQuestion, String securityAnswer) {
+	public boolean createPlayer(String newUsername, String newPassword, String securityQuestion,
+			String securityAnswer) {
 		try {
 			String query = "insert into "
 					+ databaseName
@@ -139,8 +139,8 @@ public class PlayerBackend {
 	public boolean checkSecurityQuestion(String username, String securityAnswer) {
 		try {
 			// Checks username and password in database
-			myStatement = myConnection.prepareStatement("select * from "
-					+ databaseName + " where username=? and securityAnswer=?");
+			myStatement = myConnection.prepareStatement("select * from " + databaseName
+					+ " where username=? and securityAnswer=?");
 			myStatement.setString(1, username); // Username and securityAnswer
 			// inserted in query
 			myStatement.setString(2, securityAnswer);
@@ -172,8 +172,7 @@ public class PlayerBackend {
 	 * @return true if the change of the profile details was changed
 	 *         successfully, false otherwise
 	 */
-	public boolean changeProfileDetails(String username, String databaseField,
-			String newInfo) {
+	public boolean changeProfileDetails(String username, String databaseField, String newInfo) {
 		try {
 
 			String query = "update " + databaseName + " set " + databaseField
@@ -206,9 +205,8 @@ public class PlayerBackend {
 		String info = "";
 		try {
 			// Checks username and password in database
-			myStatement = myConnection.prepareStatement("select "
-					+ databaseField + " from " + databaseName
-					+ " where username=?");
+			myStatement = myConnection.prepareStatement("select " + databaseField + " from "
+					+ databaseName + " where username=?");
 			myStatement.setString(1, username); // Username inserted in query
 			// executes the prepared statement
 			result = myStatement.executeQuery();
@@ -216,13 +214,12 @@ public class PlayerBackend {
 				info = result.getString(1);
 			}
 		} catch (Exception e) {
-			System.out
-					.println("Error while searching username in the database");
+			System.out.println("Error while searching username in the database");
 			return info;
 		}
 		return info;
 	}
-	
+
 	/**
 	 * The method pulls the specific information from the database field
 	 * specified by the player or the other classes that interact with it
@@ -235,30 +232,29 @@ public class PlayerBackend {
 	 * @return a string representing the info that is stored inside the database
 	 *         field of the specific user
 	 */
-	 public boolean changeProfileDetails(String username, String databaseField,
-			   int newInfo) {
-			  boolean changed = false;
-			  try {
+	public boolean changeProfileDetails(String username, String databaseField, int newInfo) {
+		boolean changed = false;
+		try {
 
-			   String query = "update " + databaseName + " set " + databaseField
-			     + " = ? where username = ? ";
-			   myStatement = myConnection.prepareStatement(query); // create a
-			   // statement
-			   myStatement.setInt(1, newInfo); // set input parameter 1
-			   myStatement.setString(2, username); // set input parameter 2
-			   myStatement.executeUpdate(); // execute update statement
+			String query = "update " + databaseName + " set " + databaseField
+					+ " = ? where username = ? ";
+			myStatement = myConnection.prepareStatement(query); // create a
+			// statement
+			myStatement.setInt(1, newInfo); // set input parameter 1
+			myStatement.setString(2, username); // set input parameter 2
+			myStatement.executeUpdate(); // execute update statement
 
-			   int changedEntries = myStatement.executeUpdate();
-			   if (changedEntries == 1) {
-			    changed = true;
-			   }
+			int changedEntries = myStatement.executeUpdate();
+			if (changedEntries == 1) {
+				changed = true;
+			}
 
-			  } catch (Exception e) {
-			   e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 
-			  }
-			  return changed;
-			 }
+		}
+		return changed;
+	}
 
 	/**
 	 * The method deletes all the information of a player corresponding to a
@@ -279,12 +275,11 @@ public class PlayerBackend {
 			myStatement.setString(1, username);
 			// executes the prepared statement
 			int deletedEntries = myStatement.executeUpdate();
-			if(deletedEntries==1){
+			if (deletedEntries == 1) {
 				deleted = true;
 			}
 		} catch (Exception e) {
-			System.out
-					.println("Error while searching username in the database");
+			System.out.println("Error while searching username in the database");
 			deleted = false;
 		}
 		return deleted;

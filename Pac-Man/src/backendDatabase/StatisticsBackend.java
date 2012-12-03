@@ -21,8 +21,8 @@ public class StatisticsBackend {
 		try {
 			// Here the connection with database will occur
 			Class.forName("com.mysql.jdbc.Driver");
-			myConnection = DriverManager.getConnection(
-					"jdbc:mysql://localhost:3306/mydatabase", "root", "123456");
+			myConnection = DriverManager.getConnection("jdbc:mysql://localhost:3306/mydatabase",
+					"root", "123456");
 		} catch (Exception e) {
 			System.out.println("Connection could not be established");
 		}
@@ -57,8 +57,7 @@ public class StatisticsBackend {
 				created = true;
 			}
 		} catch (Exception e) {
-			System.out
-					.println("Error while creating player statistics in the database");
+			System.out.println("Error while creating player statistics in the database");
 			e.printStackTrace();
 		}
 		return created;
@@ -87,8 +86,7 @@ public class StatisticsBackend {
 				deleted = true;
 			}
 		} catch (Exception e) {
-			System.out
-					.println("Error while removing player from the statistics database");
+			System.out.println("Error while removing player from the statistics database");
 			deleted = false;
 		}
 		return deleted;
@@ -110,8 +108,7 @@ public class StatisticsBackend {
 		int score = -1;
 		try {
 			// Checks username and password in database
-			myStatement = myConnection.prepareStatement("select "
-					+ databaseField
+			myStatement = myConnection.prepareStatement("select " + databaseField
 					+ " from statisticsdatabase where username=?");
 			myStatement.setString(1, username); // Username inserted in query
 			// executes the prepared statement
@@ -120,8 +117,7 @@ public class StatisticsBackend {
 				score = Integer.parseInt(result.getString(1));
 			}
 		} catch (Exception e) {
-			System.out
-					.println("Error while getting the personal highscore from the database");
+			System.out.println("Error while getting the personal highscore from the database");
 		}
 		return score;
 	}
@@ -151,9 +147,10 @@ public class StatisticsBackend {
 			// statement
 			myStatement.setInt(1, score); // set input parameter 1
 			myStatement.setString(2, username); // set input parameter 2
-			int updatedEntries=myStatement.executeUpdate(); // execute update statement
-			if(updatedEntries==1){
-			updatedScore = true;
+			int updatedEntries = myStatement.executeUpdate(); // execute update
+																// statement
+			if (updatedEntries == 1) {
+				updatedScore = true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -198,20 +195,24 @@ public class StatisticsBackend {
 			}
 
 		} catch (Exception e) {
-			System.out
-					.println("Error while getting the global highscores from the database");
+			System.out.println("Error while getting the global highscores from the database");
 		}
 		return resultsArray;
 	}
+
 	/**
-	 * This method changes a players username in the statistics database in order to match
-	 * a change that has occured in changing a players name in the player database.
-	 * @param username players old username
-	 * @param newInfo players new username
+	 * This method changes a players username in the statistics database in
+	 * order to match a change that has occured in changing a players name in
+	 * the player database.
+	 * 
+	 * @param username
+	 *            players old username
+	 * @param newInfo
+	 *            players new username
 	 * @return true if the change has occured false otherwise
 	 */
-	
-	public boolean changeUsername(String username,	String newInfo) {
+
+	public boolean changeUsername(String username, String newInfo) {
 		try {
 
 			String query = "update " + databaseName + " set " + "username"

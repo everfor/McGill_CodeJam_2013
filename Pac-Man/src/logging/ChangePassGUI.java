@@ -21,17 +21,15 @@ import playerManipulation.ChangeProfileDetails;
  */
 public class ChangePassGUI extends ResetGUI {
 	private static JPanel changePasswordPage;
-	private static JPasswordField recoverNewPassword,
-			reenterRecoverNewPassword;
-	private static JLabel recoverNewPasswordLabel,
-			reenterRecoverNewPasswordLabel;
+	private static JPasswordField recoverNewPassword, reenterRecoverNewPassword;
+	private static JLabel recoverNewPasswordLabel, reenterRecoverNewPasswordLabel;
 	private static JButton newPassword, cancelRecover;
 	static String securityQuestionDisplayed;
 
 	/**
 	 * The method creates a panel for changeing the password
 	 * 
-	 * @return a Jpanel for this GUI 
+	 * @return a Jpanel for this GUI
 	 */
 	public static JPanel changePasswordGUI() {
 		// Create Login Panel
@@ -63,8 +61,7 @@ public class ChangePassGUI extends ResetGUI {
 		recoverNewPassword.setColumns(10);
 		reenterRecoverNewPassword.setColumns(10);
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\background.gif");
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\background.gif");
 		JLabel changePassBG = new JLabel(background);
 		changePassBG.setBounds(47, 11, 400, 150);
 		changePasswordPage.add(changePassBG);
@@ -77,12 +74,10 @@ public class ChangePassGUI extends ResetGUI {
 			// profile details in order to fullfill the command
 			public void actionPerformed(ActionEvent event) {
 				if (SignUp.passwordLength(recoverNewPassword)) {
-					if (ChangeProfileDetails.changePassword(
-							currentPlayer.getUsername(), recoverNewPassword,
-							reenterRecoverNewPassword)) {
+					if (ChangeProfileDetails.changePassword(currentPlayer.getUsername(),
+							recoverNewPassword, reenterRecoverNewPassword)) {
 						JOptionPane.showMessageDialog(null,
-								"Your password have been successfully changed",
-								"Password Changed",
+								"Your password have been successfully changed", "Password Changed",
 								JOptionPane.INFORMATION_MESSAGE);
 						recoverNewPassword.setText("");
 						reenterRecoverNewPassword.setText("");
@@ -95,11 +90,9 @@ public class ChangePassGUI extends ResetGUI {
 										"Error", JOptionPane.ERROR_MESSAGE);
 					}
 				} else {
-					JOptionPane
-							.showMessageDialog(
-									null,
-									"Password is not between 8-45 characters, please try again",
-									"Error", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null,
+							"Password is not between 8-45 characters, please try again", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

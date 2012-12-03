@@ -17,9 +17,10 @@ import logging.SignUp;
 import playerManipulation.ChangeProfileDetails;
 import playerManipulation.Player;
 import playerManipulation.VerifyPlayer;
+
 /**
- * The class deals with the entire graphical user interface related to
- * changing a players password.
+ * The class deals with the entire graphical user interface related to changing
+ * a players password.
  */
 public class ChangePassword extends ChangeProfileDetailsGUI {
 	private static JPanel changePasswordPage;
@@ -42,8 +43,7 @@ public class ChangePassword extends ChangeProfileDetailsGUI {
 		changePasswordPage.setBackground(Color.BLACK);
 		// heading gif
 		File path = new File("").getAbsoluteFile();
-		ImageIcon changePassIcon = new ImageIcon(path
-				+ "\\res\\image\\changePassword.gif");
+		ImageIcon changePassIcon = new ImageIcon(path + "\\res\\image\\changePassword.gif");
 		changePasswordPage.setLayout(null);
 		JLabel changePassHeading = new JLabel();
 		changePassHeading.setBounds(74, 11, 350, 38);
@@ -85,19 +85,14 @@ public class ChangePassword extends ChangeProfileDetailsGUI {
 				JTextField username = new JTextField(Player.getUsername());
 				if (VerifyPlayer.loginCheck(oldPassword, username)) {
 					if (SignUp.passwordLength(newPassword)) {
-						if (ChangeProfileDetails.changePassword(
-								Player.getUsername(), newPassword,
+						if (ChangeProfileDetails.changePassword(Player.getUsername(), newPassword,
 								reenterNewPassword)) {
 							if (Player.clearPlayer()) {
-								Player currentPlayer = new Player(username
-										.getText());
+								Player currentPlayer = new Player(username.getText());
 							}
-							JOptionPane
-									.showMessageDialog(
-											null,
-											"Your password have been successfully changed",
-											"Password Changed",
-											JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null,
+									"Your password have been successfully changed",
+									"Password Changed", JOptionPane.INFORMATION_MESSAGE);
 							newPassword.setText("");
 							reenterNewPassword.setText("");
 							oldPassword.setText("");
@@ -110,18 +105,15 @@ public class ChangePassword extends ChangeProfileDetailsGUI {
 											"Error", JOptionPane.ERROR_MESSAGE);
 						}
 					} else {
-						JOptionPane
-								.showMessageDialog(
-										null,
-										"Password is not between 8-45 characters, please try again",
-										"Error", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null,
+								"Password is not between 8-45 characters, please try again",
+								"Error", JOptionPane.ERROR_MESSAGE);
 					}
 				}
 
 				else {
-					JOptionPane.showMessageDialog(null,
-							"Incorrect password, Please try again", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Incorrect password, Please try again",
+							"Error", JOptionPane.ERROR_MESSAGE);
 					newPassword.setText("");
 					reenterNewPassword.setText("");
 					oldPassword.setText("");

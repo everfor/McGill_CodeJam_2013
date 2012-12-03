@@ -43,8 +43,7 @@ public class ResetGUI extends RecoverGUI {
 		resetMyPass.setBounds(252, 225, 86, 23);
 		resetToLogin = new JButton("Back");
 		resetToLogin.setBounds(148, 225, 65, 23);
-		resetSecurityQuestion = new JLabel("Security Question: " + playersSQ
-				+ " ");
+		resetSecurityQuestion = new JLabel("Security Question: " + playersSQ + " ");
 		resetSecurityQuestion.setBounds(148, 172, 287, 14);
 		resetSecurityQuestion.setForeground(Color.WHITE);
 		resetSecurityAnswer = new JLabel("Security Answer");
@@ -75,8 +74,7 @@ public class ResetGUI extends RecoverGUI {
 		resetMyPass.setActionCommand("resetMyPass");
 
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\background.gif");
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\background.gif");
 		JLabel resetBG = new JLabel(background);
 		resetBG.setBounds(47, 11, 400, 150);
 
@@ -84,16 +82,14 @@ public class ResetGUI extends RecoverGUI {
 		resetMyPass.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				if (RecoverPassword.checkSecurityQuestion(
-						currentPlayer.getUsername(), resetSecurityAnswerInput)) {
-					pagePanels.add(ChangePassGUI.changePasswordGUI(),
-							"changePassPage");
+				if (RecoverPassword.checkSecurityQuestion(currentPlayer.getUsername(),
+						resetSecurityAnswerInput)) {
+					pagePanels.add(ChangePassGUI.changePasswordGUI(), "changePassPage");
 					pages.show(pagePanels, "changePassPage");
 
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Invalid Answer, please try again", "Error",
-							JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "Invalid Answer, please try again",
+							"Error", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}

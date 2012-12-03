@@ -23,8 +23,8 @@ public class SignUpGUI extends LoggingGUI {
 	private static JTextField newUsernameInput;
 	private static JPasswordField reenterPassword, newPasswordInput;
 	private static JTextField securityQuestionInput, securityAnswerInput;
-	private static JLabel newUsernameLabel, newPasswordLabel,
-			reenterPasswordLabel, securityQuestion, securityAnswer;
+	private static JLabel newUsernameLabel, newPasswordLabel, reenterPasswordLabel,
+			securityQuestion, securityAnswer;
 	private static JButton signUpToLogin, registerButton;
 	Player currentPlayer;
 	String securityQuestionDisplayed;
@@ -86,8 +86,7 @@ public class SignUpGUI extends LoggingGUI {
 		signUpPage.add(signUpToLogin);
 		signUpPage.add(registerButton);
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\background.gif");
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\background.gif");
 		JLabel signUpBackground = new JLabel();
 		signUpBackground.setBounds(55, 10, 400, 150);
 		signUpBackground.setIcon(background);
@@ -116,16 +115,15 @@ public class SignUpGUI extends LoggingGUI {
 		registerButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				SignUp.register(newUsernameInput, newPasswordInput,
-						securityQuestionInput, securityAnswerInput,
-						reenterPassword);
+				SignUp.register(newUsernameInput, newPasswordInput, securityQuestionInput,
+						securityAnswerInput, reenterPassword);
 
-				
 			}
 		});
 		return signUpPage;
 	}
-	public static void clearFields(){
+
+	public static void clearFields() {
 		newUsernameInput.setText("");
 		newPasswordInput.setText("");
 		reenterPassword.setText("");

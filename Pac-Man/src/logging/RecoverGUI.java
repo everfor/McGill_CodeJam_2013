@@ -58,8 +58,7 @@ public class RecoverGUI extends LoggingGUI {
 		recoverUsername.setColumns(10);
 		// sets what happens when the login button is pressed
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path
-				+ "\\res\\image\\background.gif");
+		ImageIcon background = new ImageIcon(path + "\\res\\image\\background.gif");
 		JLabel recoverBackground = new JLabel();
 		recoverBackground.setBounds(47, 11, 400, 150);
 		recoverBackground.setIcon(background);
@@ -80,17 +79,15 @@ public class RecoverGUI extends LoggingGUI {
 			public void actionPerformed(ActionEvent event) {
 				if (PlayerFrontend.playerExists(recoverUsername)) {
 					currentPlayer = new Player(recoverUsername.getText());
-					securityQuestionDisplayed = currentPlayer
-							.getSecurityQuestion();
-					pagePanels.add(ResetGUI
-							.resetPasswordGUI(securityQuestionDisplayed),
+					securityQuestionDisplayed = currentPlayer.getSecurityQuestion();
+					pagePanels.add(ResetGUI.resetPasswordGUI(securityQuestionDisplayed),
 							"resetPasswordPage");
 					pages.show(pagePanels, "resetPasswordPage");
 					recoverUsername.setText("");
 				} else {
 					JOptionPane.showMessageDialog(null,
-							"Username does not exist, please try again",
-							"Error", JOptionPane.ERROR_MESSAGE);
+							"Username does not exist, please try again", "Error",
+							JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});

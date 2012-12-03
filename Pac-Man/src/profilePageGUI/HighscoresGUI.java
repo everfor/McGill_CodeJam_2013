@@ -14,10 +14,11 @@ import javax.swing.SwingConstants;
 
 import playerManipulation.Player;
 import frontendDatabase.StatisticsFrontend;
+
 /**
- * The class deals with the entire graphical user interface related to highscores.
- * Both personal and global highscores are displayed in this class. 
- *
+ * The class deals with the entire graphical user interface related to
+ * highscores. Both personal and global highscores are displayed in this class.
+ * 
  */
 public class HighscoresGUI extends ProfilePage {
 	static JPanel highscoresGUI;
@@ -41,8 +42,11 @@ public class HighscoresGUI extends ProfilePage {
 		highscoresGUI.setLayout(null);
 		// Heading
 		File path = new File("").getAbsoluteFile();
-		ImageIcon highscoresImage = new ImageIcon(path
-				+ "\\res\\image\\globalHS.gif");// TODO make a method to
+		ImageIcon highscoresImage = new ImageIcon(path + "\\res\\image\\globalHS.gif");// TODO
+																						// make
+																						// a
+																						// method
+																						// to
 		globalHSBackground = new JLabel();
 		globalHSBackground.setLocation(250, 11);
 		globalHSBackground.setSize(230, 25);
@@ -50,18 +54,17 @@ public class HighscoresGUI extends ProfilePage {
 		highscoresGUI.add(globalHSBackground);
 		// line
 		ImageIcon lineImage = new ImageIcon(path + "\\res\\image\\line.jpg");// TODO
-																			// make
-																			// a
-																			// method
-																			// to
+																				// make
+																				// a
+																				// method
+																				// to
 		line = new JLabel();
 		line.setLocation(250, 50);
 		line.setSize(10, 490);
 		line.setIcon(lineImage);
 		highscoresGUI.add(line);
 		// personal Highscores subheading
-		ImageIcon subHeading = new ImageIcon(path
-				+ "\\res\\image\\personalHS.gif");
+		ImageIcon subHeading = new ImageIcon(path + "\\res\\image\\personalHS.gif");
 		personalHSBackground = new JLabel();
 		personalHSBackground.setBounds(10, 11, 230, 25);
 		personalHSBackground.setIcon(subHeading);

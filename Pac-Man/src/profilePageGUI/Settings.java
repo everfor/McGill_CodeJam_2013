@@ -38,8 +38,11 @@ public class Settings extends ProfilePage {
 		settingsGUI.setLayout(null);
 		// Heading
 		File path = new File("").getAbsoluteFile();
-		ImageIcon settingImage = new ImageIcon(path
-				+ "\\res\\image\\settings.gif");// TODO make a method to
+		ImageIcon settingImage = new ImageIcon(path + "\\res\\image\\settings.gif");// TODO
+																					// make
+																					// a
+																					// method
+																					// to
 		settingHeader = new JLabel();
 		settingHeader.setLocation(140, 11);
 		settingHeader.setSize(230, 25);
@@ -94,7 +97,6 @@ public class Settings extends ProfilePage {
 		} else {
 			rdbtnOff.setSelected(true);
 		}
-
 		return settingsGUI;
 	}
 }
