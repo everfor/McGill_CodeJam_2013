@@ -11,6 +11,7 @@ import javax.swing.Timer;
 
 import playerManipulation.Player;
 import profilePageGUI.ProfilePage;
+import profilePageGUI.Settings;
 import frontendDatabase.StatisticsFrontend;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
@@ -100,12 +101,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 2) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				Audio.SoundPlayer("eatdot.wav");
+				if (Settings.isSoundOn()){
+					Audio.SoundPlayer("eatdot.wav");
+				}
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 3) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				Audio.SoundPlayer("eatdot.wav");
+				if (Settings.isSoundOn()){
+					Audio.SoundPlayer("eatdot.wav");
+				}
 			}
 
 			map.fruitVisibility(map.board);
@@ -114,7 +119,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				fruitEaten = true;
 				map.fruitVisible = false;
 
-				Audio.SoundPlayer("eatdot.wav");
+				if (Settings.isSoundOn()){
+					Audio.SoundPlayer("eatdot.wav");
+				}
 			}
 
 			inky.movePossible(pacman, map.board);
@@ -269,7 +276,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		pacman.setX(14);
 		pacman.setY(23);
 		pacman.livesLeft--;
-		Audio.SoundPlayer("pacman_beginning.wav");
+		if (Settings.isSoundOn()){
+			Audio.SoundPlayer("pacman_beginning.wav");
+		}
 		Game.inGame = true;
 	}
 

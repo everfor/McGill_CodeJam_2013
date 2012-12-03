@@ -10,6 +10,8 @@ import java.util.Scanner;
 import javax.swing.ImageIcon;
 import javax.swing.JPanel;
 
+import profilePageGUI.Settings;
+
 /**
  * The class creates the Map with a specific size and 
  * includes the wall, space, dot, energizer, score, lives, door and life icons
@@ -165,13 +167,18 @@ public class Map extends JPanel {
 		if(!Game.inGame){
 			if(pacman.livesLeft == 3){
 				g.drawImage(life, 18*Game.pixel, (int) (31.2*Game.pixel), null);
-				Audio.SoundPlayer("die.wav");
+				if (Settings.isSoundOn()){
+					Audio.SoundPlayer("die.wav");
+				}
 				Game.restartGame(pacman, g);
 			}
 			
 			else if(pacman.livesLeft == 2){
 				g.drawImage(null, 18*Game.pixel, (int) (31.2*Game.pixel), null);
-				Audio.SoundPlayer("die.wav");
+				if (Settings.isSoundOn()){
+					Audio.SoundPlayer("die.wav");
+				}
+				
 				Game.restartGame(pacman, g);
 			}
 			
@@ -179,7 +186,9 @@ public class Map extends JPanel {
 				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 				g.setColor(Color.RED);
 				g.drawString("Game Over", (int) (125), (int) (250));
-				Audio.SoundPlayer("die.wav");
+				if (Settings.isSoundOn()){
+					Audio.SoundPlayer("die.wav");
+				}
 				Game.endOfGame();
 			}
 		}

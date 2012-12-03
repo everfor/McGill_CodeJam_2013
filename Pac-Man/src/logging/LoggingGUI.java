@@ -53,6 +53,7 @@ public class LoggingGUI {
 		masterPage.setTitle("Pac-Man");
 		masterPage.setSize(510,622 );
 		masterPage.setLocationRelativeTo(null);
+		masterPage.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		//Building the card layout to switch between pages
 		pages = new CardLayout();
 		pagePanels = new JPanel();
