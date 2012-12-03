@@ -121,10 +121,22 @@ public class UserControls {
 	}
 
 	public static void checkCollision(Pacman pacman, Ghost ghost) {
-		if (ghost.goLeftGhost
-				&& Game.goRight
-				&& (pacman.getX() + 1 == ghost.getX() && pacman.getY() == ghost
-						.getY())) {
+		if (ghost.goLeftGhost && Game.goRight
+				&& ((int) pacman.getX() + 1 == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY())) {
+			if (!Ghost.frightened) {
+				Game.inGame = false;
+			} 
+			else {
+				if (Settings.isSoundOn()) {
+					Audio.SoundPlayer("pacman_eatghost.wav");
+				}
+				Game.setCollided(Game.getCollided() + 1);
+				ghost.setX(12);
+				ghost.setY(14);
+			}
+		} 
+		else if (ghost.goRightGhost && Game.goLeft
+				&& ((int) pacman.getX() - 1 == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY())) {
 			if (!Ghost.frightened) {
 				Game.inGame = false;
 			} else {
@@ -135,13 +147,13 @@ public class UserControls {
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} else if (ghost.goRightGhost
-				&& Game.goLeft
-				&& (pacman.getX() - 1 == ghost.getX() && pacman.getY() == ghost
-						.getY())) {
+		} 
+		else if (ghost.goUpGhost && Game.goDown
+				&& ((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() + 1 == (int) ghost.getY())) {
 			if (!Ghost.frightened) {
 				Game.inGame = false;
-			} else {
+			} 
+			else {
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
@@ -149,13 +161,13 @@ public class UserControls {
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} else if (ghost.goUpGhost
-				&& Game.goDown
-				&& (pacman.getX() == ghost.getX() && pacman.getY() + 1 == ghost
-						.getY())) {
-			if (!Ghost.frightened) {
+		} 
+		else if (ghost.goDownGhost && Game.goUp
+				&& ((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() - 1 == (int) ghost.getY())) {
+			if (!Ghost.frightened) { 
 				Game.inGame = false;
-			} else {
+			}
+			else {
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
@@ -163,25 +175,12 @@ public class UserControls {
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} else if (ghost.goDownGhost
-				&& Game.goUp
-				&& (pacman.getX() == ghost.getX() && pacman.getY() - 1 == ghost
-						.getY())) {
+		} 
+		else if ((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY()) {
 			if (!Ghost.frightened) {
 				Game.inGame = false;
-			} else {
-				if (Settings.isSoundOn()) {
-					Audio.SoundPlayer("pacman_eatghost.wav");
-				}
-				Game.setCollided(Game.getCollided() + 1);
-				ghost.setX(12);
-				ghost.setY(14);
-			}
-		} else if (pacman.getX() == ghost.getX()
-				&& pacman.getY() == ghost.getY()) {
-			if (!Ghost.frightened) {
-				Game.inGame = false;
-			} else {
+			} 
+			else {
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}

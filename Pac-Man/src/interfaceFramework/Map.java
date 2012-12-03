@@ -48,8 +48,7 @@ public class Map extends JPanel {
 		wall = new ImageIcon(path + "\\res\\image\\wall.jpg").getImage();
 		space = new ImageIcon(path + "\\res\\image\\space.jpg").getImage();
 		dot = new ImageIcon(path + "\\res\\image\\dot.jpg").getImage();
-		energizer = new ImageIcon(path + "\\res\\image\\energizer.jpg")
-				.getImage();
+		energizer = new ImageIcon(path + "\\res\\image\\energizer.jpg").getImage();
 		tunnel = new ImageIcon(path + "\\res\\image\\tunnel.jpg").getImage();
 		score = new ImageIcon(path + "\\res\\image\\score.jpg").getImage();
 		lives = new ImageIcon(path + "\\res\\image\\lives.jpg").getImage();
@@ -123,17 +122,23 @@ public class Map extends JPanel {
 			for (int x = 0; x < width; x++) {
 				if (board[x][y] == 0) {
 					g.drawImage(space, x * Game.pixel, y * Game.pixel, null);
-				} else if (board[x][y] == 1) {
+				} 
+				else if (board[x][y] == 1) {
 					g.drawImage(wall, x * Game.pixel, y * Game.pixel, null);
-				} else if (board[x][y] == 2) {
+				} 
+				else if (board[x][y] == 2) {
 					g.drawImage(dot, x * Game.pixel, y * Game.pixel, null);
-				} else if (board[x][y] == 3) {
+				} 
+				else if (board[x][y] == 3) {
 					g.drawImage(energizer, x * Game.pixel, y * Game.pixel, null);
-				} else if (board[x][y] == 5) {
+				} 
+				else if (board[x][y] == 5) {
 					g.drawImage(door, x * Game.pixel, y * Game.pixel, null);
-				} else if (board[x][y] == 4) {
+				} 
+				else if (board[x][y] == 4) {
 					g.drawImage(tunnel, x * Game.pixel, y * Game.pixel, null);
-				} else if (board[x][y] == 6) {
+				} 
+				else if (board[x][y] == 6) {
 					if (System.currentTimeMillis() <= (time + 10000)) {
 						g.drawImage(cherry, 14 * Game.pixel, 17 * Game.pixel,
 								null);
@@ -182,7 +187,7 @@ public class Map extends JPanel {
 	 */
 	public void addExtras(Pacman pacman, Graphics g) {
 		g.drawImage(score, 0, 31 * Game.pixel, null);
-		g.drawImage(lives, 16 * Game.pixel, 31 * Game.pixel, null);
+		g.drawImage(lives, 17 * Game.pixel, 31 * Game.pixel, null);
 
 		int score = Score.getScore(board);
 		g.setFont(new Font("Comic Sans MS", Font.BOLD, 27));
@@ -191,25 +196,24 @@ public class Map extends JPanel {
 				(int) (32.5 * Game.pixel));
 		g.drawString("Level:" + Game.getCurrentLevel(), (int) (9.5 * Game.pixel),
 				(int) (32.5 * Game.pixel));
-
-
+		
 		if (Game.inGame) {
 			if (pacman.livesLeft == 3) {
-				g.drawImage(life, 21 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(life, 22 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
-				g.drawImage(life, (int) (22.8 * Game.pixel),
+				g.drawImage(life, (int) (23.8 * Game.pixel),
 						(int) (31.2 * Game.pixel), null);
 			}
 
 			if (pacman.livesLeft == 2) {
-				g.drawImage(life, 21 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(life, 22 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 			}
 		}
 
 		if (!Game.inGame) {
 			if (pacman.livesLeft == 3) {
-				g.drawImage(life, 21 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(life, 22 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
@@ -218,7 +222,7 @@ public class Map extends JPanel {
 			}
 
 			else if (pacman.livesLeft == 2) {
-				g.drawImage(null, 21 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(null, 22 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
@@ -249,7 +253,7 @@ public class Map extends JPanel {
 		public static void copyBoard(){
 			for (int x = 0; x < width; x++) {
 				for (int y = 0; y < height; y++) {
-					board[x][y] =newLevelBoard[x][y];
+					board[x][y] = newLevelBoard[x][y];
 				}
 		}
 	}
