@@ -5,9 +5,10 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
+import frontendDatabase.PlayerFrontend;
+
 import backendDatabase.PlayerBackend;
 import backendDatabase.StatisticsBackend;
-import frontendDatabase.PlayerFrontend;
 
 /**
  * This class tests all of the methods of PlayerBackend. Since it is the one
@@ -73,6 +74,7 @@ public class TestBackendDatabase {
 
 	int[] highscores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int[] rank = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
+	int[] level = { 1, 2, 3, 4};
 
 	StatisticsBackend backStats = new StatisticsBackend();
 
@@ -275,6 +277,31 @@ public class TestBackendDatabase {
 			backStats.removePlayerStats(username[i]);
 			backendDatabase.removePlayer(username[i]);
 		}
+	}
+
+	/**
+	 * This method tests whether the changeProfileDetails method successfully
+	 * changes the level achieved of a player
+	 */
+	@Test
+	public void testChangeLevelDetails() {
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+
+		}
+
+		for (int i = 0; i < username.length; i++) {
+
+			assertEquals(backendDatabase.changeProfileDetails(username[i],
+					"levelachieved", level[i]), true);
+
+		}
+		for (int i = 0; i < usernameTextFields.length; i++) {
+			backendDatabase.removePlayer(username[i]);
+
+		}
+
 	}
 
 }

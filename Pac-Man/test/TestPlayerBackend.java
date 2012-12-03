@@ -5,8 +5,9 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
-import backendDatabase.PlayerBackend;
 import frontendDatabase.PlayerFrontend;
+
+import backendDatabase.*;
 
 /**
  * This class tests all of the methods of PlayerBackend. Since it is the one
@@ -71,6 +72,8 @@ public class TestPlayerBackend {
 			"username.length353" };
 
 	PlayerFrontend frontendDatabase = new PlayerFrontend();
+	
+	int[] level = { 1, 2, 3, 4};
 
 	/**
 	 * This method tests the creation of a player in the backend backendDatabase
@@ -167,6 +170,30 @@ public class TestPlayerBackend {
 			assertEquals(backendDatabase.removePlayer(passwords[i]), false);
 
 		}
+	}
+	/**
+	 * This method tests whether the changeProfileDetails method successfully
+	 * changes the level achieved of a player
+	 */
+	@Test
+	public void testChangeLevelDetails() {
+		for (int i = 0; i < username.length; i++) {
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+
+		}
+
+		for (int i = 0; i < username.length; i++) {
+
+			assertEquals(backendDatabase.changeProfileDetails(username[i],
+					"levelachieved", level[i]), true);
+
+		}
+		for (int i = 0; i < usernameTextFields.length; i++) {
+			backendDatabase.removePlayer(username[i]);
+
+		}
+
 	}
 
 }
