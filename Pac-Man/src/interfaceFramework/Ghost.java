@@ -9,14 +9,15 @@ import javax.swing.ImageIcon;
 public class Ghost {
 	int x, y;
 	File path;
-	static double debugX, debugY;
-	Image inkyImg, pinkyImg, blinkyImg, clydeImg, temp;
+	Image inkyImg, pinkyImg, blinkyImg, clydeImg;
+	static Image scared;
 	boolean goLeftGhost = true;
-	boolean goRightGhost, goUpGhost, goDownGhost, stopped;
+	boolean goRightGhost, goUpGhost, goDownGhost;
 	boolean ghostDirection[] = new boolean[4];
-	static boolean scatter = true;
-	static boolean chase;
-	boolean frightened;
+	static boolean scatter = false;
+	static boolean chase = false;
+	static boolean frightened = false;
+	static boolean turnDirection = false;
 	static int modeCounter = 0;
 	static long[] level1Timing = { 7000, 20000, 7000, 20000, 5000, 20000, 5000 };
 	static long[] level2To4Timing = { 7000, 20000, 7000, 20000, 5000, 1033000, 1/60 };
@@ -34,7 +35,7 @@ public class Ghost {
 		blinkyImg = new ImageIcon(path + "\\res\\image\\blinky.gif").getImage();
 		pinkyImg = new ImageIcon(path + "\\res\\image\\pinky.gif").getImage();
 		clydeImg = new ImageIcon(path + "\\res\\image\\clyde.gif").getImage();
-		temp = new ImageIcon(path + "\\res\\image\\target.gif").getImage();
+		scared = new ImageIcon(path + "\\res\\image\\scared.gif").getImage();
 	}
 
 	/**
@@ -99,10 +100,6 @@ public class Ghost {
 		}
 	}
 
-	public void setDirection() {
-		goRightGhost = true;
-	}
-
 	// getX() and getY() get a ghost's x and y coordinates at a specified time.
 	public int getX() {
 		return x;
@@ -110,6 +107,14 @@ public class Ghost {
 
 	public int getY() {
 		return y;
+	}
+	
+	public void setX(int newX) {
+		x = newX;
+	}
+
+	public void setY(int newY) {
+		y = newY; 
 	}
 
 	public boolean[] moveLeft() {
@@ -154,8 +159,6 @@ public class Ghost {
 
 	public double distance(double tileX, double tileY, int x, int y) {
 		double distance = 0;
-		debugX = tileX;
-		debugY = tileY;
 		distance = Math.pow(tileX - x, 2) + Math.pow(tileY - y, 2);
 		return distance;
 	}

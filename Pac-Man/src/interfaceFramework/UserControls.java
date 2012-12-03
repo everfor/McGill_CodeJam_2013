@@ -80,49 +80,82 @@ public class UserControls {
 		checkCollision(pacman, Game.clyde);
 
 		if (board[x - 1][y] == 1 && Game.storedLeft == true) {
-			result = false;
-			
+			result = false;	
 		}
+		
 		else if (board[x - 1][y] == 4 && Game.storedLeft == true){
 			pacman.moveTo(27,14);
 		}
 		
 		else if ((board[x + 1][y] == 1  || board[x + 1][y] == 5) && Game.storedRight == true) {
-			result = false;
-			
+			result = false;	
 		}
-		
+	
 		else if (board[x + 1][y] == 4 && Game.storedRight == true) {
 			pacman.moveTo(0,14);
 		}
 		
 		else if (board[x][y - 1] == 1 && Game.storedUp == true) {
 			result = false;
-			
 		}
 		
 		else if ((board[x][y + 1] == 1 || board[x][y + 1] == 5) && Game.storedDown == true) {
 			result = false;
-
 		}
+		
 		return result;
 	}
 	
 	public static void checkCollision(Pacman pacman, Ghost ghost){
 		if(ghost.goLeftGhost && Game.goRight && (pacman.getX() + 1 == ghost.getX() && pacman.getY() == ghost.getY())){
-			Game.inGame = false;
+			if(!Ghost.frightened){
+				Game.inGame = false;
+			}
+			else{
+				Game.collided++;
+				ghost.setX(12);
+				ghost.setY(14);			
+			}
 		}
 		else if(ghost.goRightGhost && Game.goLeft && (pacman.getX() - 1 == ghost.getX() && pacman.getY() == ghost.getY())){
-			Game.inGame = false;
+			if(!Ghost.frightened){
+				Game.inGame = false;
+			}
+			else{
+				Game.collided++;
+				ghost.setX(12);
+				ghost.setY(14);			
+			}
 		}
 		else if(ghost.goUpGhost && Game.goDown && (pacman.getX() == ghost.getX() && pacman.getY() + 1 == ghost.getY())){
-			Game.inGame = false;
+			if(!Ghost.frightened){
+				Game.inGame = false;
+			}
+			else{
+				Game.collided++;
+				ghost.setX(12);
+				ghost.setY(14);			
+			}
 		}
 		else if(ghost.goDownGhost && Game.goUp && (pacman.getX() == ghost.getX() && pacman.getY() - 1 == ghost.getY())){
-			Game.inGame = false;
+			if(!Ghost.frightened){
+				Game.inGame = false;
+			}
+			else{
+				Game.collided++;
+				ghost.setX(12);
+				ghost.setY(14);			
+			}
 		}
 		else if(pacman.getX() == ghost.getX() && pacman.getY() == ghost.getY()){
-			Game.inGame = false;
+			if(!Ghost.frightened){
+				Game.inGame = false;
+			}
+			else{
+				Game.collided++;
+				ghost.setX(12);
+				ghost.setY(14);			
+			}
 		}
 	}
 	
@@ -210,5 +243,4 @@ public class UserControls {
 		}
 		return result;
 	}
-
 }

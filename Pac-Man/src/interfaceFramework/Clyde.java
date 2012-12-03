@@ -1,5 +1,6 @@
 package interfaceFramework;
 
+import java.awt.Graphics;
 import java.util.Random;
 
 public class Clyde extends Ghost {
@@ -31,13 +32,31 @@ public class Clyde extends Ghost {
 		return inProximity;
 	}
 
-	public void movePossible(Pacman pacman, int[][] board) {
+	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
 		if(scatter){
 			insideProximityScatter(board);
 		}
 		else if(frightened){
 			possibleExit(board);
-			if (goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
+			g.drawImage(Ghost.scared, getX()*Game.pixel, getY()*Game.pixel, null);
+			if(goRightGhost && turnDirection){
+				move(board, moveLeft());
+				turnDirection = false;
+			}
+			else if(goLeftGhost && turnDirection){
+				move(board, moveRight());
+				turnDirection = false;
+			}
+			else if(goUpGhost && turnDirection){
+				move(board, moveDown());
+				turnDirection = false;
+			}
+			else if(goDownGhost && turnDirection){
+				move(board, moveUp());
+				turnDirection = false;
+			}
+			
+			else if (goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
 				Random generator = new Random();
 				int randomMove = generator.nextInt(3);
 	

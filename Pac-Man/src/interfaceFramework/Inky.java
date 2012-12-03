@@ -1,5 +1,6 @@
 package interfaceFramework;
 
+import java.awt.Graphics;
 import java.util.Random;
 
 public class Inky extends Ghost {
@@ -21,7 +22,7 @@ public class Inky extends Ghost {
 		super(x, y);
 	}
 
-	public void movePossible(Pacman pacman, int[][] board) {
+	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
 		possibleExit(board);
 		if(scatter){
 			if(goLeftGhost && (exitLeft || exitUp || exitDown)) {
@@ -187,7 +188,25 @@ public class Inky extends Ghost {
 			}
 		}
 		else if(frightened){
-			if (goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
+			g.drawImage(Ghost.scared, getX()*Game.pixel, getY()*Game.pixel, null);
+			if(goRightGhost && turnDirection){
+				move(board, moveLeft());
+				turnDirection = false;
+			}
+			else if(goLeftGhost && turnDirection){
+				move(board, moveRight());
+				turnDirection = false;
+			}
+			else if(goUpGhost && turnDirection){
+				move(board, moveDown());
+				turnDirection = false;
+			}
+			else if(goDownGhost && turnDirection){
+				move(board, moveUp());
+				turnDirection = false;
+			}
+			
+			else if (goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
 				Random generator = new Random();
 				int randomMove = generator.nextInt(3);
 	
