@@ -117,6 +117,7 @@ public class SignUpGUI extends LoggingGUI {
 			public void actionPerformed(ActionEvent event) {
 				SignUp.register(newUsernameInput, newPasswordInput, securityQuestionInput,
 						securityAnswerInput, reenterPassword);
+				clearFields();
 
 			}
 		});
