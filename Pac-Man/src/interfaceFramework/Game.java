@@ -143,10 +143,11 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 2) {
-				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
+				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
+				
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 3) {
