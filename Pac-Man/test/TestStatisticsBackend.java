@@ -23,6 +23,7 @@ public class TestStatisticsBackend {
 	String[] securityAnswers = { "yes it isss",
 			"the best project in the world", "i did once, maybe twice",
 			"1st one lets say january" };
+	String[] newUsername = { "teamBla", "Team55553", "My Teamz", "ONE More34" };
 
 	int[] highscores = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
 	int[] rank = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
@@ -132,6 +133,30 @@ public class TestStatisticsBackend {
 		}
 
 		for (int i = 0; i < username.length; i++) {
+			backStats.removePlayerStats(username[i]);
+			backendDatabase.removePlayer(username[i]);
+		}
+	}
+
+	/**
+	 * Tests whether the method changeUsername changes the username in the
+	 * statistics database
+	 * 
+	 */
+	@Test
+	public void testChangeUsername() {
+		for (int i = 0; i < username.length; i++) { // four fields in each of
+													// the string array
+			backendDatabase.createPlayer(username[i], passwords[i],
+					securityQuestions[i], securityAnswers[i]);
+			backStats.createPlayerStats(username[i]);
+			assertEquals(backStats.changeUsername(username[i], newUsername[i]),
+					true);
+		}
+
+		for (int i = 0; i < username.length; i++) {
+			backStats.removePlayerStats(newUsername[i]);
+			backendDatabase.removePlayer(newUsername[i]);
 			backStats.removePlayerStats(username[i]);
 			backendDatabase.removePlayer(username[i]);
 		}
