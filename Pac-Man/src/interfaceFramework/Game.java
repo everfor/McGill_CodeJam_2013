@@ -1,5 +1,7 @@
 package interfaceFramework;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -19,6 +21,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	static int tester = 0;//TODO delete
+	long time;//TODO
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
 	static Inky inky = new Inky(20, 5);
@@ -41,7 +45,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean storedDown = false;
 
 	static boolean fruitEaten = false;
-	double speed = 1.0;
+	static double speed = 1.0;
 	static Timer timer;
 
 	public Game() {
@@ -57,16 +61,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void actionPerformed(ActionEvent e) {
 		revalidate();
 		repaint();
-		if (currentLevel==1){
+		if (currentLevel == 1) {
 			Ghost.ghostModes(Ghost.level1Timing);
-		}
-		else if(currentLevel>1&&currentLevel<5){
+		} else if (currentLevel > 1 && currentLevel < 5) {
 			Ghost.ghostModes(Ghost.level2To4Timing);
-		}
-		else if(currentLevel>4){
+		} else if (currentLevel > 4) {
 			Ghost.ghostModes(Ghost.level5PlusTiming);
 		}
-		
+
 	}
 
 	public void paint(Graphics g) {
@@ -101,7 +103,23 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		map.addExtras(pacman, g);
 
 		if (inGame) {
-			if (UserControls.checkMoveForStored(pacman, map.board, tunnel)) {
+			if (Score.dotsLeft == 0) {
+				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
+				g.setColor(Color.green);
+				g.drawString("Level Completed", 60, 260 );
+				
+				if (tester==0){
+					time = System.currentTimeMillis();
+					tester++;
+				}
+				
+				else if (System.currentTimeMillis()>(time+5000)&&System.currentTimeMillis()<(time+5500)){
+					System.out.println("new game");
+				}
+				
+
+			} else if (UserControls.checkMoveForStored(pacman, map.board,
+					tunnel)) {
 				setCurrentToStored();
 				pacman.move(tunnel, speed);
 			} else if (UserControls.checkMove(pacman, map.board, tunnel)) {
@@ -133,10 +151,10 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				}
 			}
 
-			inky.movePossible(pacman, map.board);
-			pinky.movePossible(pacman, map.board);
-			blinky.movePossible(pacman, map.board);
-			clyde.movePossible(pacman, map.board);
+			// inky.movePossible(pacman, map.board);
+			// pinky.movePossible(pacman, map.board);
+			// blinky.movePossible(pacman, map.board);
+			// clyde.movePossible(pacman, map.board);
 
 		}
 
@@ -320,4 +338,5 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public static void setCurrentLevel(int currentLevel) {
 		Game.currentLevel = currentLevel;
 	}
+
 }
