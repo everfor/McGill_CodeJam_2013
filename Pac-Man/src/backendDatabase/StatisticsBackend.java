@@ -204,11 +204,11 @@ public class StatisticsBackend {
 		return resultsArray;
 	}
 	/**
-	 * 
-	 * @param username
-	 * @param databaseField
-	 * @param newInfo
-	 * @return
+	 * This method changes a players username in the statistics database in order to match
+	 * a change that has occured in changing a players name in the player database.
+	 * @param username players old username
+	 * @param newInfo players new username
+	 * @return true if the change has occured false otherwise
 	 */
 	
 	public boolean changeUsername(String username,	String newInfo) {

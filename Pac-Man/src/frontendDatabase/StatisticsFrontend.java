@@ -120,11 +120,10 @@ public class StatisticsFrontend {
 		return result;
 	}
 	/**
-	 * 
-	 * @param username
-	 * @param databaseField
-	 * @param newInfo
-	 * @return
+	 * Changes a players username in the statistics database
+	 * @param username Player's old username
+	 * @param newInfo Player's new username
+	 * @return true if change has been made, false otherwise
 	 */
 	 public static boolean changeUsernameForStatistics(String username, String newInfo) {
 			  boolean changesMade = false;
