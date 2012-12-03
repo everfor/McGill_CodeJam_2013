@@ -187,32 +187,32 @@ public class Map extends JPanel {
 	 */
 	public void addExtras(Pacman pacman, Graphics g) {
 		g.drawImage(score, 0, 31 * Game.pixel, null);
-		g.drawImage(lives, 17 * Game.pixel, 31 * Game.pixel, null);
+		g.drawImage(lives, 19 * Game.pixel, 31 * Game.pixel, null);
 
 		int score = Score.getScore(board);
 		g.setFont(new Font("Comic Sans MS", Font.BOLD, 27));
 		g.setColor(Color.yellow);
 		g.drawString("" + score, (int) (5.3 * Game.pixel), (int) (32.5 * Game.pixel));
-		g.drawString("Level:" + Game.getCurrentLevel(), (int) (9.5 * Game.pixel),
+		g.drawString("Level:" + Game.getCurrentLevel(), (int) (11.5 * Game.pixel),
 				(int) (32.5 * Game.pixel));
 		
 		if (Game.inGame) {
 			if (pacman.livesLeft == 3) {
-				g.drawImage(life, 22 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(life, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
-				g.drawImage(life, (int) (23.8 * Game.pixel),
+				g.drawImage(life, (int) (25.8 * Game.pixel),
 						(int) (31.2 * Game.pixel), null);
 			}
 
 			if (pacman.livesLeft == 2) {
-				g.drawImage(life, 22 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(life, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 			}
 		}
 
 		if (!Game.inGame) {
 			if (pacman.livesLeft == 3) {
-				g.drawImage(life, 22 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(life, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
@@ -221,7 +221,7 @@ public class Map extends JPanel {
 			}
 
 			else if (pacman.livesLeft == 2) {
-				g.drawImage(null, 22 * Game.pixel, (int) (31.2 * Game.pixel),
+				g.drawImage(null, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");

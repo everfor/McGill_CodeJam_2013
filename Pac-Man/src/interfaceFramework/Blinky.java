@@ -37,12 +37,15 @@ public class Blinky extends Ghost {
 	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
 		possibleExit(board);
 		if (scatter) {
+			Game.setNormalSpeeds();
 			// movement for scattering mode based on blinky's AI
 			shortestMovement(25, 3, board);
 		} else if (chase) {
+			Game.setNormalSpeeds();
 			// movement for chasing mode based on blinky's AI
 			shortestMovement(pacman.getX(), pacman.getY(), board);
 		} else if (frightened) {
+			Game.setFrightenedSpeeds();
 			// movement for frightened mode based on blinky's AI
 			randomMovement(board, g);
 		}

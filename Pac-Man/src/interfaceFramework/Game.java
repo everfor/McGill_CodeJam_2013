@@ -49,7 +49,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean markedTime = true;
 	static int currentLevel;
 	private static int collided = 0;
-	double speed = 0.95;
+	static double speed = 0.95;
 	static Timer timer;
 
 	public Game() {
@@ -159,8 +159,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				Ghost.scatter = false;
 				Ghost.chase = false;
 				Ghost.frightened = true;
-				speed = 1;
-				Ghost.ghostSpeed = 0.5;
+				
 				Ghost.frightenedTimeStart = System.currentTimeMillis();
 				Ghost.turnDirection = true;
 				if (Settings.isSoundOn()) {
@@ -437,5 +436,21 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	 */
 	public static void setCollided(int collided) {
 		Game.collided = collided;
+	}
+	/**
+	 * This method sets the speeds for pacman and the ghosts in
+	 * the frightened state
+	 */
+	public static void setFrightenedSpeeds(){
+		Game.speed = 1;
+		Ghost.ghostSpeed = 0.5;
+	}
+	/**
+	 * This method sets the speeds for pacman and the ghosts in
+	 * normal state
+	 */
+	public static void setNormalSpeeds(){
+		Game.speed = 0.95;
+		Ghost.ghostSpeed = 0.9;
 	}
 }

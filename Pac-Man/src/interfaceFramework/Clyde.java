@@ -48,13 +48,16 @@ public class Clyde extends Ghost {
 	 */
 	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
 		if (scatter) {
+			Game.setNormalSpeeds();
 			insideProximityScatter(board);
-		} else if (frightened) {
+		} 
+		else if (frightened) {
 			possibleExit(board);
 			randomMovement(board, g);
+			Game.setFrightenedSpeeds();
 		}
-
-		else {
+		else if (chase){
+			Game.setNormalSpeeds();
 			if (withinProximity(pacman)) {
 				insideProximityScatter(board);
 			} else {
@@ -75,7 +78,8 @@ public class Clyde extends Ghost {
 		inProximity = true;
 		if (distance(pacman.getX(), pacman.getY(), x, y - 1) >= 64) {
 			inProximity = false;
-		} else {
+		} 
+		else {
 			inProximity = true;
 		}
 		return inProximity;
@@ -108,6 +112,7 @@ public class Clyde extends Ghost {
 	public void outsideProximityChase(Pacman pacman, int[][] board) {
 		possibleExit(board);
 		shortestMovement(pacman.getX(), pacman.getY(), board);
+	
 	}
 
 }

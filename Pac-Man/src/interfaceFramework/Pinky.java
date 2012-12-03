@@ -48,12 +48,15 @@ public class Pinky extends Ghost {
 	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
 		possibleExit(board);
 		if (scatter) {
+			Game.setNormalSpeeds();
 			shortestMovement(4, 3, board);
 		} else if (chase) {
+			Game.setNormalSpeeds();
 			shortestMovement(pacman.getX() + xOffset, pacman.getY() + yOffset,
 					board);
 		} else if (frightened) {
 			randomMovement(board, g);
+			Game.setFrightenedSpeeds();
 		}
 	}
 

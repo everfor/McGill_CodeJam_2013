@@ -51,14 +51,18 @@ public class Inky extends Ghost {
 		possibleExit(board);
 		// movement for scattering mode based on inky's AI
 		if (scatter) {
+			Game.setNormalSpeeds();
 			shortestMovement(25, 28, board);
 			// movement for chasing mode based on inky's AI
 		} else if (chase) {
+			Game.setNormalSpeeds();
 			changeTargetTile();
 			shortestMovement(newXTile, newYTile, board);
+			
 			// movement for frightened mode based on blinky's AI
 		} else if (frightened) {
 			randomMovement(board, g);
+			Game.setFrightenedSpeeds();
 		}
 	}
 
