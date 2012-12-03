@@ -1,4 +1,4 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;

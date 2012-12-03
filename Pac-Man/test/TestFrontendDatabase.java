@@ -1,13 +1,14 @@
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.*;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.junit.Test;
 
-import frontendDatabase.*;
-import backendDatabase.*;
+import backendDatabase.PlayerBackend;
+import backendDatabase.StatisticsBackend;
+import frontendDatabase.PlayerFrontend;
+import frontendDatabase.StatisticsFrontend;
 
 /**
  * This class tests all of the methods found in all of the classes of the

@@ -5,9 +5,8 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
-import frontendDatabase.PlayerFrontend;
-
 import backendDatabase.PlayerBackend;
+import frontendDatabase.PlayerFrontend;
 
 /**
  * This class tests all of the methods of PlayerBackend. Since it is the one

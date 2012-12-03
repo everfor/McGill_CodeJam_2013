@@ -1,15 +1,19 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
 import org.junit.Test;
 
-import playerManipulation.*;
-
-import frontendDatabase.*;
-
-import backendDatabase.*;
+import playerManipulation.ChangeProfileDetails;
+import playerManipulation.Player;
+import playerManipulation.RecoverPassword;
+import playerManipulation.VerifyPlayer;
+import backendDatabase.PlayerBackend;
+import backendDatabase.StatisticsBackend;
+import frontendDatabase.PlayerFrontend;
+import frontendDatabase.StatisticsFrontend;
 
 /**
  * This class integrates the tests for all the methods in the classes in the

@@ -5,9 +5,9 @@ import javax.swing.JTextField;
 
 import org.junit.Test;
 
-import playerManipulation.*;
-import frontendDatabase.*;
-import backendDatabase.*;
+import playerManipulation.ChangeProfileDetails;
+import backendDatabase.PlayerBackend;
+import frontendDatabase.PlayerFrontend;
 
 /**
  * This class tests all of the methods of ChangeProfileDetails

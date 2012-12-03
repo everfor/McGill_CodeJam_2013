@@ -1,12 +1,11 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
-import logging.SignUp;
-
 import org.junit.Test;
 
+import logging.SignUp;
 import frontendDatabase.PlayerFrontend;
 
 /**
