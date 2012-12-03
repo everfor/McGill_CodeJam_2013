@@ -24,15 +24,17 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	private static final long serialVersionUID = 1L;
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
-	public static boolean guest;
 	static Inky inky = new Inky(12, 14);
-	static Blinky blinky = new Blinky(15, 14);
-	static Pinky pinky = new Pinky(14, 14);
+	static Blinky blinky = new Blinky(14, 11);
+	static Pinky pinky = new Pinky(15, 14);
 	static Clyde clyde = new Clyde(13, 14);
 	static int pixel = 18;
+	
 	static boolean inGame = true;
+	public static boolean guest;
 	static String username = Player.getUsername();
 	boolean tunnel = false;
+	
 	static boolean goLeft = true;
 	static boolean goRight = false;
 	static boolean goUp = false;
@@ -46,15 +48,16 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean fruitEaten = false;
 
 	boolean pause;
+	static boolean moved;
 	long time;
 	static boolean markedTime = true;
 	static int currentLevel;
 	private static int collided = 0;
-	static double speed = 0.95;
+	static double speed = 1;
 	static Timer timer;
 
 	public Game() {
-		timer = new Timer(130, this);
+		timer = new Timer(150, this);
 		timer.start();
 		addKeyListener(this);
 		setFocusable(true);
@@ -88,10 +91,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	public void paint(Graphics g) {
 		super.paint(g);
 		map.addMap(g);
-		System.out.println("P: " + (int) pacman.getX() + " " + (int) pacman.getY());
-		System.out.println("B: " + (int) blinky.getX() + " " + (int) blinky.getY());
-		System.out.println("B...: " + blinky.getX() + " " + blinky.getY());
-
+		
 		if (goRight) {
 			g.drawImage(pacman.image1, (int) pacman.getX() * pixel,
 					(int) pacman.getY() * pixel, null);
@@ -107,12 +107,9 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		}
 
 		g.drawImage(inky.inkyImg, (int) inky.getX() * pixel, (int) inky.getY() * pixel, null);
-		g.drawImage(pinky.pinkyImg, (int) pinky.getX() * pixel, (int) pinky.getY() * pixel,
-				null);
-		g.drawImage(blinky.blinkyImg, (int) blinky.getX() * pixel, (int) blinky.getY()
-				* pixel, null);
-		g.drawImage(clyde.clydeImg, (int) clyde.getX() * pixel, (int) clyde.getY() * pixel,
-				null);
+		g.drawImage(pinky.pinkyImg, (int) pinky.getX() * pixel, (int) pinky.getY() * pixel, null);
+		g.drawImage(blinky.blinkyImg, (int) blinky.getX() * pixel, (int) blinky.getY() * pixel, null);
+		g.drawImage(clyde.clydeImg, (int) clyde.getX() * pixel, (int) clyde.getY() * pixel, null);
 
 		map.addExtras(pacman, g);
 
@@ -127,8 +124,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 					markedTime = false;
 				}
 
-				else if (System.currentTimeMillis() > (time + 5000)
-						&& System.currentTimeMillis() < (time + 5500)) {
+				else if (System.currentTimeMillis() > (time + 5000) && System.currentTimeMillis() < (time + 5500)) {
 					int levelScore = Score.getScore();
 					Map.copyBoard();
 					Score.setLevelScore(levelScore);
@@ -178,11 +174,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 					Audio.SoundPlayer("pacman_eatfruit.wav");
 				}
 			}
-
-			inky.movePossible(pacman, map.board, g);
-			pinky.movePossible(pacman, map.board, g);
+			if(!moved){
+				pinky.move(0, -3);
+				inky.move(0, -3);
+				clyde.move(0, -3);
+				moved = true;
+			}
+			
+			else {
+				inky.movePossible(pacman, map.board, g);
+				pinky.movePossible(pacman, map.board, g);
+				clyde.movePossible(pacman, map.board, g);
+			}
 			blinky.movePossible(pacman, map.board, g);
-			clyde.movePossible(pacman, map.board, g);
 
 			if(pause){
 				pauseSession(g);
@@ -307,7 +311,8 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				goUp = false;
 				goDown = true;
 				setStoredToCurrent();
-			} else {
+			} 
+			else {
 				storedLeft = false;
 				storedRight = false;
 				storedUp = false;
@@ -345,30 +350,19 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	 * object of Graphics
 	 */
 	public static void restartGame(Pacman pacman, Graphics g) {
-		pacman.setX(14);
-		pacman.setY(23);
-		blinky.setX(15);
-		blinky.setY(14);
-		inky.setX(12);
-		inky.setY(14);
-		pinky.setX(14);
-		pinky.setY(14);
-		clyde.setX(13);
-		clyde.setY(14);
-
+		resetPositions();
 		pacman.livesLeft--;
-
 		Game.inGame = true;
 	}
 	
 	public static void resetPositions() {
 		pacman.setX(14);
 		pacman.setY(23);
-		blinky.setX(15);
-		blinky.setY(14);
+		blinky.setX(14);
+		blinky.setY(11);
 		inky.setX(12);
 		inky.setY(14);
-		pinky.setX(14);
+		pinky.setX(15);
 		pinky.setY(14);
 		clyde.setX(13);
 		clyde.setY(14);
@@ -453,7 +447,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	 * normal state
 	 */
 	public static void setNormalSpeeds(){
-		Game.speed = 0.95;
-		Ghost.ghostSpeed = 0.9;
+		Game.speed = 1;
+		Ghost.ghostSpeed = 0.95;
 	}
 }

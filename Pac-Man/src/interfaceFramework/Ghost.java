@@ -50,7 +50,7 @@ public class Ghost {
 			1 / 60 };
 	static long startTime = System.currentTimeMillis();
 	public static long frightenedTimeStart;
-	static double ghostSpeed = 0.9;
+	static double ghostSpeed = 1;
 
 	/**
 	 * The constructs creates a ghost object in the given paramaters x and y

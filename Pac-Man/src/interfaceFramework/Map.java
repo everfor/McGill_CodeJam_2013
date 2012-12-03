@@ -22,7 +22,7 @@ public class Map extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	final static int width = 28;
-	final static int height = 33; // 2 more for extra space at bottom
+	final static int height = 33; 		// 2 more for extra space at bottom
 	boolean fruitVisible = false;
 	static boolean fruitDisappear = false;
 	static boolean fruitAppear = false;
@@ -151,21 +151,17 @@ public class Map extends JPanel {
 						board[14][17] = 0;
 						g.drawImage(space, 14 * Game.pixel, 17 * Game.pixel,
 								null);
-
 					}
 
 					if (System.currentTimeMillis() <= (time2 + 10000)) {
-
-						g.drawImage(cherry, 14 * Game.pixel, 17 * Game.pixel,
-								null);
-					} else if (System.currentTimeMillis() > (time2 + 10000)
+						g.drawImage(cherry, 14 * Game.pixel, 17 * Game.pixel, null);
+					}
+					else if (System.currentTimeMillis() > (time2 + 10000)
 							&& ((System.currentTimeMillis() < (time2 + 11000)) && fruitDisappear == false)) {
 						fruitDisappear = true;
 						fruitAppear = false;
 						board[14][17] = 0;
-						g.drawImage(space, 14 * Game.pixel, 17 * Game.pixel,
-								null);
-
+						g.drawImage(space, 14 * Game.pixel, 17 * Game.pixel, null);
 					}
 				}
 			}
@@ -217,6 +213,8 @@ public class Map extends JPanel {
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
 				}
+				Game.moved = false;
+				Game.resetPositions();
 				Game.restartGame(pacman, g);
 			}
 
@@ -226,7 +224,8 @@ public class Map extends JPanel {
 				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
 				}
-
+				Game.moved = false;
+				Game.resetPositions();
 				Game.restartGame(pacman, g);
 			}
 
@@ -249,11 +248,11 @@ public class Map extends JPanel {
 			}
 		}
 	}
-		public static void copyBoard(){
-			for (int x = 0; x < width; x++) {
-				for (int y = 0; y < height; y++) {
-					board[x][y] = newLevelBoard[x][y];
-				}
+	public static void copyBoard(){
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				board[x][y] = newLevelBoard[x][y];
+			}
 		}
 	}
 
@@ -275,7 +274,8 @@ public class Map extends JPanel {
 		if ((Score.dotsLeft <= 170 && fruitDisappear == false && Game.fruitEaten == false)) {
 			board[14][17] = 6;
 			fruitVisible = true;
-		} else if (Game.fruitEaten == true) {
+		} 
+		else if (Game.fruitEaten == true) {
 			board[14][17] = 0;
 			fruitVisible = false;
 		}
