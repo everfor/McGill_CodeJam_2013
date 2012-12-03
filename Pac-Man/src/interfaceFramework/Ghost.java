@@ -170,7 +170,7 @@ public class Ghost {
 		if ((System.currentTimeMillis() > (startTime + levelTiming[modeCounter]))
 				&& !infiniteChase&&!frightened) {
 			startTime = System.currentTimeMillis();
-			System.out.println("f");
+
 			modeCounter++;
 			if (scatter) {
 				scatter = false;
@@ -181,6 +181,8 @@ public class Ghost {
 			}
 			if (modeCounter == 6) {
 				infiniteChase = true;
+				chase = true;
+				scatter = false;
 			}
 		}
 	}

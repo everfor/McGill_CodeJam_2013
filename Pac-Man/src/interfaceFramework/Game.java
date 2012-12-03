@@ -14,6 +14,7 @@ import javax.swing.Timer;
 import playerManipulation.Player;
 import profilePageGUI.ProfilePage;
 import profilePageGUI.Settings;
+import frontendDatabase.PlayerFrontend;
 import frontendDatabase.StatisticsFrontend;
 
 public class Game extends JPanel implements ActionListener, KeyListener {
@@ -24,7 +25,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
 	static Inky inky = new Inky(12, 14);
-	static Blinky blinky = new Blinky(14,14 );
+	static Blinky blinky = new Blinky(15, 14);
 	static Pinky pinky = new Pinky(14, 14);
 	static Clyde clyde = new Clyde(13, 14);
 	static int pixel = 18;
@@ -44,14 +45,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean fruitEaten = false;
 
 	long time;
-	static boolean tester = true;
-	static int currentLevel=1;
+	static boolean markedTime = true;
+	static int currentLevel=1;//TODO remove 1
 	private static int collided = 0;
 	double speed = 1.0;
 	static Timer timer;
 
 	public Game() {
-		timer = new Timer(200, this);
+		timer = new Timer(150, this);
 		timer.start();
 		addKeyListener(this);
 		setFocusable(true);
@@ -109,20 +110,21 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				g.setColor(Color.green);
 				g.drawString("Level Completed", 60, 260);
 
-				if (tester) {
+				if (markedTime) {
 					time = System.currentTimeMillis();
-					tester = false;
+					markedTime = false;
 				}
 
 				else if (System.currentTimeMillis() > (time + 5000)
 						&& System.currentTimeMillis() < (time + 5500)) {
 					int levelScore = Score.getScore();
-//					System.out.println(System.currentTimeMillis()+"   "+time);
-					Map.board = Map.newLevelBoard;
+				
+					Map.copyBoard();
 					Score.setLevelScore(levelScore);
 					setCurrentLevel(getCurrentLevel() + 1);
 					Map.addMap(g);
-					tester = true;
+					resetPositions();
+					markedTime = true;
 					inGame = true;
 				}
 
@@ -143,15 +145,15 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 3) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				Ghost.scatterWhilefrightened =Ghost.scatter;
-				Ghost.chaseWhilefrightened =Ghost.chase;
-				Ghost.scatter=false;
+				Ghost.scatterWhilefrightened = Ghost.scatter;
+				Ghost.chaseWhilefrightened = Ghost.chase;
+				Ghost.scatter = false;
 				Ghost.chase = false;
 				Ghost.frightened = true;
-				Ghost.frightenedTimeStart= System.currentTimeMillis();
+				Ghost.frightenedTimeStart = System.currentTimeMillis();
 				Ghost.turnDirection = true;
 				if (Settings.isSoundOn()) {
-					Audio.SoundPlayer("eatdot.wav");
+					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
 			}
 
@@ -162,7 +164,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				map.fruitVisible = false;
 
 				if (Settings.isSoundOn()) {
-					Audio.SoundPlayer("eatdot.wav");
+					Audio.SoundPlayer("pacman_eatfruit.wav");
 				}
 			}
 
@@ -289,9 +291,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			break;
 
-		case KeyEvent.VK_N:
-			inGame = false;
-			break;
 
 		case KeyEvent.VK_P:
 			pauseSession();
@@ -312,13 +311,23 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	}
 
 	public static void restartGame(Pacman pacman, Graphics g) {
+		resetPositions();
+
+		pacman.livesLeft--;
+
+		Game.inGame = true;
+	}
+	public static void resetPositions(){
 		pacman.setX(14);
 		pacman.setY(23);
-		pacman.livesLeft--;
-		if (Settings.isSoundOn()) {
-			Audio.SoundPlayer("pacman_beginning.wav");
-		}
-		Game.inGame = true;
+		blinky.setX(15);
+		blinky.setY(14);
+		inky.setX(12);
+		inky.setY(14);
+		pinky.setX(14);
+		pinky.setY(14);
+		clyde.setX(13);
+		clyde.setY(14);
 	}
 
 	public void setCurrentToStored() {
@@ -338,9 +347,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 	public static void endOfGame() {
 		StatisticsFrontend.setHighScores(username, Score.getScore());
+		if(Player.getLevelAchieved()<Game.currentLevel){
+			PlayerFrontend.changeProfileDetails(username, "levelAchieved", Game.currentLevel);
+		}
 		Player currentPlayer = new Player(username);
 		Maze.setMazeVisiblity(false);
 		ProfilePage.setMasterPageVisiblity(true);
+		
 	}
 
 	public static int getCurrentLevel() {

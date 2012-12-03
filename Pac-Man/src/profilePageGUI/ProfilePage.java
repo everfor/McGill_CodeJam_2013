@@ -101,12 +101,10 @@ public class ProfilePage extends LoggingGUI {
 		playGame.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent event) {
-				setMasterPageVisiblity(false);
-				Score.setScore(0);
-				Score.setLevelScore(0);
-				Game.setCollided(0);
-				Game.setCurrentLevel(1);//TODO change this to selection
-				Maze.main(null);
+				pagePanels.add(
+						LevelSelectGUI.levelSelectPage(),"LevelSelectGUI");
+				pages.show(pagePanels, "LevelSelectGUI");
+
 			}
 		});
 
