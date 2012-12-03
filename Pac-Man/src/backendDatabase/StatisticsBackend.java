@@ -203,4 +203,28 @@ public class StatisticsBackend {
 		}
 		return resultsArray;
 	}
+	/**
+	 * 
+	 * @param username
+	 * @param databaseField
+	 * @param newInfo
+	 * @return
+	 */
+	
+	public boolean changeUsername(String username,	String newInfo) {
+		try {
+
+			String query = "update " + databaseName + " set " + "username"
+					+ " = ? where username = ? ";
+			myStatement = myConnection.prepareStatement(query); // create a
+			// statement
+			myStatement.setString(1, newInfo); // set input parameter 1
+			myStatement.setString(2, username); // set input parameter 2
+			myStatement.executeUpdate(); // execute update statement
+			return true;
+		} catch (Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
 }

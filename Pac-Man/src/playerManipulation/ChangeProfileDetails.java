@@ -51,6 +51,7 @@ public class ChangeProfileDetails {
 	public static boolean changeUsername(String username, String newUsername) {
 		return PlayerFrontend.changeProfileDetails(username, "username",
 				newUsername);
+		
 
 	}
 

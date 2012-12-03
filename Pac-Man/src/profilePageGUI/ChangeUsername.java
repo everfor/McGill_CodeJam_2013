@@ -13,6 +13,8 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTextField;
 
+import frontendDatabase.StatisticsFrontend;
+
 import logging.SignUp;
 import playerManipulation.ChangeProfileDetails;
 import playerManipulation.Player;
@@ -93,6 +95,7 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 						if (SignUp.usernameLength(newUsername)) {
 							if (ChangeProfileDetails.changeUsername(
 									Player.getUsername(), newUsername.getText())) {
+								if(StatisticsFrontend.changeUsernameForStatistics(Player.getUsername(), newUsername.getText())){
 								if (Player.clearPlayer()) {
 									Player currentPlayer = new Player(
 											newUsername.getText());
@@ -106,6 +109,7 @@ public class ChangeUsername extends ChangeProfileDetailsGUI {
 								newUsername.setText("");
 								password.setText("");
 								pages.show(pagePanels, "profilePage");
+							}
 							}
 						} else {
 							JOptionPane

@@ -119,4 +119,19 @@ public class StatisticsFrontend {
 		result = database.removePlayerStats(username);
 		return result;
 	}
+	/**
+	 * 
+	 * @param username
+	 * @param databaseField
+	 * @param newInfo
+	 * @return
+	 */
+	 public static boolean changeUsernameForStatistics(String username, String newInfo) {
+			  boolean changesMade = false;
+			  StatisticsBackend database;
+			  database = new StatisticsBackend();
+			  // trying to perform to make the changes for a username
+			  changesMade = (database.changeUsername(username, newInfo));
+			  return changesMade;
+			 }
 }
