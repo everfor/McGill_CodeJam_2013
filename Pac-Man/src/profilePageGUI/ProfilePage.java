@@ -1,5 +1,6 @@
 package profilePageGUI;
 
+import interfaceFramework.Game;
 import interfaceFramework.Maze;
 
 import java.awt.Color;
@@ -100,6 +101,7 @@ public class ProfilePage extends LoggingGUI {
 			@Override
 			public void actionPerformed(ActionEvent event) {
 				setMasterPageVisiblity(false);
+				Game.setCurrentLevel(1);//TODO change this to selection
 				Maze.main(null);
 			}
 		});

@@ -34,7 +34,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 	static boolean goUp = false;
 	static boolean goDown = false;
 	static boolean stop = false;
-
+	private static int currentLevel;
 	static boolean storedLeft = false;
 	static boolean storedRight = true;
 	static boolean storedUp = false;
@@ -50,14 +50,23 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		addKeyListener(this);
 		setFocusable(true);
 		inGame = true;
-		pacman.livesLeft=3;
-	
+		pacman.livesLeft = 3;
+
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		revalidate();
 		repaint();
-		Ghost.ghostModes();
+		if (currentLevel==1){
+			Ghost.ghostModes(Ghost.level1Timing);
+		}
+		else if(currentLevel>1&&currentLevel<5){
+			Ghost.ghostModes(Ghost.level2To4Timing);
+		}
+		else if(currentLevel>4){
+			Ghost.ghostModes(Ghost.level5PlusTiming);
+		}
+		
 	}
 
 	public void paint(Graphics g) {
@@ -101,14 +110,14 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 2) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				if (Settings.isSoundOn()){
+				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
 			}
 
 			if (map.board[(int) pacman.getX()][(int) pacman.getY()] == 3) {
 				map.board[(int) pacman.getX()][(int) pacman.getY()] = 0;
-				if (Settings.isSoundOn()){
+				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
 			}
@@ -119,7 +128,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 				fruitEaten = true;
 				map.fruitVisible = false;
 
-				if (Settings.isSoundOn()){
+				if (Settings.isSoundOn()) {
 					Audio.SoundPlayer("eatdot.wav");
 				}
 			}
@@ -135,7 +144,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			g.dispose();
 		}
 	}
-
 
 	// method that pauses game (used by p keypress)
 	public void pauseSession() {
@@ -276,7 +284,7 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		pacman.setX(14);
 		pacman.setY(23);
 		pacman.livesLeft--;
-		if (Settings.isSoundOn()){
+		if (Settings.isSoundOn()) {
 			Audio.SoundPlayer("pacman_beginning.wav");
 		}
 		Game.inGame = true;
@@ -303,5 +311,13 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 		Maze.setMazeVisiblity(false);
 		ProfilePage.setMasterPageVisiblity(true);
 
+	}
+
+	public static int getCurrentLevel() {
+		return currentLevel;
+	}
+
+	public static void setCurrentLevel(int currentLevel) {
+		Game.currentLevel = currentLevel;
 	}
 }

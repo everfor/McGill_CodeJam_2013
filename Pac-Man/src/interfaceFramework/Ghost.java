@@ -19,6 +19,8 @@ public class Ghost {
 	boolean frightened;
 	static int modeCounter = 0;
 	static long[] level1Timing = { 7000, 20000, 7000, 20000, 5000, 20000, 5000 };
+	static long[] level2To4Timing = { 7000, 20000, 7000, 20000, 5000, 1033000, 1/60 };
+	static long[] level5PlusTiming = { 5000, 20000, 5000, 20000, 5000, 1037000, 1/60 };
 	static long startTime = System.currentTimeMillis();
 	static boolean infiniteChase;
 
@@ -158,8 +160,8 @@ public class Ghost {
 		return distance;
 	}
 
-	public static void ghostModes() {
-		if ((System.currentTimeMillis() > (startTime + level1Timing[modeCounter]))
+	public static void ghostModes(long []levelTiming) {
+		if ((System.currentTimeMillis() > (startTime + levelTiming[modeCounter]))
 				&& !infiniteChase) {
 			startTime = System.currentTimeMillis();
 			modeCounter++;
