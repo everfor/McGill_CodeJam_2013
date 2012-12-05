@@ -3,8 +3,8 @@ package interfaceFramework;
 import java.awt.Graphics;
 
 /**
- * The class is for the clyde ghost. The class incorporates all the attributes that
- * this ghost should have
+ * The class is for the clyde ghost. The class incorporates all the attributes that this ghost
+ * should have
  * 
  */
 public class Clyde extends Ghost {
@@ -34,33 +34,32 @@ public class Clyde extends Ghost {
 	}
 
 	/**
-	 * Checking the possible movements that can be done by clyde if it is in
-	 * scatter,chase or frightened move
+	 * Checking the possible movements that can be done by clyde if it is in scatter,chase or
+	 * frightened move
 	 * 
 	 * @param pacman
 	 *            the pacman object which is active in the game
 	 * @param board
-	 *            the board where the game is being played on by pacman and the
-	 *            ghosts
+	 *            the board where the game is being played on by pacman and the ghosts
 	 * @param g
-	 *            the graphics which takes care of the drawing of different
-	 *            functions
+	 *            the graphics which takes care of the drawing of different functions
 	 */
 	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
-		if (scatter) {
+		if(scatter) {
 			Game.setNormalSpeeds();
 			insideProximityScatter(board);
-		} 
-		else if (frightened) {
+		}
+		else if(frightened) {
 			possibleExit(board);
 			randomMovement(board, g);
 			Game.setFrightenedSpeeds();
 		}
-		else if (chase){
+		else if(chase) {
 			Game.setNormalSpeeds();
-			if (withinProximity(pacman)) {
+			if(withinProximity(pacman)) {
 				insideProximityScatter(board);
-			} else {
+			}
+			else {
 				outsideProximityChase(pacman, board);
 			}
 		}
@@ -70,15 +69,14 @@ public class Clyde extends Ghost {
 	 * Checking if pacman is close enough to clyde
 	 * 
 	 * @param pacman
-	 *            the pacman object which needs to be checked in relation to
-	 *            clyde
+	 *            the pacman object which needs to be checked in relation to clyde
 	 * @return true if pacman is within clyde's proximity, false otherwise
 	 */
 	public boolean withinProximity(Pacman pacman) {
 		inProximity = true;
-		if (distance(pacman.getX(), pacman.getY(), x, y - 1) >= 64) {
+		if(distance(pacman.getX(), pacman.getY(), x, y - 1) >= 64) {
 			inProximity = false;
-		} 
+		}
 		else {
 			inProximity = true;
 		}
@@ -86,12 +84,12 @@ public class Clyde extends Ghost {
 	}
 
 	/**
-	 * Checking if pacman is close enough to clyde, when in scatter mode. checks
-	 * for clyde for possible exists towards pacman
+	 * Checking if pacman is close enough to clyde, when in scatter mode. checks for clyde for
+	 * possible exists towards pacman
 	 * 
 	 * @param board
-	 *            the board so that clyde can check the distance from pacman,
-	 *            when clyde is in scatter mode
+	 *            the board so that clyde can check the distance from pacman, when clyde is in
+	 *            scatter mode
 	 * @return
 	 */
 	public void insideProximityScatter(int[][] board) {
@@ -100,19 +98,20 @@ public class Clyde extends Ghost {
 	}
 
 	/**
-	 * Checking if pacman is close enough to clyde, when in scatter mode. checks
-	 * for clyde for possible exists towards pacman
+	 * Checking if pacman is close enough to clyde, when in scatter mode. checks for clyde for
+	 * possible exists towards pacman
 	 * 
 	 * @param board
-	 *            the board so that clyde can check the distance from pacman,
-	 *            when clyde is in chase mode
-	 * @param board the board which pacman and clyde are on
+	 *            the board so that clyde can check the distance from pacman, when clyde is in chase
+	 *            mode
+	 * @param board
+	 *            the board which pacman and clyde are on
 	 * @return
 	 */
 	public void outsideProximityChase(Pacman pacman, int[][] board) {
 		possibleExit(board);
 		shortestMovement(pacman.getX(), pacman.getY(), board);
-	
+
 	}
 
 }

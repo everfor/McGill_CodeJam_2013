@@ -8,10 +8,9 @@ import java.util.Random;
 import javax.swing.ImageIcon;
 
 /**
- * The class representing the ghost object and all the attributes a ghost should
- * have. The class takes care of the movement of the ghosts, and all the
- * calculations the general ghost AI needs to perform relating to the position,
- * speed and other factors
+ * The class representing the ghost object and all the attributes a ghost should have. The class
+ * takes care of the movement of the ghosts, and all the calculations the general ghost AI needs to
+ * perform relating to the position, speed and other factors
  * 
  */
 public class Ghost {
@@ -20,6 +19,7 @@ public class Ghost {
 	File path;
 	Image inkyImg, pinkyImg, blinkyImg, clydeImg;
 	static Image scared;
+	double debugX, debugY;
 	boolean exitLeft = false;
 	boolean exitRight = false;
 	boolean exitUp = false;
@@ -44,13 +44,15 @@ public class Ghost {
 	static int modeCounter = 0;
 	// timing arrays for different levels
 	static long[] level1Timing = { 7000, 20000, 7000, 20000, 5000, 20000, 5000 };
-	static long[] level2To4Timing = { 7000, 20000, 7000, 20000, 5000, 1033000,
-			1 / 60 };
-	static long[] level5PlusTiming = { 5000, 20000, 5000, 20000, 5000, 1037000,
-			1 / 60 };
+	static long[] level2To4Timing = { 7000, 20000, 7000, 20000, 5000, 1033000, 1 / 60 };
+	static long[] level5PlusTiming = { 5000, 20000, 5000, 20000, 5000, 1037000, 1 / 60 };
 	static long startTime = System.currentTimeMillis();
 	public static long frightenedTimeStart;
 	static double ghostSpeed = 1;
+
+	//TODO REMOVE
+	Image temp1, temp2, temp3, temp4;
+
 
 	/**
 	 * The constructs creates a ghost object in the given paramaters x and y
@@ -71,12 +73,18 @@ public class Ghost {
 		pinkyImg = new ImageIcon(path + "\\res\\image\\pinky.gif").getImage();
 		clydeImg = new ImageIcon(path + "\\res\\image\\clyde.gif").getImage();
 		scared = new ImageIcon(path + "\\res\\image\\scared.gif").getImage();
+		
+		//TODO REMOVE
+		temp1 = new ImageIcon(path + "\\res\\image\\targetc.jpg").getImage();
+		temp2 = new ImageIcon(path + "\\res\\image\\targetp.jpg").getImage();
+		temp3 = new ImageIcon(path + "\\res\\image\\targetb.jpg").getImage();
+		temp4 = new ImageIcon(path + "\\res\\image\\targeti.jpg").getImage();
+
 	}
 
 	/**
-	 * This is the method that controls the ghosts movement. It is set to
-	 * random, however before a ghosts movements it checks if the upcoming
-	 * coordinates are occupied with a wall.
+	 * This is the method that controls the ghosts movement. It is set to random, however before a
+	 * ghosts movements it checks if the upcoming coordinates are occupied with a wall.
 	 * 
 	 * @param ghost
 	 *            used to find a particular ghost's coordinates
@@ -89,14 +97,13 @@ public class Ghost {
 	}
 
 	/**
-	 * The method takes care of the movement if the ghost based on its direction
-	 * and relative to the board where all the objects exist
+	 * The method takes care of the movement if the ghost based on its direction and relative to the
+	 * board where all the objects exist
 	 * 
 	 * @param board
 	 *            the board where the game is played by all the objects
 	 * @param ghostDirection
-	 *            the direction where the ghost is going towards, relative to
-	 *            the computer screen
+	 *            the direction where the ghost is going towards, relative to the computer screen
 	 */
 	public void move(int board[][], boolean[] ghostDirection) {
 		goLeftGhost = ghostDirection[0];
@@ -105,49 +112,54 @@ public class Ghost {
 		goDownGhost = ghostDirection[3];
 		// if the ghost is going left, it will stop if there is a wall, jump of
 		// there is a tunnel or continue with its speed in the current direction
-		if (goLeftGhost) {
-			if (board[(int) (x - 1)][(int) y] == 1) {
+		if(goLeftGhost) {
+			if(board[(int) (x - 1)][(int) y] == 1) {
 				x += 0;
 				goLeftGhost = false;
-			} else if (board[(int) (x - 1)][(int) y] == 4) {
+			}
+			else if(board[(int) (x - 1)][(int) y] == 4) {
 				x += 25;
-			} else {
+			}
+			else {
 				x -= 1 * ghostSpeed;
 			}
 		}
 
 		// if the ghost is going right, it will stop if there is a wall, jump of
 		// there is a tunnel or continue with its speed in the current direction
-		else if (goRightGhost) {
-			if (board[(int) (x + 1)][(int) y] == 1) {
+		else if(goRightGhost) {
+			if(board[(int) (x + 1)][(int) y] == 1) {
 				x += 0;
 				goRightGhost = false;
-			} else if (board[(int) (x + 1)][(int) y] == 4) {
+			}
+			else if(board[(int) (x + 1)][(int) y] == 4) {
 				x -= 25;
-			} else {
+			}
+			else {
 				x += 1 * ghostSpeed;
 			}
 		}
 
 		// if the ghost is going up, it will stop if there is a wall, or
 		// continue with its speed in the current direction
-		else if (goUpGhost) {
-			if (board[(int) x][(int) (y - 1)] == 1) {
+		else if(goUpGhost) {
+			if(board[(int) x][(int) (y - 1)] == 1) {
 				y += 0;
 				goUpGhost = false;
-			} else {
+			}
+			else {
 				y -= 1 * ghostSpeed;
 			}
 		}
 
 		// if the ghost is going down, it will stop if there is a wall, or
 		// continue with its speed in the current direction
-		else if (goDownGhost) {
-			if (board[(int) x][(int) (y + 1)] == 1
-					|| board[(int) x][(int) (y + 1)] == 5) {
+		else if(goDownGhost) {
+			if(board[(int) x][(int) (y + 1)] == 1 || board[(int) x][(int) (y + 1)] == 5) {
 				y += 0;
 				goDownGhost = false;
-			} else {
+			}
+			else {
 				y += 1 * ghostSpeed;
 			}
 		}
@@ -266,35 +278,35 @@ public class Ghost {
 	 */
 	public double distance(double tileX, double tileY, double x, double y) {
 		double distance = 0;
+		debugX = tileX;
+		debugY = tileY;
 		distance = Math.pow(tileX - x, 2) + Math.pow(tileY - y, 2);
 		return distance;
 	}
 
 	/**
-	 * the method ensures the timing in which each ghost needs to stay in
-	 * different modes liek scatter,chase and infinitechase
+	 * the method ensures the timing in which each ghost needs to stay in different modes liek
+	 * scatter,chase and infinitechase
 	 * 
 	 * @param levelTiming
-	 *            the timing for each mode for the ghost depending on the
-	 *            factors like level
+	 *            the timing for each mode for the ghost depending on the factors like level
 	 */
 	public static void ghostModes(long[] levelTiming) {
 		// checking if the necessary time has passed
-		if ((System.currentTimeMillis() > (startTime + levelTiming[modeCounter]))
-				&& !infiniteChase && !frightened) {
+		if((System.currentTimeMillis() > (startTime + levelTiming[modeCounter])) && !infiniteChase && !frightened) {
 
 			startTime = System.currentTimeMillis();
 			modeCounter++;
 
-			if (scatter) {
+			if(scatter) {
 				scatter = false;
 				chase = true;
 			}
-			else if (chase) {
+			else if(chase) {
 				chase = false;
 				scatter = true;
 			}
-			if (modeCounter == 6) {
+			if(modeCounter == 6) {
 				infiniteChase = true;
 				chase = true;
 				scatter = false;
@@ -303,8 +315,7 @@ public class Ghost {
 	}
 
 	/**
-	 * the method finds the shortest movement from where it is to the target x,y
-	 * tile in the board
+	 * the method finds the shortest movement from where it is to the target x,y tile in the board
 	 * 
 	 * @param targetX
 	 *            the target x tile where the ghost should go
@@ -314,161 +325,170 @@ public class Ghost {
 	 *            the board where the objects are placed on
 	 */
 	public void shortestMovement(double targetX, double targetY, int[][] board) {
-		if (goLeftGhost && (exitLeft || exitUp || exitDown)) {
-			if (exitUp) {
-				distanceUp = distance(targetX, targetY, x, y - 1);
-			} 
-			else {
-				distanceUp = 9999;
-			}
-			if (exitLeft) {
-				distanceLeft = distance(targetX, targetY, x - 1, y);
-			} 
-			else {
-				distanceLeft = 9999;
-			}
-			if (exitDown) {
-				distanceDown = distance(targetX, targetY, x, y + 1);
-			} 
-			else {
-				distanceDown = 9999;
-			}
-
-			if (distanceUp <= Math.min(distanceLeft, distanceDown)) {
-				move(board, moveUp());
-			} 
-			else if (distanceLeft <= Math.min(distanceUp, distanceDown)) {
-				move(board, moveLeft());
-			}
-			else if (distanceDown <= Math.min(distanceUp, distanceLeft)) {
-				move(board, moveDown());
-			} 
-			else {
-				move(board, moveRight());
-			}
-		}
-
-		if (goRightGhost && (exitRight || exitUp || exitDown)) {
-			if (exitUp) {
-				distanceUp = distance(targetX, targetY, x, y - 1);
-			} 
-			else {
-				distanceUp = 9999;
-			}
-			if (exitRight) {
-				distanceRight = distance(targetX, targetY, x + 1, y);
-			}
-			else {
-				distanceRight = 9999;
-			}
-			if (exitDown) {
-				distanceDown = distance(targetX, targetY, x, y + 1);
-			} 
-			else {
-				distanceDown = 9999;
-			}
-
-			if (distanceUp <= Math.min(distanceRight, distanceDown)) {
-				move(board, moveUp());
-			} 
-			else if (distanceDown <= Math.min(distanceUp, distanceRight)) {
-				move(board, moveDown());
-			} 
-			else if (distanceRight <= Math.min(distanceUp, distanceDown)) {
-				move(board, moveRight());
-			} 
-			else {
-				move(board, moveLeft());
-			}
-		}
-
-		if (goUpGhost && (exitLeft || exitRight || exitUp)) {
-			if (exitUp) {
+		// decides which turn should the ghost take to catch the pacman using the shortest path
+		// when it reaches an intersection when travelling right to left. and then takes that turn.
+		if(goLeftGhost && (exitLeft || exitUp || exitDown)) {
+			if(exitUp) {
 				distanceUp = distance(targetX, targetY, x, y - 1);
 			}
 			else {
 				distanceUp = 9999;
 			}
-			if (exitLeft) {
+			if(exitLeft) {
 				distanceLeft = distance(targetX, targetY, x - 1, y);
-			} 
+			}
 			else {
 				distanceLeft = 9999;
 			}
-			if (exitRight) {
-				distanceRight = distance(targetX, targetY, x + 1, y);
-			} 
-			else {
-				distanceRight = 9999;
-			}
-
-			if (distanceUp <= Math.min(distanceLeft, distanceRight)) {
-				move(board, moveUp());
-			}
-			else if (distanceLeft <= Math.min(distanceUp, distanceRight)) {
-				move(board, moveLeft());
-			} 
-			else if (distanceRight <= Math.min(distanceUp, distanceLeft)) {
-				move(board, moveRight());
-			}
-			else {
-				move(board, moveDown());
-			}
-		}
-
-		if (goDownGhost && (exitLeft || exitUp || exitRight)) {
-			if (exitRight) {
-				distanceRight = distance(targetX, targetY, x + 1, y);
-			} else {
-				distanceRight = 9999;
-			}
-			if (exitLeft) {
-				distanceLeft = distance(targetX, targetY, x - 1, y);
-			} else {
-				distanceLeft = 9999;
-			}
-			if (exitDown) {
+			if(exitDown) {
 				distanceDown = distance(targetX, targetY, x, y + 1);
-			} else {
+			}
+			else {
 				distanceDown = 9999;
 			}
 
-			if (distanceLeft <= Math.min(distanceRight, distanceDown)) {
+			if(distanceUp <= Math.min(distanceLeft, distanceDown)) {
+				move(board, moveUp());
+			}
+			else if(distanceLeft <= Math.min(distanceUp, distanceDown)) {
 				move(board, moveLeft());
-			} 
-			else if (distanceDown <= Math.min(distanceRight, distanceLeft)) {
+			}
+			else if(distanceDown <= Math.min(distanceUp, distanceLeft)) {
 				move(board, moveDown());
-			} 
-			else if (distanceRight <= Math.min(distanceLeft, distanceDown)) {
+			}
+			else {
 				move(board, moveRight());
-			} 
+			}
+		}
+
+		// decides which turn should the ghost take to catch the pacman using the shortest path
+		// when it reaches an intersection when travelling left to right. and then takes that turn.
+		if(goRightGhost && (exitRight || exitUp || exitDown)) {
+			if(exitUp) {
+				distanceUp = distance(targetX, targetY, x, y - 1);
+			}
+			else {
+				distanceUp = 9999;
+			}
+			if(exitRight) {
+				distanceRight = distance(targetX, targetY, x + 1, y);
+			}
+			else {
+				distanceRight = 9999;
+			}
+			if(exitDown) {
+				distanceDown = distance(targetX, targetY, x, y + 1);
+			}
+			else {
+				distanceDown = 9999;
+			}
+
+			if(distanceUp <= Math.min(distanceRight, distanceDown)) {
+				move(board, moveUp());
+			}
+			else if(distanceDown <= Math.min(distanceUp, distanceRight)) {
+				move(board, moveDown());
+			}
+			else if(distanceRight <= Math.min(distanceUp, distanceDown)) {
+				move(board, moveRight());
+			}
+			else {
+				move(board, moveLeft());
+			}
+		}
+
+		// decides which turn should the ghost take to catch the pacman using the shortest path
+		// when it reaches an intersection when travelling down to up. and then takes that turn.
+		if(goUpGhost && (exitLeft || exitRight || exitUp)) {
+			if(exitUp) {
+				distanceUp = distance(targetX, targetY, x, y - 1);
+			}
+			else {
+				distanceUp = 9999;
+			}
+			if(exitLeft) {
+				distanceLeft = distance(targetX, targetY, x - 1, y);
+			}
+			else {
+				distanceLeft = 9999;
+			}
+			if(exitRight) {
+				distanceRight = distance(targetX, targetY, x + 1, y);
+			}
+			else {
+				distanceRight = 9999;
+			}
+
+			if(distanceUp <= Math.min(distanceLeft, distanceRight)) {
+				move(board, moveUp());
+			}
+			else if(distanceLeft <= Math.min(distanceUp, distanceRight)) {
+				move(board, moveLeft());
+			}
+			else if(distanceRight <= Math.min(distanceUp, distanceLeft)) {
+				move(board, moveRight());
+			}
+			else {
+				move(board, moveDown());
+			}
+		}
+
+		// decides which turn should the ghost take to catch the pacman using the shortest path
+		// when it reaches an intersection when travelling up to down. and then takes that turn.
+		if(goDownGhost && (exitLeft || exitUp || exitRight)) {
+			if(exitRight) {
+				distanceRight = distance(targetX, targetY, x + 1, y);
+			}
+			else {
+				distanceRight = 9999;
+			}
+			if(exitLeft) {
+				distanceLeft = distance(targetX, targetY, x - 1, y);
+			}
+			else {
+				distanceLeft = 9999;
+			}
+			if(exitDown) {
+				distanceDown = distance(targetX, targetY, x, y + 1);
+			}
+			else {
+				distanceDown = 9999;
+			}
+
+			if(distanceLeft <= Math.min(distanceRight, distanceDown)) {
+				move(board, moveLeft());
+			}
+			else if(distanceDown <= Math.min(distanceRight, distanceLeft)) {
+				move(board, moveDown());
+			}
+			else if(distanceRight <= Math.min(distanceLeft, distanceDown)) {
+				move(board, moveRight());
+			}
 			else {
 				move(board, moveUp());
 			}
 		}
-
-		if (!goDownGhost && !goUpGhost && !goLeftGhost && !goRightGhost) {
+		// decides which turn should the ghost take to catch the pacman using the shortest path
+		// when it reaches a wall. and then takes that turn.
+		if(!goDownGhost && !goUpGhost && !goLeftGhost && !goRightGhost) {
 			distanceRight = distance(targetX, targetY, x + 1, y);
 			distanceLeft = distance(targetX, targetY, x - 1, y);
 			distanceUp = distance(targetX, targetY, x, y - 1);
 			distanceDown = distance(targetX, targetY, x, y + 1);
 
-			if (distanceLeft <= Math.min(Math.min(distanceRight, distanceDown),
-					distanceUp) && exitLeft) {
+			if(distanceLeft <= Math.min(Math.min(distanceRight, distanceDown), distanceUp)
+					&& exitLeft) {
 				goLeftGhost = true;
-			} 
-			else if (distanceDown <= Math.min(
-					Math.min(distanceRight, distanceLeft), distanceUp)
+			}
+			else if(distanceDown <= Math.min(Math.min(distanceRight, distanceLeft), distanceUp)
 					&& exitDown) {
 				goDownGhost = true;
-			} 
-			else if (distanceRight <= Math.min(
-					Math.min(distanceLeft, distanceDown), distanceUp)
+			}
+			else if(distanceRight <= Math.min(Math.min(distanceLeft, distanceDown), distanceUp)
 					&& exitRight) {
 				goRightGhost = true;
-			} 
-			else if (distanceUp <= Math.min(
-					Math.min(distanceLeft, distanceRight), distanceDown)
+			}
+			else if(distanceUp <= Math.min(Math.min(distanceLeft, distanceRight), distanceDown)
 					&& exitUp) {
 				goUpGhost = true;
 			}
@@ -484,164 +504,173 @@ public class Ghost {
 	 *            the graphics that draws them
 	 */
 	public void randomMovement(int[][] board, Graphics g) {
-		if (System.currentTimeMillis() > Ghost.frightenedTimeStart + 5000) {
+		if(System.currentTimeMillis() > Ghost.frightenedTimeStart + 5000) {
 			frightened = false;
 			chase = Ghost.chaseWhilefrightened;
 			scatter = Ghost.scatterWhilefrightened;
 			startTime -= 5000;
 		}
-		g.drawImage(Ghost.scared, (int) getX() * Game.pixel, (int) getY()
-				* Game.pixel, null);
+		g.drawImage(Ghost.scared, (int) getX() * Game.pixel, (int) getY() * Game.pixel, null);
 
-		if (goRightGhost && turnDirection) {
+		if(goRightGhost && turnDirection) {
 			move(board, moveLeft());
 			turnDirection = false;
 		}
 
-		else if (goLeftGhost && turnDirection) {
+		else if(goLeftGhost && turnDirection) {
 			move(board, moveRight());
 			turnDirection = false;
 		}
 
-		else if (goUpGhost && turnDirection) {
+		else if(goUpGhost && turnDirection) {
 			move(board, moveDown());
 			turnDirection = false;
 		}
 
-		else if (goDownGhost && turnDirection) {
+		else if(goDownGhost && turnDirection) {
 			move(board, moveUp());
 			turnDirection = false;
 		}
 
-		else if (goUpGhost
-				&& ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
+		else if(goUpGhost && ((exitLeft && exitUp) || (exitLeft && exitRight) || (exitRight && exitUp))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
-			if (randomMove == 0 && exitLeft) {
+			if(randomMove == 0 && exitLeft) {
 				move(board, moveLeft());
-			} else if (randomMove == 1 && exitUp) {
+			}
+			else if(randomMove == 1 && exitUp) {
 				move(board, moveUp());
-			} else if (randomMove == 2 && exitRight) {
+			}
+			else if(randomMove == 2 && exitRight) {
 				move(board, moveRight());
 			}
 		}
 
-		else if (goUpGhost) {
-			if (exitUp) {
+		else if(goUpGhost) {
+			if(exitUp) {
 				move(board, moveUp());
-			} else if (exitLeft) {
+			}
+			else if(exitLeft) {
 				move(board, moveLeft());
-			} else if (exitRight) {
+			}
+			else if(exitRight) {
 				move(board, moveRight());
 			}
 		}
 
-		else if (goLeftGhost
-				&& ((exitLeft && exitUp) || (exitLeft && exitDown) || (exitDown && exitUp))) {
+		else if(goLeftGhost && ((exitLeft && exitUp) || (exitLeft && exitDown) || (exitDown && exitUp))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
-			if (randomMove == 0 && exitLeft) {
+			if(randomMove == 0 && exitLeft) {
 				move(board, moveLeft());
-			} else if (randomMove == 1 && exitUp) {
+			}
+			else if(randomMove == 1 && exitUp) {
 				move(board, moveUp());
-			} else if (randomMove == 2 && exitDown) {
+			}
+			else if(randomMove == 2 && exitDown) {
 				move(board, moveDown());
 			}
 		}
 
-		else if (goLeftGhost) {
-			if (exitUp) {
+		else if(goLeftGhost) {
+			if(exitUp) {
 				move(board, moveUp());
-			} else if (exitLeft) {
+			}
+			else if(exitLeft) {
 				move(board, moveLeft());
-			} else if (exitDown) {
+			}
+			else if(exitDown) {
 				move(board, moveDown());
 			}
 		}
 
-		else if (goDownGhost
-				&& ((exitLeft && exitDown) || (exitLeft && exitRight) || (exitDown && exitRight))) {
+		else if(goDownGhost && ((exitLeft && exitDown) || (exitLeft && exitRight) || (exitDown && exitRight))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
-			if (randomMove == 0 && exitLeft) {
+			if(randomMove == 0 && exitLeft) {
 				move(board, moveLeft());
-			} else if (randomMove == 1 && exitRight) {
+			}
+			else if(randomMove == 1 && exitRight) {
 				move(board, moveRight());
-			} else if (randomMove == 2 && exitDown) {
+			}
+			else if(randomMove == 2 && exitDown) {
 				move(board, moveDown());
 			}
 		}
 
-		else if (goDownGhost) {
-			if (exitDown) {
+		else if(goDownGhost) {
+			if(exitDown) {
 				move(board, moveDown());
-			} else if (exitLeft) {
+			}
+			else if(exitLeft) {
 				move(board, moveLeft());
-			} else if (exitRight) {
+			}
+			else if(exitRight) {
 				move(board, moveRight());
 			}
 		}
 
-		else if (goRightGhost
-				&& ((exitRight && exitUp) || (exitRight && exitDown) || (exitDown && exitUp))) {
+		else if(goRightGhost && ((exitRight && exitUp) || (exitRight && exitDown) || (exitDown && exitUp))) {
 			Random generator = new Random();
 			int randomMove = generator.nextInt(3);
 
-			if (randomMove == 0 && exitRight) {
+			if(randomMove == 0 && exitRight) {
 				move(board, moveRight());
-			} else if (randomMove == 1 && exitUp) {
+			}
+			else if(randomMove == 1 && exitUp) {
 				move(board, moveUp());
-			} else if (randomMove == 2 && exitDown) {
+			}
+			else if(randomMove == 2 && exitDown) {
 				move(board, moveDown());
 			}
 		}
 
-		else if (goRightGhost) {
-			if (exitUp) {
+		else if(goRightGhost) {
+			if(exitUp) {
 				move(board, moveUp());
-			} else if (exitRight) {
+			}
+			else if(exitRight) {
 				move(board, moveRight());
-			} else if (exitDown) {
+			}
+			else if(exitDown) {
 				move(board, moveDown());
 			}
 		}
 	}
 
 	/**
-	 * the method finds which possible exits, out of the four ones, are
-	 * available for a ghost
+	 * the method finds which possible exits, out of the four ones, are available for a ghost
 	 * 
 	 * @param board
 	 *            the board where the objects are interacting on
 	 */
 	public void possibleExit(int[][] board) {
-		if (board[(int) x][(int) y] != 4) {
-			if (board[(int) (x - 1)][(int) y] != 1) {
+		if(board[(int) x][(int) y] != 4) {
+			if(board[(int) (x - 1)][(int) y] != 1) {
 				exitLeft = true;
 			}
-			if (board[(int) (x - 1)][(int) y] == 1) {
+			if(board[(int) (x - 1)][(int) y] == 1) {
 				exitLeft = false;
 			}
-			if (board[(int) (x + 1)][(int) y] != 1) {
+			if(board[(int) (x + 1)][(int) y] != 1) {
 				exitRight = true;
 			}
-			if (board[(int) (x + 1)][(int) y] == 1) {
+			if(board[(int) (x + 1)][(int) y] == 1) {
 				exitRight = false;
 			}
-			if (board[(int) x][(int) (y - 1)] != 1) {
+			if(board[(int) x][(int) (y - 1)] != 1) {
 				exitUp = true;
 			}
-			if (board[(int) x][(int) (y - 1)] == 1) {
+			if(board[(int) x][(int) (y - 1)] == 1) {
 				exitUp = false;
 			}
-			if (board[(int) x][(int) (y + 1)] != 1) {
+			if(board[(int) x][(int) (y + 1)] != 1) {
 				exitDown = true;
 			}
-			if (board[(int) x][(int) (y + 1)] == 1
-					|| board[(int) x][(int) (y + 1)] == 5) {
+			if(board[(int) x][(int) (y + 1)] == 1 || board[(int) x][(int) (y + 1)] == 5) {
 				exitDown = false;
 			}
 		}

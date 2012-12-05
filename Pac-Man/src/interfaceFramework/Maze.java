@@ -7,8 +7,7 @@ import java.awt.GridBagLayout;
 import javax.swing.JFrame;
 
 /**
- * The class sets the basic Grid guidelines and initializes the contents for the
- * Frame of the Maze
+ * The class sets the basic Grid guidelines and initializes the contents for the Frame of the Maze
  * 
  * 
  */
@@ -25,7 +24,8 @@ public class Maze {
 				try {
 					Maze window = new Maze();
 					window.frame.setVisible(true);
-				} catch (Exception e) {
+				}
+				catch (Exception e) {
 					e.printStackTrace();
 				}
 			}

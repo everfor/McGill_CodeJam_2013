@@ -3,8 +3,8 @@ package interfaceFramework;
 import java.awt.Graphics;
 
 /**
- * The class is for the pinky ghost. The class incorporates all the attributes that
- * this ghost should have
+ * The class is for the pinky ghost. The class incorporates all the attributes that this ghost
+ * should have
  * 
  */
 public class Pinky extends Ghost {
@@ -33,28 +33,28 @@ public class Pinky extends Ghost {
 	}
 
 	/**
-	 * Checking the possible movements that can be done by pinky if it is in
-	 * scatter,chase or frightened move
+	 * Checking the possible movements that can be done by pinky if it is in scatter,chase or
+	 * frightened move
 	 * 
 	 * @param pacman
 	 *            the pacman object which is active in the game
 	 * @param board
-	 *            the board where the game is being played on by pacman and the
-	 *            ghosts
+	 *            the board where the game is being played on by pacman and the ghosts
 	 * @param g
-	 *            the graphics which takes care of the drawing of different
-	 *            functions
+	 *            the graphics which takes care of the drawing of different functions
 	 */
 	public void movePossible(Pacman pacman, int[][] board, Graphics g) {
 		possibleExit(board);
-		if (scatter) {
+		if(scatter) {
 			Game.setNormalSpeeds();
 			shortestMovement(4, 3, board);
-		} else if (chase) {
+		}
+		else if(chase) {
 			Game.setNormalSpeeds();
-			shortestMovement(pacman.getX() + xOffset, pacman.getY() + yOffset,
-					board);
-		} else if (frightened) {
+			changeOffset();
+			shortestMovement(pacman.getX() + xOffset, pacman.getY() + yOffset, board);
+		}
+		else if(frightened) {
 			randomMovement(board, g);
 			Game.setFrightenedSpeeds();
 		}
@@ -64,16 +64,19 @@ public class Pinky extends Ghost {
 	 * Changing pinky's offset based on pinky's ai and the position of pacman
 	 */
 	public static void changeOffset() {
-		if (Game.goRight) {
+		if(Game.goRight) {
 			xOffset = 4;
 			yOffset = 0;
-		} else if (Game.goLeft) {
+		}
+		else if(Game.goLeft) {
 			xOffset = -4;
 			yOffset = 0;
-		} else if (Game.goDown) {
+		}
+		else if(Game.goDown) {
 			xOffset = 0;
 			yOffset = 4;
-		} else if (Game.goUp) {
+		}
+		else if(Game.goUp) {
 			xOffset = -4;
 			yOffset = -4;
 		}

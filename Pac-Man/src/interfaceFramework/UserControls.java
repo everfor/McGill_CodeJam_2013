@@ -3,16 +3,14 @@ package interfaceFramework;
 import profilePageGUI.Settings;
 
 /**
- * The UserControls class checks if it's possible for pacman to move in a
- * specific direction
+ * The UserControls class checks if it's possible for pacman to move in a specific direction
  */
 
 public class UserControls {
 	/**
-	 * The checkMove() method checks if it is possible for pacman to move in a
-	 * specific direction by ensuring that there is no wall in his upcoming
-	 * position. If a wall exists the method returns a false boolean to prevent
-	 * pacman from changing directions.
+	 * The checkMove() method checks if it is possible for pacman to move in a specific direction by
+	 * ensuring that there is no wall in his upcoming position. If a wall exists the method returns
+	 * a false boolean to prevent pacman from changing directions.
 	 * 
 	 * @param pacman
 	 *            used to find his coordinates
@@ -20,8 +18,7 @@ public class UserControls {
 	 *            used to check upcoming coordinates for walls
 	 * @param tunnel
 	 *            boolean that indicates if the specified coordinate is a tunnel
-	 * @return a boolean specifying whether Pac-Man can move in a specfic
-	 *         direction or not
+	 * @return a boolean specifying whether Pac-Man can move in a specfic direction or not
 	 */
 
 	public static boolean checkMove(Pacman pacman, int board[][], boolean tunnel) {
@@ -34,30 +31,29 @@ public class UserControls {
 		checkCollision(pacman, Game.inky);
 		checkCollision(pacman, Game.clyde);
 
-		if (board[x - 1][y] == 1 && Game.goLeft == true) {
+		if(board[x - 1][y] == 1 && Game.goLeft == true) {
 			result = false;
 			Game.stop = false;
-		} else if (board[x - 1][y] == 4 && Game.goLeft == true) {
+		}
+		else if(board[x - 1][y] == 4 && Game.goLeft == true) {
 			pacman.moveTo(27, 14);
 		}
 
-		else if ((board[x + 1][y] == 1 || board[x + 1][y] == 5)
-				&& Game.goRight == true) {
+		else if((board[x + 1][y] == 1 || board[x + 1][y] == 5) && Game.goRight == true) {
 			result = false;
 			Game.stop = false;
 		}
 
-		else if (board[x + 1][y] == 4 && Game.goRight == true) {
+		else if(board[x + 1][y] == 4 && Game.goRight == true) {
 			pacman.moveTo(0, 14);
 		}
 
-		else if (board[x][y - 1] == 1 && Game.goUp == true) {
+		else if(board[x][y - 1] == 1 && Game.goUp == true) {
 			result = false;
 			Game.stop = false;
 		}
 
-		else if ((board[x][y + 1] == 1 || board[x][y + 1] == 5)
-				&& Game.goDown == true) {
+		else if((board[x][y + 1] == 1 || board[x][y + 1] == 5) && Game.goDown == true) {
 			result = false;
 			Game.stop = false;
 		}
@@ -65,10 +61,10 @@ public class UserControls {
 	}
 
 	/**
-	 * The checkMoveForStored() method checks if it is possible for pacman to
-	 * move in a direction that has previously been inputted, by ensuring that
-	 * there is no wall in his upcoming position. If a wall exists the method
-	 * returns a false boolean to prevent pacman from changing directions.
+	 * The checkMoveForStored() method checks if it is possible for pacman to move in a direction
+	 * that has previously been inputted, by ensuring that there is no wall in his upcoming
+	 * position. If a wall exists the method returns a false boolean to prevent pacman from changing
+	 * directions.
 	 * 
 	 * @param pacman
 	 *            used to find his coordinates
@@ -76,12 +72,10 @@ public class UserControls {
 	 *            used to check upcoming coordinates for walls
 	 * @param tunnel
 	 *            boolean that indicates if the specified coordinate is a tunnel
-	 * @return a boolean specifying whether Pac-Man can move in a specfic
-	 *         direction or not
+	 * @return a boolean specifying whether Pac-Man can move in a specfic direction or not
 	 */
 
-	public static boolean checkMoveForStored(Pacman pacman, int board[][],
-			boolean tunnel) {
+	public static boolean checkMoveForStored(Pacman pacman, int board[][], boolean tunnel) {
 		boolean result = true;
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
@@ -91,29 +85,27 @@ public class UserControls {
 		checkCollision(pacman, Game.inky);
 		checkCollision(pacman, Game.clyde);
 
-		if (board[x - 1][y] == 1 && Game.storedLeft == true) {
+		if(board[x - 1][y] == 1 && Game.storedLeft == true) {
 			result = false;
 		}
 
-		else if (board[x - 1][y] == 4 && Game.storedLeft == true) {
+		else if(board[x - 1][y] == 4 && Game.storedLeft == true) {
 			pacman.moveTo(27, 14);
 		}
 
-		else if ((board[x + 1][y] == 1 || board[x + 1][y] == 5)
-				&& Game.storedRight == true) {
+		else if((board[x + 1][y] == 1 || board[x + 1][y] == 5) && Game.storedRight == true) {
 			result = false;
 		}
 
-		else if (board[x + 1][y] == 4 && Game.storedRight == true) {
+		else if(board[x + 1][y] == 4 && Game.storedRight == true) {
 			pacman.moveTo(0, 14);
 		}
 
-		else if (board[x][y - 1] == 1 && Game.storedUp == true) {
+		else if(board[x][y - 1] == 1 && Game.storedUp == true) {
 			result = false;
 		}
 
-		else if ((board[x][y + 1] == 1 || board[x][y + 1] == 5)
-				&& Game.storedDown == true) {
+		else if((board[x][y + 1] == 1 || board[x][y + 1] == 5) && Game.storedDown == true) {
 			result = false;
 		}
 
@@ -121,67 +113,68 @@ public class UserControls {
 	}
 
 	public static void checkCollision(Pacman pacman, Ghost ghost) {
-		if (ghost.goLeftGhost && Game.goRight
+		if(ghost.goLeftGhost && Game.goRight
 				&& ((int) pacman.getX() + 1 == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY())) {
-			if (!Ghost.frightened) {
+			if(!Ghost.frightened) {
 				Game.inGame = false;
-			} 
+			}
 			else {
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
 				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} 
-		else if (ghost.goRightGhost && Game.goLeft
+		}
+		else if(ghost.goRightGhost && Game.goLeft
 				&& ((int) pacman.getX() - 1 == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY())) {
-			if (!Ghost.frightened) {
+			if(!Ghost.frightened) {
 				Game.inGame = false;
-			} else {
-				if (Settings.isSoundOn()) {
+			}
+			else {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
 				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} 
-		else if (ghost.goUpGhost && Game.goDown
+		}
+		else if(ghost.goUpGhost && Game.goDown
 				&& ((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() + 1 == (int) ghost.getY())) {
-			if (!Ghost.frightened) {
+			if(!Ghost.frightened) {
 				Game.inGame = false;
-			} 
+			}
 			else {
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
 				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} 
-		else if (ghost.goDownGhost && Game.goUp
+		}
+		else if(ghost.goDownGhost && Game.goUp
 				&& ((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() - 1 == (int) ghost.getY())) {
-			if (!Ghost.frightened) { 
+			if(!Ghost.frightened) {
 				Game.inGame = false;
 			}
 			else {
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
 				Game.setCollided(Game.getCollided() + 1);
 				ghost.setX(12);
 				ghost.setY(14);
 			}
-		} 
-		else if ((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY()) {
-			if (!Ghost.frightened) {
+		}
+		else if((int) pacman.getX() == (int) ghost.getX() && (int) pacman.getY() == (int) ghost.getY()) {
+			if(!Ghost.frightened) {
 				Game.inGame = false;
-			} 
+			}
 			else {
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("pacman_eatghost.wav");
 				}
 				Game.setCollided(Game.getCollided() + 1);
@@ -192,10 +185,9 @@ public class UserControls {
 	}
 
 	/**
-	 * The moveLeft() method checks if it is possible for pacman to move left by
-	 * ensuring that there is no wall in his upcoming position. If a wall exists
-	 * the method returns a false boolean to prevent pacman from changing
-	 * directions.
+	 * The moveLeft() method checks if it is possible for pacman to move left by ensuring that there
+	 * is no wall in his upcoming position. If a wall exists the method returns a false boolean to
+	 * prevent pacman from changing directions.
 	 * 
 	 * @param pacman
 	 *            used to find his coordinates
@@ -209,17 +201,16 @@ public class UserControls {
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
 
-		if (board[x - 1][y] == 1 || board[x - 1][y] == 5) {
+		if(board[x - 1][y] == 1 || board[x - 1][y] == 5) {
 			result = false;
 		}
 		return result;
 	}
 
 	/**
-	 * The moveRight() method checks if it is possible for pacman to move Right
-	 * by ensuring that there is no wall in his upcoming position. If a wall
-	 * exists the method returns a false boolean to prevent pacman from changing
-	 * directions.
+	 * The moveRight() method checks if it is possible for pacman to move Right by ensuring that
+	 * there is no wall in his upcoming position. If a wall exists the method returns a false
+	 * boolean to prevent pacman from changing directions.
 	 * 
 	 * @param pacman
 	 *            used to find his coordinates
@@ -232,17 +223,16 @@ public class UserControls {
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
 
-		if (board[x + 1][y] == 1 || board[x + 1][y] == 5) {
+		if(board[x + 1][y] == 1 || board[x + 1][y] == 5) {
 			result = false;
 		}
 		return result;
 	}
 
 	/**
-	 * The moveUp() method checks if it is possible for pacman to move up by
-	 * ensuring that there is no wall in his upcoming position. If a wall exists
-	 * the method returns a false boolean to prevent pacman from changing
-	 * directions.
+	 * The moveUp() method checks if it is possible for pacman to move up by ensuring that there is
+	 * no wall in his upcoming position. If a wall exists the method returns a false boolean to
+	 * prevent pacman from changing directions.
 	 * 
 	 * @param pacman
 	 *            used to find his coordinates
@@ -255,17 +245,16 @@ public class UserControls {
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
 
-		if (board[x][y - 1] == 1) {
+		if(board[x][y - 1] == 1) {
 			result = false;
 		}
 		return result;
 	}
 
 	/**
-	 * The moveDown() method checks if it is possible for pacman to move down by
-	 * ensuring that there is no wall in his upcoming position. If a wall exists
-	 * the method returns a false boolean to prevent pacman from changing
-	 * directions.
+	 * The moveDown() method checks if it is possible for pacman to move down by ensuring that there
+	 * is no wall in his upcoming position. If a wall exists the method returns a false boolean to
+	 * prevent pacman from changing directions.
 	 * 
 	 * @param pacman
 	 *            used to find his coordinates
@@ -278,7 +267,7 @@ public class UserControls {
 		int x = (int) pacman.getX();
 		int y = (int) pacman.getY();
 
-		if (board[x][y + 1] == 1 || board[x][y + 1] == 5) {
+		if(board[x][y + 1] == 1 || board[x][y + 1] == 5) {
 			result = false;
 		}
 		return result;

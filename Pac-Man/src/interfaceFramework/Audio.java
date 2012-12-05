@@ -10,8 +10,8 @@ import javax.sound.sampled.DataLine;
 import javax.sound.sampled.SourceDataLine;
 
 /**
- * This class handles getting audio files and playing them. This is used for all
- * parts of gameplay where sound is needed.
+ * This class handles getting audio files and playing them. This is used for all parts of gameplay
+ * where sound is needed.
  */
 public class Audio {
 	static File path, audio;
@@ -20,8 +20,8 @@ public class Audio {
 	static DataLine.Info DataLineInfo;
 
 	/**
-	 * This method uses the filename to get an audio file with the same name and
-	 * play it It is used by other classes to play audio during gameplay.
+	 * This method uses the filename to get an audio file with the same name and play it It is used
+	 * by other classes to play audio during gameplay.
 	 * 
 	 * @param fileName
 	 *            this is the name of the audio file to be played
@@ -34,13 +34,15 @@ public class Audio {
 
 		try {
 			line.close();
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 
 		}
 
 		try {
 			audioInputStream = AudioSystem.getAudioInputStream(audio);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		audioFormat = audioInputStream.getFormat();
@@ -50,7 +52,8 @@ public class Audio {
 		try {
 			line = (SourceDataLine) AudioSystem.getLine(DataLineInfo);
 			line.open(audioFormat);
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 		line.start();
@@ -61,11 +64,12 @@ public class Audio {
 
 			try {
 				bytesRead = audioInputStream.read(data, 0, data.length);
-			} catch (IOException e) {
+			}
+			catch (IOException e) {
 				e.printStackTrace();
 			}
 
-			if (bytesRead >= 0) {
+			if(bytesRead >= 0) {
 				int numberOfBytesWritten = line.write(data, 0, bytesRead);
 			}
 		}

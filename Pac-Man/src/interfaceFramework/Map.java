@@ -13,8 +13,8 @@ import javax.swing.JPanel;
 import profilePageGUI.Settings;
 
 /**
- * The class creates the Map with a specific size and includes the wall, space,
- * dot, energizer, score, lives, door and life icons
+ * The class creates the Map with a specific size and includes the wall, space, dot, energizer,
+ * score, lives, door and life icons
  * 
  */
 public class Map extends JPanel {
@@ -22,7 +22,7 @@ public class Map extends JPanel {
 	private static final long serialVersionUID = 1L;
 
 	final static int width = 28;
-	final static int height = 33; 		// 2 more for extra space at bottom
+	final static int height = 33; // 2 more for extra space at bottom
 	boolean fruitVisible = false;
 	static boolean fruitDisappear = false;
 	static boolean fruitAppear = false;
@@ -40,8 +40,8 @@ public class Map extends JPanel {
 	static Scanner reader;
 
 	/**
-	 * Constructor which adds the images corresponding to: wall, space, dot,
-	 * energizer, score, lives, door
+	 * Constructor which adds the images corresponding to: wall, space, dot, energizer, score,
+	 * lives, door
 	 */
 	public Map() {
 		path = new File("").getAbsoluteFile();
@@ -69,14 +69,15 @@ public class Map extends JPanel {
 	public void open() {
 		try {
 			reader = new Scanner(new File(path + "\\res\\raw\\Map.txt"));
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * Method that imports the data found in the reader from the open method to
-	 * an array which it then uses to create a rough structure of the board
+	 * Method that imports the data found in the reader from the open method to an array which it
+	 * then uses to create a rough structure of the board
 	 * 
 	 * @return void
 	 */
@@ -108,9 +109,9 @@ public class Map extends JPanel {
 	}
 
 	/**
-	 * Method that creates the map using the rough structure made in the read
-	 * method It resolves that structure into one with pixels and graphics
-	 * corresponding to: wall, space, dot, energizer and door
+	 * Method that creates the map using the rough structure made in the read method It resolves
+	 * that structure into one with pixels and graphics corresponding to: wall, space, dot,
+	 * energizer and door
 	 * 
 	 * @param g
 	 *            Graphics object
@@ -120,30 +121,31 @@ public class Map extends JPanel {
 	public static void addMap(Graphics g) {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
-				if (board[x][y] == 0) {
+				if(board[x][y] == 0) {
 					g.drawImage(space, x * Game.pixel, y * Game.pixel, null);
-				} 
-				else if (board[x][y] == 1) {
+				}
+				else if(board[x][y] == 1) {
 					g.drawImage(wall, x * Game.pixel, y * Game.pixel, null);
-				} 
-				else if (board[x][y] == 2) {
+				}
+				else if(board[x][y] == 2) {
 					g.drawImage(dot, x * Game.pixel, y * Game.pixel, null);
-				} 
-				else if (board[x][y] == 3) {
+				}
+				else if(board[x][y] == 3) {
 					g.drawImage(energizer, x * Game.pixel, y * Game.pixel, null);
-				} 
-				else if (board[x][y] == 5) {
+				}
+				else if(board[x][y] == 5) {
 					g.drawImage(door, x * Game.pixel, y * Game.pixel, null);
-				} 
-				else if (board[x][y] == 4) {
+				}
+				else if(board[x][y] == 4) {
 					g.drawImage(tunnel, x * Game.pixel, y * Game.pixel, null);
-				} 
-				else if (board[x][y] == 6) {
-					if (System.currentTimeMillis() <= (time + 10000)) {
+				}
+				else if(board[x][y] == 6) {
+					if(System.currentTimeMillis() <= (time + 10000)) {
 						g.drawImage(cherry, 14 * Game.pixel, 17 * Game.pixel,
 								null);
 
-					} else if (System.currentTimeMillis() > (time + 10000)
+					}
+					else if(System.currentTimeMillis() > (time + 10000)
 							&& ((System.currentTimeMillis() < (time + 11000)) && fruitDisappear == false)) {
 
 						fruitDisappear = true;
@@ -153,10 +155,10 @@ public class Map extends JPanel {
 								null);
 					}
 
-					if (System.currentTimeMillis() <= (time2 + 10000)) {
+					if(System.currentTimeMillis() <= (time2 + 10000)) {
 						g.drawImage(cherry, 14 * Game.pixel, 17 * Game.pixel, null);
 					}
-					else if (System.currentTimeMillis() > (time2 + 10000)
+					else if(System.currentTimeMillis() > (time2 + 10000)
 							&& ((System.currentTimeMillis() < (time2 + 11000)) && fruitDisappear == false)) {
 						fruitDisappear = true;
 						fruitAppear = false;
@@ -169,15 +171,14 @@ public class Map extends JPanel {
 	}
 
 	/**
-	 * Method that creates additional graphics: score and lives It also sets
-	 * fonts, colours and appropriate images for these particular graphics
+	 * Method that creates additional graphics: score and lives It also sets fonts, colours and
+	 * appropriate images for these particular graphics
 	 * 
 	 * @param g
 	 *            Graphics object
 	 * 
 	 * @param pacman
-	 *            object of Pacman class, which contains the charactersitics of
-	 *            Pac-Man
+	 *            object of Pacman class, which contains the charactersitics of Pac-Man
 	 * 
 	 * @return void
 	 */
@@ -191,26 +192,26 @@ public class Map extends JPanel {
 		g.drawString("" + score, (int) (5.3 * Game.pixel), (int) (32.5 * Game.pixel));
 		g.drawString("Level:" + Game.getCurrentLevel(), (int) (11.5 * Game.pixel),
 				(int) (32.5 * Game.pixel));
-		
-		if (Game.inGame) {
-			if (pacman.livesLeft == 3) {
+
+		if(Game.inGame) {
+			if(pacman.livesLeft == 3) {
 				g.drawImage(life, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 				g.drawImage(life, (int) (25.8 * Game.pixel),
 						(int) (31.2 * Game.pixel), null);
 			}
 
-			if (pacman.livesLeft == 2) {
+			if(pacman.livesLeft == 2) {
 				g.drawImage(life, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
 			}
 		}
 
-		if (!Game.inGame) {
-			if (pacman.livesLeft == 3) {
+		if(!Game.inGame) {
+			if(pacman.livesLeft == 3) {
 				g.drawImage(life, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
 				}
 				Game.moved = false;
@@ -218,10 +219,10 @@ public class Map extends JPanel {
 				Game.restartGame(pacman, g);
 			}
 
-			else if (pacman.livesLeft == 2) {
+			else if(pacman.livesLeft == 2) {
 				g.drawImage(null, 24 * Game.pixel, (int) (31.2 * Game.pixel),
 						null);
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
 				}
 				Game.moved = false;
@@ -229,11 +230,11 @@ public class Map extends JPanel {
 				Game.restartGame(pacman, g);
 			}
 
-			else if (pacman.livesLeft == 1) {
+			else if(pacman.livesLeft == 1) {
 				g.setFont(new Font("Comic Sans MS", Font.BOLD, 50));
 				g.setColor(Color.RED);
 				g.drawString("Game Over", (int) (125), (int) (250));
-				if (Settings.isSoundOn()) {
+				if(Settings.isSoundOn()) {
 					Audio.SoundPlayer("die.wav");
 				}
 				Game.endOfGame();
@@ -248,7 +249,8 @@ public class Map extends JPanel {
 			}
 		}
 	}
-	public static void copyBoard(){
+
+	public static void copyBoard() {
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < height; y++) {
 				board[x][y] = newLevelBoard[x][y];
@@ -257,8 +259,8 @@ public class Map extends JPanel {
 	}
 
 	/**
-	 * Method that checks the number of dots and puts the fruit on the board
-	 * when 70 dots and 170 dots are consumed
+	 * Method that checks the number of dots and puts the fruit on the board when 70 dots and 170
+	 * dots are consumed
 	 * 
 	 * @param board
 	 * 
@@ -266,30 +268,31 @@ public class Map extends JPanel {
 	 */
 	public void fruitVisibility(int[][] board) {
 		// 70 dots consumed
-		if (Score.dotsLeft == 170) {
+		if(Score.dotsLeft == 170) {
 			time = System.currentTimeMillis();
 			fruitDisappear = false;
 		}
 
-		if ((Score.dotsLeft <= 170 && fruitDisappear == false && Game.fruitEaten == false)) {
+		if((Score.dotsLeft <= 170 && fruitDisappear == false && Game.fruitEaten == false)) {
 			board[14][17] = 6;
 			fruitVisible = true;
-		} 
-		else if (Game.fruitEaten == true) {
+		}
+		else if(Game.fruitEaten == true) {
 			board[14][17] = 0;
 			fruitVisible = false;
 		}
 		// 170 dots consumed
-		if (Score.dotsLeft == 70) {
+		if(Score.dotsLeft == 70) {
 			time2 = System.currentTimeMillis();
 			fruitDisappear = false;
 		}
 
-		if ((Score.dotsLeft <= 70 && fruitDisappear == false && Game.fruitEaten == false)) {
+		if((Score.dotsLeft <= 70 && fruitDisappear == false && Game.fruitEaten == false)) {
 			board[14][17] = 6;
 			fruitVisible = true;
 
-		} else if (Game.fruitEaten == true) {
+		}
+		else if(Game.fruitEaten == true) {
 			board[14][17] = 0;
 			fruitVisible = false;
 
