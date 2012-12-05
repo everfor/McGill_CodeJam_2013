@@ -17,20 +17,25 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import playerManipulation.Player;
-
+/**
+ * The class deals with the entire graphical user interface related to
+ * Level selection process prior to starting a new game.
+ * 
+ */
 public class LevelSelectGUI extends ProfilePage {
 	private static JPanel levelSelected;
 	static Player currentPlayer;
 	static String securityQuestionDisplayed;
-	static JLabel comboBoxSelection, changeUsername, passwordLabel, reenterPasswordLabel;
+	static JLabel comboBoxSelection, changeUsername, passwordLabel,
+			reenterPasswordLabel;
 	static JButton logout, backToProfile;
 	public static JComboBox comboBoxLevels;
 	static String[] comboBoxSelectionsLevels = new String[101];
 
 	/**
-	 * This method creates a JPanel for the Change Profile Details page. Here a
-	 * player gets the choice to move to the designated page to change his/her
-	 * selected information.
+	 * This method creates a JPanel for the Level Selection page. Here a
+	 * player gets the choice to start at an unlocked level. He/She will
+	 * only be allowed to play at a level that he/she has already unlocked
 	 * 
 	 * @return the JPanel for the change username page
 	 * 
@@ -38,14 +43,15 @@ public class LevelSelectGUI extends ProfilePage {
 	public static JPanel levelSelectPage() {
 		// Create changeProfileDetailsPage Panel
 		for (int i = 0; i < comboBoxSelectionsLevels.length; i++) {
-			comboBoxSelectionsLevels[i] = Integer.toString(i+1);
+			comboBoxSelectionsLevels[i] = Integer.toString(i + 1);
 		}
 
 		levelSelected = new JPanel();
 		levelSelected.setBackground(Color.BLACK);
 		// background gif
 		File path = new File("").getAbsoluteFile();
-		ImageIcon background = new ImageIcon(path + "\\res\\image\\playgamebutton.gif");
+		ImageIcon background = new ImageIcon(path
+				+ "\\res\\image\\playgamebutton.gif");
 		levelSelected.setLayout(null);
 		JLabel levelBackground = new JLabel();
 		levelBackground.setBounds(150, 11, 350, 38);
@@ -89,14 +95,20 @@ public class LevelSelectGUI extends ProfilePage {
 	}
 
 	/**
-	 * This method handles the selection of the comboBox, depending pn the
-	 * choice made the player will be moved to the appropriate page
-	 * 
+	 * This method handles the selection of the comboBox, depending on the
+	 * choice made the player will either be told that he hasnt unlocked the 
+	 * selected level or he will be redirected to a new game in the selected
+	 * level.
+	 * 	 * 
 	 * @param comboBoxChoice
 	 *            a string representing the player's choice
 	 */
 	public static void implementSelection(String comboBoxChoice) {
 		boolean inRange = checkRange(comboBoxChoice);
+		/*
+		 * if the level selected is in range start a new game with a new score
+		 * in the given level
+		 */
 		if (inRange) {
 			setMasterPageVisiblity(false);
 			Score.setScore(0);
@@ -104,15 +116,29 @@ public class LevelSelectGUI extends ProfilePage {
 			Game.setCollided(0);
 			Game.setCurrentLevel(Integer.parseInt(comboBoxChoice));
 			Maze.main(null);
-			Game.guest=false;
+			Game.guest = false;
 			Game.resetPositions();
 		} else {
-			JOptionPane.showMessageDialog(null,
-					"Your highest unlocked level is: " + Player.getLevelAchieved(), "Error",
+			/*If the level is not in range then tell the playe that he hasnt unlocked the
+			level and display his highest level reached*/
+			JOptionPane.showMessageDialog(
+					null,
+					"Your highest unlocked level is: "
+							+ Player.getLevelAchieved(), "Error",
 					JOptionPane.ERROR_MESSAGE);
 		}
 	}
 
+	/**
+	 * This method checks the choice made by the player in the comboBox and
+	 * accordingly returns whether the player has unlocked the selected level or
+	 * not.
+	 * 
+	 * @param comboBoxChoice
+	 *            the selection made in the comboBox
+	 * @return true if the player has already unlocked the level, false
+	 *         otherwise.
+	 */
 	public static boolean checkRange(String comboBoxChoice) {
 		boolean inRange = false;
 		int levelChosen = Integer.parseInt(comboBoxChoice);
