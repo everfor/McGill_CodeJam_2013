@@ -8,7 +8,7 @@ import frontendDatabase.PlayerFrontend;
 /**
  * this class handles the changing of a player's profile details such as
  * username, password and security information. The methods in this class allow
- * a player to change his/her password, username and Security informaion.
+ * a player to change his/her password, username and Security information.
  * 
  */
 public class ChangeProfileDetails {

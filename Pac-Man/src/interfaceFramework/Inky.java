@@ -3,7 +3,7 @@ package interfaceFramework;
 import java.awt.Graphics;
 
 /**
- * The class for the ghost, inky. The class incorporates all the attributes that
+ * The class is for the ghost, inky. The class incorporates all the attributes that
  * this ghost should have
  * 
  */

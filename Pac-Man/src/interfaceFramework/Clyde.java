@@ -3,7 +3,7 @@ package interfaceFramework;
 import java.awt.Graphics;
 
 /**
- * The class for the clyde ghost. The class incorporates all the attributes that
+ * The class is for the clyde ghost. The class incorporates all the attributes that
  * this ghost should have
  * 
  */

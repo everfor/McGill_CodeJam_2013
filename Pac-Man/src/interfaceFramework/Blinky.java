@@ -3,7 +3,7 @@ package interfaceFramework;
 import java.awt.Graphics;
 
 /**
- * The class for the blinky ghost. The class incorporates all the attributes
+ * The class is for the blinky ghost. The class incorporates all the attributes
  * that this ghost should have
  * 
  */
