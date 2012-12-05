@@ -16,11 +16,11 @@ import profilePageGUI.ProfilePage;
 import profilePageGUI.Settings;
 import frontendDatabase.PlayerFrontend;
 import frontendDatabase.StatisticsFrontend;
-
+/**
+ * This class deals with the major aspects of gameplay
+ */
 public class Game extends JPanel implements ActionListener, KeyListener {
-	/**
-	 * This class deals with the major aspects of gameplay
-	 */
+
 	private static final long serialVersionUID = 1L;
 	static Pacman pacman = new Pacman();
 	Map map = new Map();
@@ -197,11 +197,6 @@ public class Game extends JPanel implements ActionListener, KeyListener {
 			}
 			blinky.movePossible(pacman, map.board, g);
 
-			//TODO REMOVE 
-			g.drawImage(clyde.temp1, (int)clyde.debugX * pixel,(int)clyde.debugY *pixel, null);
-			g.drawImage(pinky.temp2, (int)pinky.debugX * pixel,(int)pinky.debugY *pixel, null);
-			g.drawImage(blinky.temp3, (int)blinky.debugX * pixel,(int)blinky.debugY *pixel, null);
-			g.drawImage(inky.temp4, (int)inky.debugX * pixel,(int)inky.debugY *pixel, null);
 			
 			//pauses session
 			if(pause) {
