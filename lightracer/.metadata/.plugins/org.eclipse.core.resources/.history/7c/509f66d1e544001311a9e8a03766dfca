@@ -1,0 +1,190 @@
+import java.awt.GridLayout;
+import java.lang.*;
+import java.util.EventListener;
+import java.awt.event.*;
+
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+/*
+ *  Authors: Aidan Petit, Syed Irtaza Raza, Jungwan Kim
+ */
+public class GameBoard {
+
+	private Racer P1;
+	private Racer P2;
+    static int[][] map;
+    static Obstacle[][] obstacles;
+    private GamePanel game;
+    private boolean gamePaused = false;
+    
+	public static void main(String[] args)
+	{	   
+		GameBoard gb = new GameBoard();
+		gb.run();
+	}
+	
+
+
+	
+	public void run(){
+		hardCodeMap();
+		initializeBoard();
+		while (!gamePaused){
+			updateBoard();
+			try {
+			    Thread.sleep(400);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	public void updateBoard(){
+		if (checkObstacleCollisions() == false){ //no collision, add light trails, update position of Racers, draw map
+			P1.addLightTrail();
+			P2.addLightTrail();
+			updateRacerPosition(P1);
+			updateRacerPosition(P2);
+			game.updateDisplay(P1, P2, 0.0);
+		}	
+	}
+	
+	public boolean checkObstacleCollisions(){
+	boolean collision = false;
+	for( int i = 0; i< obstacles[0].length; i++) {
+			for (int j =0; j<obstacles.length; j++) {
+					
+				if (i == P1.getXPosition() && j == P1.getYPosition()){
+					if (obstacles[i][j] != null) {
+						collision = true;
+						announceWinner(P2);
+					}	
+				}
+				if (i == P2.getXPosition() && j == P2.getYPosition()){
+					if(obstacles[i][j] != null){
+						collision = true;
+						announceWinner(P1);
+					}
+				}
+			}
+	}
+		return collision;
+	}
+	
+	public void updateRacerPosition(Racer racer){
+	int currDirection = racer.getDirection();
+	int currXPos = racer.getXPosition();
+	int currYPos = racer.getYPosition();
+		if (currDirection == 0 ){//moving upwards
+			currYPos = currYPos + 1; 
+			racer.setYPosition(currYPos); //
+		}
+		else if( currDirection == 1){ //moving right
+			currXPos = currXPos + 1; 
+			racer.setXPosition(currXPos);
+		}
+		else if( currDirection == 2){ //moving down
+			currYPos = currYPos + 1; 
+			racer.setXPosition(currYPos);
+		}
+		else if( currDirection == 3){ //moving left
+			currXPos = currXPos - 1; 
+			racer.setXPosition(currXPos);
+		}
+	}
+	
+	public void toggleClock(){
+		gamePaused = !gamePaused;
+	}
+	
+	public void hardCodeMap(){
+		int rows = 50; int cols = 50;
+		map = new int[rows][cols];
+		obstacles = new Obstacle[rows][cols];
+		for (int row = 0; row < rows; row ++){
+		    for (int col = 0; col < cols; col++){
+		        map[row][col] = 0;
+		        obstacles[row][col] = null;
+		    }
+		}
+		for (int row = 0; row < rows; row++) {
+			for (int col = 0; col<cols; col++) {
+				if ((row == 0)||(row == 49) ){ 
+				    obstacles[row][col] = new Obstacle('0');
+				}
+				else {
+					obstacles[row][0] = new Obstacle('0');
+					obstacles[row][49] = new Obstacle('0');
+				}
+			}
+		}
+		map[rows/2][0] = 1; map[rows/2][cols-1] = 2;
+		obstacles[rows/4][0] = new Obstacle('1');
+		obstacles[rows/4][cols-1] = new Obstacle('2');
+		obstacles[rows/4][cols/2] = new Obstacle('0');
+	}
+	
+	public void announceWinner(Racer racer){
+		//Racer.getPlayerID;
+	}
+	
+	public void initializeBoard(){
+		P1 = new Racer(1,1,10,10,0);
+		P2 = new Racer(2,2,40,40,3);
+		JFrame frame = new JFrame("Light Racer"); 
+		
+		frame.setLayout( new GridLayout(1,1));
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		game = new GamePanel();
+		frame.addKeyListener(new KeyListener() {
+			public void keyPressed(KeyEvent e){
+			int key = e.getKeyCode();
+			switch(key){
+			case KeyEvent.VK_LEFT:
+				P2.setDirection(2);
+				break;
+			case KeyEvent.VK_UP:
+				P2.setDirection(3);
+				break;
+			case KeyEvent.VK_RIGHT:
+				P2.setDirection(0);
+				break;
+			case KeyEvent.VK_DOWN:
+				P2.setDirection(1);
+				break;
+			case KeyEvent.VK_A:
+				P1.setDirection(2);
+				break;
+			case KeyEvent.VK_W:
+				P1.setDirection(3);
+				break;
+			case KeyEvent.VK_D:
+				P1.setDirection(0);
+				break;
+			case KeyEvent.VK_S:
+				P1.setDirection(1);
+				break;
+			}
+		}
+
+			@Override
+			public void keyReleased(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void keyTyped(KeyEvent arg0) {
+				// TODO Auto-generated method stub
+				
+			}});
+        frame.add(game);
+        frame.pack();
+        frame.setLocationRelativeTo(null);
+	    frame.setVisible(true);
+	    game.updateDisplay(P1, P2, 0.0);
+	}
+	public static void addObstacle(int x, int y, int racerID){
+		obstacles[x][y] = new Obstacle((char) racerID);
+		
+	}
+}
