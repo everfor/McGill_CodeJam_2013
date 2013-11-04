@@ -32,7 +32,7 @@ public class GameBoard {
 		while (!gamePaused){
 			updateBoard();
 			try {
-			    Thread.sleep(1000);
+			    Thread.sleep(50);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -56,17 +56,17 @@ public class GameBoard {
 	
 	public boolean checkObstacleCollisions(){
 	boolean collision = false;
-	for( int i = 0; i< obstacles[0].length; i++) {
-			for (int j =0; j<obstacles.length; j++) {
+	for( int x = 0; x< obstacles[0].length; x++) {
+			for (int y =0; y<obstacles.length; y++) {
 					
-				if (i == P1.getXPosition() && j == P1.getYPosition()){
-					if (obstacles[i][j] != null) {
+				if (x == P1.getXPosition() && y == P1.getYPosition()){
+					if (obstacles[x][y] != null) {
 						collision = true;
 						P1.setHasCrashed(true);
 					}	
 				}
-				if (i == P2.getXPosition() && j == P2.getYPosition()){
-					if(obstacles[i][j] != null){
+				if (x == P2.getXPosition() && y == P2.getYPosition()){
+					if(obstacles[x][y] != null){
 						collision = true;
 						P2.setHasCrashed(true);
 					}
