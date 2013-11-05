@@ -1,4 +1,6 @@
+import java.awt.BorderLayout;
 import java.awt.GridLayout;
+import java.awt.FlowLayout;
 import java.lang.*;
 import java.util.EventListener;
 import java.awt.event.*;
@@ -6,15 +8,18 @@ import java.awt.event.*;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 /*
- *  Authors: Aidan Petit, Syed Irtaza Raza, Jungwan Kim
+ *  Authors: Alex Reiff, Aidan Petit, Syed Irtaza Raza, Jungwan Kim
  */
 public class GameBoard {
 
 	private Racer P1;
 	private Racer P2;
+	private Map boardmap;
     static int[][] map;
     static Obstacle[][] obstacles;
     private GamePanel game;
+    private HeaderPanel header;
+    private boolean gameOver = false;
     private boolean gamePaused = false;
     
 	public static void main(String[] args)
@@ -23,16 +28,15 @@ public class GameBoard {
 		gb.run();
 	}
 	
-
-
-	
 	public void run(){
-		hardCodeMap();
+		initializeMap();
 		initializeBoard();
-		while (!gamePaused){
-			updateBoard();
+		while (!gameOver){
+			if(!gamePaused){
+				updateBoard();
+			}
 			try {
-			    Thread.sleep(50);
+			    Thread.sleep(100);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
@@ -44,7 +48,7 @@ public class GameBoard {
 			addObstacle(P2.getXPosition(),P2.getYPosition(), '2');
 			updateRacerPosition(P1);
 			updateRacerPosition(P2);
-			game.updateDisplay(P1, P2, 0.0);
+			updateDisplay(0.1);
 
 		}
 		else {
@@ -85,50 +89,53 @@ public class GameBoard {
 	int currDirection = racer.getDirection();
 	int currXPos = racer.getXPosition();
 	int currYPos = racer.getYPosition();
-		if (currDirection == 0 ){//moving upwards
+		if (currDirection == 0 ){//moving left
 			currYPos = currYPos + 1; 
-			racer.setYPosition(currYPos); //
+			if (currYPos > map[0].length -1){
+				racer.setHasCrashed(true);
+			}
+			else {
+				racer.setYPosition(currYPos); //
+			}
 		}
-		else if( currDirection == 1){ //moving right
+		else if( currDirection == 1){ //moving up
 			currXPos = currXPos + 1; 
-			racer.setXPosition(currXPos);
+			if (currXPos > map[0].length -1){
+				racer.setHasCrashed(true);
+			}
+			else {
+				racer.setXPosition(currXPos);
+			}
 		}
-		else if( currDirection == 2){ //moving down
+		else if( currDirection == 2){ //moving right
 			currYPos = currYPos - 1; 
-			racer.setYPosition(currYPos);
+			if (currYPos < 0){
+				racer.setHasCrashed(true);
+			}
+			else {
+				racer.setYPosition(currYPos);
+			}
 		}
-		else if( currDirection == 3){ //moving left
+		else if( currDirection == 3){ //moving down
 			currXPos = currXPos - 1; 
-			racer.setXPosition(currXPos);
+			if (currXPos < 0){
+				racer.setHasCrashed(true);
+			}
+			else {
+				racer.setXPosition(currXPos);
+			}
 		}
 	}
+	
+    public void updateDisplay(double timeElapsed){
+    	game.updateRacer(P1);
+    	game.updateRacer(P2);
+    	header.updateTimer(timeElapsed);
+    	game.updateCells();  	
+    }
 	
 	public void toggleClock(){
 		gamePaused = !gamePaused;
-	}
-	
-	public void hardCodeMap(){
-		int rows = 50; int cols = 50;
-		map = new int[rows][cols];
-		obstacles = new Obstacle[rows][cols];
-		for (int row = 0; row < rows; row ++){
-		    for (int col = 0; col < cols; col++){
-		        map[row][col] = 0;
-		        obstacles[row][col] = null;
-		    }
-		}
-		for (int row = 0; row < rows; row++) {
-			for (int col = 0; col<cols; col++) {
-				if ((row == 0)||(row == 49) ){ 
-				    obstacles[row][col] = new Obstacle('0');
-				}
-				else {
-					obstacles[row][0] = new Obstacle('0');
-					obstacles[row][49] = new Obstacle('0');
-				}
-			}
-		}
-
 	}
 	
 	public void announceWinner(){
@@ -136,56 +143,63 @@ public class GameBoard {
 			
 		}
 		else if (P1.hasCrashed() == true) {
-			game.p2Wins();
+			header.p2Wins();
 		}
 		else {
-			game.p1Wins();
+			header.p1Wins();
 		}
+	}
+	
+	public void initializeMap(){
+		boardmap = new Map();
+		map = boardmap.getBoardMap();
+		obstacles = boardmap.getBoardObstacle();
 	}
 	
 	public void initializeBoard(){
 		P1 = new Racer(1,1,10,10,0);
 		P2 = new Racer(2,2,40,40,3);
-		JFrame frame = new JFrame("Light Racer"); 
-		
-		frame.setLayout( new GridLayout(1,1));
+		JFrame frame = new JFrame("Light Racer"); 	
+	//	frame.setLayout( new FlowLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		game = new GamePanel();
 		frame.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e){
 			int key = e.getKeyCode();
 			switch(key){
 			case KeyEvent.VK_LEFT:
-				if (P2.getDirection()!=0)
+				if (P2.getDirection()!=0 && !gamePaused)
 				P2.setDirection(2);
 				break;
 			case KeyEvent.VK_UP:
-				if (P2.getDirection()!=1)
+				if (P2.getDirection()!=1 && !gamePaused)
 				P2.setDirection(3);
 				break;
 			case KeyEvent.VK_RIGHT:
-				if (P2.getDirection()!=2)
+				if (P2.getDirection()!=2 && !gamePaused)
 				P2.setDirection(0);
 				break;
 			case KeyEvent.VK_DOWN:
-				if (P2.getDirection()!=3)
+				if (P2.getDirection()!=3 && !gamePaused)
 				P2.setDirection(1);
 				break;
 			case KeyEvent.VK_A:
-				if (P1.getDirection()!=0)
+				if (P1.getDirection()!=0 && !gamePaused)
 				P1.setDirection(2);
 				break;
 			case KeyEvent.VK_W:
-				if (P1.getDirection()!=1)
+				if (P1.getDirection()!=1 && !gamePaused)
 				P1.setDirection(3);
 				break;
 			case KeyEvent.VK_D:
-				if (P1.getDirection()!=2)
+				if (P1.getDirection()!=2 && !gamePaused)
 				P1.setDirection(0);
 				break;
 			case KeyEvent.VK_S:
-				if (P1.getDirection()!=3)
+				if (P1.getDirection()!=3 && !gamePaused)
 				P1.setDirection(1);
+				break;
+			case KeyEvent.VK_SPACE:
+				toggleClock();
 				break;
 			}
 		}
@@ -201,11 +215,14 @@ public class GameBoard {
 				// TODO Auto-generated method stub
 				
 			}});
-        frame.add(game);
+		header = new HeaderPanel();
+		game = new GamePanel();
+        frame.add(header,BorderLayout.CENTER);
+        frame.add(game,BorderLayout.PAGE_END);
         frame.pack();
         frame.setLocationRelativeTo(null);
 	    frame.setVisible(true);
-	    game.updateDisplay(P1, P2, 0.0);
+	    updateDisplay(0.0);
 	}
 	public static void addObstacle(int x, int y, int racerID){
 		obstacles[x][y] = new Obstacle(((char) racerID));

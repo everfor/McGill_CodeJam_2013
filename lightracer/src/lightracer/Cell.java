@@ -3,25 +3,13 @@ import java.awt.Dimension;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.JPanel;
-
+/*
+ * Authors: Alex Reiff
+ */
+	
 public class Cell extends JPanel {
 
-    private Color defaultBackground;
-
-    public Cell() {/*
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseEntered(MouseEvent e) {
-                defaultBackground = getBackground();
-                setBackground(Color.BLUE);
-            }
-
-            @Override
-            public void mouseExited(MouseEvent e) {
-                setBackground(defaultBackground);
-            }
-        });*/
-    }
+    public Cell() {}
 
     @Override
     public Dimension getPreferredSize() {

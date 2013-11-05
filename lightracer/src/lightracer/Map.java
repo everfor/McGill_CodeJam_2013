@@ -1,17 +1,25 @@
 
-package lightracer;
-
 import java.io.*;
 import java.util.Scanner;
 
 public class Map {
 
-	private final static int heightMap = 3;
-	private final static int widthMap = 3;
-	public final static int[][] boardMap = new int [widthMap][heightMap];
+	private int heightMap = 50;
+	private int widthMap = 50;
+	private int[][] boardMap;
+	private Obstacle[][] boardObstacle;
 	private File mapPath;
 	private static Scanner lineReader;
 	
+	
+	public int[][] getBoardMap() {
+		return boardMap;
+	}
+	
+	public Obstacle[][] getBoardObstacle() {
+		return boardObstacle;
+	}
+
 	/*
 	 * default map constructor
 	 */
@@ -33,7 +41,7 @@ public class Map {
 	public void openMapfile() {
 		try {
 			mapPath = new File("").getAbsoluteFile();
-			lineReader = new Scanner(new File(mapPath + "/src/map/defaultMap.txt"));
+			lineReader = new Scanner(new File(mapPath + "/src/defaultMap.txt"));
 		}
 		catch (Exception e) {
 			e.printStackTrace();
@@ -48,10 +56,13 @@ public class Map {
 					temparyArray[line] = lineReader.nextLine();
 				}
 			}
-		
+		    initializeSize();
+		    
 			for (int yPixel = 0; yPixel < heightMap; yPixel++) {
 				for (int xPixel = 0; xPixel < widthMap; xPixel++) {
-					boardMap[xPixel][yPixel] = Integer.parseInt(temparyArray[yPixel].substring(xPixel, xPixel+1));
+					int valueinPosition = Integer.parseInt(temparyArray[yPixel].substring(xPixel, xPixel+1));
+					boardMap[xPixel][yPixel] = valueinPosition;
+					boardObstacle[xPixel][yPixel] = null;
 				}
 			}
 		}
@@ -69,4 +80,8 @@ public class Map {
 		
 	}
 	*/
+	public void initializeSize(){
+		 boardMap = new int[widthMap][heightMap];
+		 boardObstacle = new Obstacle[widthMap][heightMap];		 
+	}
 }
