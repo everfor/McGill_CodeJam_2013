@@ -1,3 +1,4 @@
+package lightracer;
 import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.FlowLayout;
@@ -21,26 +22,45 @@ public class GameBoard {
     private HeaderPanel header;
     private boolean gameOver = false;
     private boolean gamePaused = false;
+    static int p1RoundWins = 0;
+    static int p2RoundWins = 0;
     
 	public static void main(String[] args)
-	{	   
-		GameBoard gb = new GameBoard();
-		gb.run();
+	{
+			GameBoard gb = new GameBoard();
+			gb.playThreeRoundMatch();	
+	}
+	
+	public void playThreeRoundMatch() {
+		gamePaused = false;
+		while(p1RoundWins < 2 && p2RoundWins < 2) {
+		run();
+		}
+		if (p1RoundWins == 2){
+			//player 1 wins the match
+			//display some message and update PvP record/personal records
+			game.MatchOver();
+		}
+		else if (p2RoundWins == 2) {
+			//player 2 wins the match, same steps as with p1
+			game.MatchOver();
+		}
 	}
 	
 	public void run(){
-		initializeMap();
-		initializeBoard();
-		while (!gameOver){
-			if(!gamePaused){
-				updateBoard();
-			}
-			try {
+			initializeMap();
+			initializeBoard();
+			while (!gameOver){
+			
+				if(!gamePaused){
+					updateBoard();
+				}
+				try {
 			    Thread.sleep(100);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
-		}
 	}
 	public void updateBoard(){
 		if (checkObstacleCollisions() == false){ //no collision, add light trails, update position of Racers, draw map
@@ -54,6 +74,13 @@ public class GameBoard {
 		else {
 			announceWinner();
 			gamePaused = true;
+			try {
+				Thread.sleep(1000);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			playThreeRoundMatch();
 		}
 		
 	}
@@ -140,12 +167,14 @@ public class GameBoard {
 	
 	public void announceWinner(){
 		if (P1.hasCrashed() == true && P2.hasCrashed() == true) {
-			
+			//tie
 		}
 		else if (P1.hasCrashed() == true) {
+			p2RoundWins ++;
 			header.p2Wins();
 		}
 		else {
+			p1RoundWins ++;
 			header.p1Wins();
 		}
 	}
@@ -160,7 +189,7 @@ public class GameBoard {
 		P1 = new Racer(1,1,10,10,0);
 		P2 = new Racer(2,2,40,40,3);
 		JFrame frame = new JFrame("Light Racer"); 	
-	//	frame.setLayout( new FlowLayout());
+		// frame.setLayout( new FlowLayout());
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.addKeyListener(new KeyListener() {
 			public void keyPressed(KeyEvent e){
@@ -201,8 +230,9 @@ public class GameBoard {
 			case KeyEvent.VK_SPACE:
 				toggleClock();
 				break;
-			}
+			
 		}
+			}
 
 			@Override
 			public void keyReleased(KeyEvent arg0) {
@@ -213,9 +243,9 @@ public class GameBoard {
 			@Override
 			public void keyTyped(KeyEvent arg0) {
 				// TODO Auto-generated method stub
-				
-			}});
-		header = new HeaderPanel();
+}
+		});
+		header = new HeaderPanel(p1RoundWins, p2RoundWins);
 		game = new GamePanel();
         frame.add(header,BorderLayout.CENTER);
         frame.add(game,BorderLayout.PAGE_END);

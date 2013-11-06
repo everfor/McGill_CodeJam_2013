@@ -1,6 +1,9 @@
+package lightracer;
 import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
+import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
 import javax.swing.border.MatteBorder;
@@ -11,8 +14,8 @@ import javax.swing.border.MatteBorder;
 public class GamePanel extends JPanel {
 	Cell[][] cells;
 	GridBagConstraints gbc;
-	int p1Wins = 0;
-	int p2Wins = 0;
+	int p1Wins;
+	int p2Wins;
 	double time = 0.0;
 	
     public GamePanel() {
@@ -20,6 +23,21 @@ public class GamePanel extends JPanel {
         cells = new Cell[(GameBoard.map[0]).length][GameBoard.map.length];
         gbc = new GridBagConstraints();
         makeCells();
+    }
+    
+    public void MatchOver() {
+    	/*
+    	 * When this method is called, a new window/text panel should pop up
+    	 * over the gameboard and tell the players that the game (best of 3 rounds) 
+    	 * is over and which player won the game
+    	 */
+    	if (GameBoard.p1RoundWins == 2) {
+    	//player 1 wins the Match, display winning message and record accordingly
+    		
+    	}
+    	else if (GameBoard.p2RoundWins == 2) {
+    	//player 2 wins	the Match, same as above but for p2
+    	}
     }
 
     public void makeCells(){

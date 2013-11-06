@@ -1,7 +1,10 @@
+package lightracer;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+
+import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 /*
@@ -14,11 +17,13 @@ public class HeaderPanel extends JPanel {
 	JLabel p2;
 	JLabel timer;
 	JLabel display;
-	int p1Wins = 0;
-	int p2Wins = 0;
+	int p1Wins;
+	int p2Wins;
 	double time = 0.0;
 	
-    public HeaderPanel() {
+    public HeaderPanel(int p1RoundWins,int p2RoundWins) {
+    	p1Wins = p1RoundWins;
+    	p2Wins = p2RoundWins;
         setLayout(new GridBagLayout());
         gbc = new GridBagConstraints();
         init();
@@ -63,13 +68,17 @@ public class HeaderPanel extends JPanel {
     }
     
     public void p1Wins(){
+    	if (p1Wins < 2){
     	p1Wins++;
+    	}
     	p1.setText(Integer.toString(p1Wins));
     	display.setText("Player 1 Wins!");
     }
     
     public void p2Wins(){
+    	if (p2Wins < 2){
     	p2Wins++;
+    	}
     	p2.setText(Integer.toString(p2Wins));	
     	display.setText("Player 2 Wins!");
     }

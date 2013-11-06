@@ -1,3 +1,4 @@
+package lightracer;
 // This class will represent a single obstacle on the game board
 
 public class Obstacle {

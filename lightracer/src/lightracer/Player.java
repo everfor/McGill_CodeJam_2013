@@ -1,3 +1,4 @@
+package lightracer;
 
 public class Player {
 	private String userID;
