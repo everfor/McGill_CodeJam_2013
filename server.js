@@ -1,9 +1,9 @@
 #!/bin/env node
 //  OpenShift Node application
-var express = require('express');
-var fs      = require('fs');
-var csv 	= require('csv');
-var reading = require('./reading');
+var express 	= require('express');
+var fs      	= require('fs');
+var analysis	= require('./analysis');
+var reading 	= require('./reading');
 
 /**
  *  Define the sample application.
@@ -117,18 +117,16 @@ var ForeCaster = function() {
             fs.readFile(req.files.filedata.path, function (err, data) {
                 var newPath = __dirname + "/uploads/input.csv";
                 fs.writeFile(newPath, data, function (err) {
-                    fs.readFile(newPath, function(err, data) {
-						if(err) throw err;
-						csv().from.string(data, {comment: '#'})
-						.to.array( function(data){
-							var str = "<html><body>";
-							for(var i = 1 ; i < data.length ; i++) {
-								var aReading = reading.fromCSV(data[i]);
-								str += aReading.getRadiation() + "<br/>";
-							}
-							str += "</body></html>";
-							res.send(str);
-						});
+                    
+					analysis.loadReadings(newPath, function(readings) {
+						var html = "<html><body>";
+						
+						for(var i = 0 ; i < readings.length ; i++) {
+							html += readings[i].radiation + "<br/>";
+						}
+						
+						html += "</body></html>";
+						res.send(html);
 					});
                 });
             });
