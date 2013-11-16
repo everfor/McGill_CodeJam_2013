@@ -110,9 +110,17 @@ var ForeCaster = function() {
         };
 
         // Handlers for post requests
-        self.post_routes['.upload'] = function(req, res) {
+        self.post_routes['/upload'] = function(req, res) {
             // TO DO
             // File directory is './uploads/input.csv'
+            console.log(req);
+            fs.readFile(req.files.path, function (err, data) {
+                // ...
+                var newPath = __dirname + "/uploads/input.csv";
+                fs.writeFile(newPath, data, function (err) {
+                 res.redirect("back");
+                });
+            });
         }
     };
 
