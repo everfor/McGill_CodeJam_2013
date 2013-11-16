@@ -1,5 +1,5 @@
 #!/bin/env node
-//  OpenShift sample Node application
+//  OpenShift Node application
 var express = require('express');
 var fs      = require('fs');
 
@@ -7,7 +7,7 @@ var fs      = require('fs');
 /**
  *  Define the sample application.
  */
-var SampleApp = function() {
+var ForeCaster = function() {
 
     //  Scope.
     var self = this;
@@ -39,11 +39,11 @@ var SampleApp = function() {
      */
     self.populateCache = function() {
         if (typeof self.zcache === "undefined") {
-            self.zcache = { 'index.html': '' };
+            self.zcache = { 'index': '' };
         }
 
         //  Local cache for static content.
-        self.zcache['index.html'] = fs.readFileSync('./index.html');
+        self.zcache['index'] = fs.readFileSync('./templates/index.html');
     };
 
 
@@ -51,7 +51,9 @@ var SampleApp = function() {
      *  Retrieve entry (content) from cache.
      *  @param {string} key  Key identifying content to retrieve from cache.
      */
-    self.cache_get = function(key) { return self.zcache[key]; };
+    self.cache_get = function(key) { 
+        return self.zcache[key]; 
+    };
 
 
     /**
@@ -102,7 +104,7 @@ var SampleApp = function() {
 
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index.html') );
+            res.send(self.cache_get('index') );
         };
     };
 
@@ -153,7 +155,7 @@ var SampleApp = function() {
 /**
  *  main():  Main code.
  */
-var zapp = new SampleApp();
-zapp.initialize();
-zapp.start();
+var foreCaster = new ForeCaster();
+foreCaster.initialize();
+foreCaster.start();
 
