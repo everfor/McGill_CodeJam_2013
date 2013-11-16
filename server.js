@@ -95,17 +95,25 @@ var ForeCaster = function() {
      *  Create the routing table entries + handlers for the application.
      */
     self.createRoutes = function() {
-        self.routes = { };
+        self.get_routes = {};
+        self.post_routes = {};
 
-        self.routes['/mcgillrobotics'] = function(req, res) {
+        // Handlers for get requests
+        self.get_routes['/mcgillrobotics'] = function(req, res) {
             var link = "http://mcgillrobotics.com/shared_media/Team.jpg";
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
 
-        self.routes['/'] = function(req, res) {
+        self.get_routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index'));
         };
+
+        // Handlers for post requests
+        self.post_routes['.upload'] = function(req, res) {
+            // TO DO
+            // File directory is './uploads/input.csv'
+        }
     };
 
 
@@ -118,8 +126,12 @@ var ForeCaster = function() {
         self.app = express.createServer();
 
         //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+        for (var r in self.get_routes) {
+            self.app.get(r, self.get_routes[r]);
+        }
+
+        for (var r in self.post_routes) {
+            self.app.post(r, self.post_routes[r]);
         }
     };
 
