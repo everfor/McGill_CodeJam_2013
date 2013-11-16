@@ -97,14 +97,14 @@ var ForeCaster = function() {
     self.createRoutes = function() {
         self.routes = { };
 
-        self.routes['/asciimo'] = function(req, res) {
-            var link = "http://i.imgur.com/kmbjB.png";
+        self.routes['/mcgillrobotics'] = function(req, res) {
+            var link = "http://mcgillrobotics.com/shared_media/Team.jpg";
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
 
         self.routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
-            res.send(self.cache_get('index') );
+            res.send(self.cache_get('index'));
         };
     };
 
@@ -158,4 +158,3 @@ var ForeCaster = function() {
 var foreCaster = new ForeCaster();
 foreCaster.initialize();
 foreCaster.start();
-
