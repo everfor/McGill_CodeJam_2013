@@ -2,7 +2,8 @@
 //  OpenShift Node application
 var express = require('express');
 var fs      = require('fs');
-
+var csv 	= require('csv');
+var reading = require('./reading');
 
 /**
  *  Define the sample application.
@@ -100,6 +101,19 @@ var ForeCaster = function() {
         self.routes['/mcgillrobotics'] = function(req, res) {
             var link = "http://mcgillrobotics.com/shared_media/Team.jpg";
             res.send("<html><body><img src='" + link + "'></body></html>");
+        };
+		
+		self.routes['/csvtest'] = function(req, res) {
+            csv().from.string('#Welcome\n"1","2","3","4","5","6"\n"a","b","c","d","e","f"', {comment: '#'})
+			.to.array( function(data){
+				var str = "<html><body>";
+				for(var i = 0 ; i < data.length ; i++) {
+					var aReading = reading(data[i]);
+					str += aReading.getRadiation() + "<br/>";
+				}
+				str += "</body></html>";
+				res.send(str);
+			} );
         };
 
         self.routes['/'] = function(req, res) {
