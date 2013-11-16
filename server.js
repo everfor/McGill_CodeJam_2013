@@ -43,7 +43,7 @@ var ForeCaster = function() {
             self.zcache = { 'index': '' };
         }
 
-        //  Local cache for static content.
+        //  Local calche for static content.
         self.zcache['index'] = fs.readFileSync('./templates/index.html');
     };
 
@@ -64,7 +64,7 @@ var ForeCaster = function() {
      */
     self.terminator = function(sig){
         if (typeof sig === "string") {
-           console.log('%s: Received %s - terminating sample app ...',
+           console.log('%s: Received %s - terminating forecaster ...',
                        Date(Date.now()), sig);
            process.exit(1);
         }
@@ -96,9 +96,11 @@ var ForeCaster = function() {
      *  Create the routing table entries + handlers for the application.
      */
     self.createRoutes = function() {
-        self.routes = { };
+        self.get_routes = {};
+        self.post_routes = {};
 
-        self.routes['/mcgillrobotics'] = function(req, res) {
+        // Handlers for get requests
+        self.get_routes['/mcgillrobotics'] = function(req, res) {
             var link = "http://mcgillrobotics.com/shared_media/Team.jpg";
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
@@ -116,10 +118,22 @@ var ForeCaster = function() {
 			} );
         };
 
-        self.routes['/'] = function(req, res) {
+        self.get_routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index'));
         };
+
+        // Handlers for post requests
+        self.post_routes['/upload'] = function(req, res) {
+            // TO DO
+            // File directory is './uploads/input.csv'
+            fs.readFile(req.files.filedata.path, function (err, data) {
+                var newPath = __dirname + "/uploads/input.csv";
+                fs.writeFile(newPath, data, function (err) {
+                    res.redirect("back");
+                });
+            });
+        }
     };
 
 
@@ -129,11 +143,19 @@ var ForeCaster = function() {
      */
     self.initializeServer = function() {
         self.createRoutes();
-        self.app = express.createServer();
+        self.app = express();
+        
+        // Use body parser to parse POST requests
+        // http://stackoverflow.com/a/18278655/2551775
+        self.app.use(express.bodyParser());
 
         //  Add handlers for the app (from the routes).
-        for (var r in self.routes) {
-            self.app.get(r, self.routes[r]);
+        for (var r in self.get_routes) {
+            self.app.get(r, self.get_routes[r]);
+        }
+
+        for (var r in self.post_routes) {
+            self.app.post(r, self.post_routes[r]);
         }
     };
 
