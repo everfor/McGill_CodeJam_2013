@@ -43,7 +43,7 @@ var ForeCaster = function() {
         }
 
         //  Local cache for static content.
-        self.zcache['index'] = fs.readFileSync('./templates/index.html');
+        self.zcache['index'] = fs.readFileSync('./templates/index.htm');
     };
 
 
