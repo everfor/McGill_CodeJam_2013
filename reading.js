@@ -1,4 +1,4 @@
-module.exports = function(data) {
+exports.fromCSV = function(data) {
 	return {
 		getDate: function() { return data[0]; },
 		getRadiation: function() { return data[1]; },

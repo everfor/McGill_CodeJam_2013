@@ -104,19 +104,6 @@ var ForeCaster = function() {
             var link = "http://mcgillrobotics.com/shared_media/Team.jpg";
             res.send("<html><body><img src='" + link + "'></body></html>");
         };
-		
-		self.routes['/csvtest'] = function(req, res) {
-            csv().from.string('#Welcome\n"1","2","3","4","5","6"\n"a","b","c","d","e","f"', {comment: '#'})
-			.to.array( function(data){
-				var str = "<html><body>";
-				for(var i = 0 ; i < data.length ; i++) {
-					var aReading = reading(data[i]);
-					str += aReading.getRadiation() + "<br/>";
-				}
-				str += "</body></html>";
-				res.send(str);
-			} );
-        };
 
         self.get_routes['/'] = function(req, res) {
             res.setHeader('Content-Type', 'text/html');
@@ -130,7 +117,19 @@ var ForeCaster = function() {
             fs.readFile(req.files.filedata.path, function (err, data) {
                 var newPath = __dirname + "/uploads/input.csv";
                 fs.writeFile(newPath, data, function (err) {
-                    res.redirect("back");
+                    fs.readFile(newPath, function(err, data) {
+						if(err) throw err;
+						csv().from.string(data, {comment: '#'})
+						.to.array( function(data){
+							var str = "<html><body>";
+							for(var i = 1 ; i < data.length ; i++) {
+								var aReading = reading.fromCSV(data[i]);
+								str += aReading.getRadiation() + "<br/>";
+							}
+							str += "</body></html>";
+							res.send(str);
+						});
+					});
                 });
             });
         }
