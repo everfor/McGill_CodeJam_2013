@@ -114,7 +114,7 @@ var ForeCaster = function() {
         self.post_routes['/upload'] = function(req, res) {
             // TO DO
             // File directory is './uploads/input.csv'
-            fs.readFile(req.files.filedata.path, function (err, data) {
+            fs.readFile(req.files.file.path, function (err, data) {
                 var newPath = __dirname + "/uploads/input.csv";
                 fs.writeFile(newPath, data, function (err) {
                     
