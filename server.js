@@ -2,8 +2,12 @@
 //  OpenShift Node application
 var express 	= require('express');
 var fs      	= require('fs');
-var analysis	= require('./analysis');
-var reading 	= require('./reading');
+var analysis	= require('./lib/analysis');
+var reading 	= require('./lib/reading');
+
+// Machine Learning
+var vector      = require('./lib/vector');
+var ml          = require('./lib/machinelearning');
 
 /**
  *  Define the sample application.
@@ -109,6 +113,29 @@ var ForeCaster = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index'));
         };
+
+        self.get_routes['/testml'] = function(req, res) {
+            var features = [],
+                weights = new vector.Vector(new Array(1, 1, 1)),
+                m = 3,
+                results = [1, 2, 3],
+                alpha = 0.072,
+                lambda = 0;
+
+            for (var i = 0; i < 3; i++) {
+                features.push(new vector.Vector([i + 1, i + 1, i + 1]));
+            }
+
+            var result = '';
+            for (var j = 0; j < 10; j++) {
+                result += weights.vector + '<br>';
+                ml.train(m, features, weights, results, alpha, lambda);
+            }
+
+            result += weights.vector + '<br>';
+
+            res.send("<html><body>" + result + "</body></html>");
+        }
 
         // Handlers for post requests
         self.post_routes['/upload'] = function(req, res) {
