@@ -12,6 +12,9 @@ var pulse		= require('./lib/pulse');
 var vector      = require('./lib/vector');
 var ml          = require('./lib/machinelearning');
 
+//Forecasting
+var engine		= require('./engine');
+
 
 /**
  *  Define the sample application.
@@ -172,11 +175,12 @@ var ForeCaster = function() {
             fs.readFile(req.files.file.path, function (err, data) {
                 var newPath = __dirname + "/uploads/input.csv";
                 fs.writeFile(newPath, data, function (err) {
-                    
 					analysis.loadReadings(newPath, function(readings) {
-						var html = "<html><body>" + JSON.stringify(readings);
-						html += "</body></html>";
-						res.send(html);
+						engine.compute(readings, function(computed) {
+							var forecast = reading.toCSV(computed);
+							res.setHeader('Content-Type', 'text/plain');
+							res.send(forecast);
+						});
 					});
                 });
             });
