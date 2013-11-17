@@ -161,7 +161,6 @@ var ForeCaster = function() {
 						
 						for(var i = 0 ; i < readings.length ; i++) {
 							html += readings[i].temperature + "<br/>";
-							console.log(readings[i].temperature);
 						}
 						
 						html += "</body></html>";
