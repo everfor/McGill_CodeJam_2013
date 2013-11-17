@@ -59,7 +59,7 @@ exports.loadReadings = function(file, callback) {
 	});
 };
 
-//exports.sampleData = exports.getReadings(__dirname + "/data/data_set.csv");
+//exports.sampleData = exports.getReadings(__dirname + "/data/datasetReadings.csv");
 // we will be using the standard variation instead of the variance// sorry not sorry
 function summaryObj(index, day, rad, radVar,  hum, humVar,
  temp,  tempVar, wind, windVar, pow, powVar){
@@ -76,14 +76,14 @@ function summaryObj(index, day, rad, radVar,  hum, humVar,
   this.pow = pow,
   this.powVar = powVar
   }
-}
-exports.loadReadings("data_set.csv", transform);var FRACTION_OF_TRAINING_SET = 0.5; // only use half of the setvar data_set = [];var summary_data;var SORTED_SET_SIZE = 200;var dayWeight = 0.05;var radWeight = 0.15;var humWeight = 0.0;var tempWeight = 0.3;var windWeight = 0.0;var powWeight = 0.5; var radVarWeight = 0.15;var humVarWeight = 0.0;var tempVarWeight = 0.3;var windVarWeight = 0.0;var powVarWeight = 0.5; weights = {    k: SORTED_SET_SIZE,	weights: {	index: 0,	day: dayWeight,	rad: radWeight,	radVar: radVarWeight,	hum: humWeight,	humVar: humVarWeight,	temp: tempWeight,	tempVar: tempVarWeight,	wind: windWeight,	windVar: windVarWeight,	pow: powWeight,	powVar: powVarWeight	}}
-function transform(datasetReadings){  data_set = datasetReadings;
+}function summaryObj2(index, day, radVar,  humVar, tempVar, windVar, powVar){{  this.index = index,  this.day = day,  this.radVar = radVar,  this.humVar = humVar,  this.tempVar = tempVar,  this.windVar = windVar,  this.powVar = powVar  }}
+exports.loadReadings("data_set.csv", transform);var FRACTION_OF_TRAINING_SET = 0.5; // only use half of the setvar datasetReadings = [];var summary_data;var SORTED_SET_SIZE = 200;var dayWeight = 0.05;var radWeight = 0.15;var humWeight = 0.0;var tempWeight = 0.3;var windWeight = 0.0;var powWeight = 0.5; var radVarWeight = 0.15;var humVarWeight = 0.0;var tempVarWeight = 0.3;var windVarWeight = 0.0;var powVarWeight = 0.5; weights = {    k: SORTED_SET_SIZE,	weights: {	index: 0,	day: dayWeight,	rad: radWeight,	radVar: radVarWeight,	hum: humWeight,	humVar: humVarWeight,	temp: tempWeight,	tempVar: tempVarWeight,	wind: windWeight,	windVar: windVarWeight,	pow: powWeight,	powVar: powVarWeight	}}weights2 = {    k: 1,	weights: {	index: 0,	day: dayWeight,	radVar: radVarWeight,	humVar: humVarWeight,	tempVar: tempVarWeight,	windVar: windVarWeight,	powVar: powVarWeight	}}
+function transform(datasetReadings){  //datasetReadings = datasetReadings;
   var summaries = new Array();
   for(var i = 0; i < Math.floor(datasetReadings.length * 0.5) - (24 * 4); i ++){
    summaries.push(summary(datasetReadings, i));
       if(i%96==0){	//console.log(summaries[i]);   }
-  }  summary_data = summaries;  predict();  return summaries;
+  }  summary_data = summaries;  predict(datasetReadings);  return summaries;
 }
 
 summary = function (datasetReadings, i) {
@@ -129,5 +129,5 @@ summary = function (datasetReadings, i) {
     windVar /= 24;		powVar = Math.sqrt(powVar);    radVar = Math.sqrt(radVar);    humVar = Math.sqrt(humVar);    tempVar = Math.sqrt(tempVar);    windVar = Math.sqrt(windVar);	
     return new summaryObj(i, day, rad, radVar,  hum, humVar,
  temp,  tempVar, wind, windVar, pow, powVar); 
-}function predict(){  var curr = summary(data_set, Math.floor(data_set.length / 2) + 2);  sortBest(curr);}
-function sortBest(currSet){  var output = knn(currSet, summary_data, weights);  console.log(output);  }
+}function predict(datasetReadings){  var curr = summary(datasetReadings, Math.floor(datasetReadings.length / 2) + 2);  sortBest(datasetReadings, curr);}
+function sortBest(datasetReadings, currSet){  var output = knn(currSet, summary_data, weights);  console.log(output);  //return output;  //getBestest(datasetReadings, currSet, output); }  function getBestest(datasetReadings, currSet, contenders){    var radVar = 0.0;    var humVar = 0.0;    var tempVar = 0.0;    var windVar = 0.0;    var powVar = 0.0;    var summaries = new Array();	var k = currSet.index;    for (var x in contenders){		var i = x.index;		for(var j = 0; j < 24; j++){			if(j < 8){				powVar += Math.abs((datasetReadings[i + j].power - datasetReadings[k + j].power)/datasetReadings[k + j].power);			}			radVar += Math.abs((datasetReadings[i + j].radiation - datasetReadings[k + j].radiation)/datasetReadings[k + j].radiation);			humVar += Math.abs((datasetReadings[i + j].humidity - datasetReadings[k + j].humidity)/datasetReadings[k + j].humidity);			tempVar += Math.abs((datasetReadings[i + j].temperature - datasetReadings[k + j].temperature)/datasetReadings[k + j].temperature);			windVar += Math.abs((datasetReadings[i + j].windSpeed - datasetReadings[k + j].windSpeed)/datasetReadings[k + j].windSpeed);		}		powVar /= 8;		radVar /= 24;		humVar /= 24;		tempVar /= 24;		windVar /= 24;		summaries.push(new summaryObj2(i, x.day, radVar, humVar, tempVar, windVar, powVar));    } 	var perfect = new summaryObj(-1,-1,0.0,0.0,0.0,0.0,0.0);	var result = knn(perfect, summaries, weights2);	console.log(result);	return result; }
