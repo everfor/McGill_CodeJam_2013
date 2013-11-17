@@ -51,8 +51,10 @@ var ForeCaster = function() {
             self.zcache = { 'index': '' };
         }
 
-        //  Local calche for static content.
+        //  Local cache for static content.
         self.zcache['index'] = fs.readFileSync('./templates/index.html');
+		self.zcache['highcharts'] = fs.readFileSync('./templates/js/highcharts.js');
+		self.zcache['exporting'] = fs.readFileSync('./templates/js/modules/exporting.js');
     };
 
 
@@ -107,7 +109,6 @@ var ForeCaster = function() {
         self.get_routes = {};
         self.post_routes = {};
 
-        // Handlers for get requests
         self.get_routes['/mcgillrobotics'] = function(req, res) {
             var link = "http://mcgillrobotics.com/shared_media/Team.jpg";
             res.send("<html><body><img src='" + link + "'></body></html>");
@@ -118,10 +119,26 @@ var ForeCaster = function() {
             res.send(self.cache_get('index'));
         };
 		
+		self.get_routes['/js/highcharts.js'] = function(req, res) {
+			res.setHeader('Content-Type', 'application/javascript');
+            res.send(self.cache_get('highcharts'));
+		}
+		
+		self.get_routes['/js/modules/exporting.js'] = function(req, res) {
+			res.setHeader('Content-Type', 'application/javascript');
+            res.send(self.cache_get('exporting'));
+		}
+		
+		//Pulse API and live chart
 		self.get_routes['/pulse'] = function(req, res) {
 			pulse.getLatestPulseData(function(data) {
-				var html = "<html><body>" + JSON.stringify(data, null, 4) + "</body></html>";
-				res.send(html);
+				res.json(data);
+			});
+		}
+		
+		self.get_routes['/live'] = function(req, res) {
+			pulse.getLatestPulseData(function(data) {
+				res.render('live.ejs', {initialPulse: JSON.stringify(data)});
 			});
 		}
 
@@ -157,12 +174,7 @@ var ForeCaster = function() {
                 fs.writeFile(newPath, data, function (err) {
                     
 					analysis.loadReadings(newPath, function(readings) {
-						var html = "<html><body>";
-						
-						for(var i = 0 ; i < readings.length ; i++) {
-							html += readings[i].temperature + "<br/>";
-						}
-						
+						var html = "<html><body>" + JSON.stringify(readings);
 						html += "</body></html>";
 						res.send(html);
 					});
