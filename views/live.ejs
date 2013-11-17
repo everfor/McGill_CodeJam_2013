@@ -34,15 +34,18 @@ $(function () {
                 }
             },
             title: {
-                text: 'Energy Usage in '
+                text: 'Energy Prediction and History '
             },
             xAxis: {
+                title: {
+                    text: 'Time'
+                },
                 type: 'datetime',
                 tickPixelInterval: 150
             },
             yAxis: {
                 title: {
-                    text: 'predicted power demand [kW]'
+                    text: 'Energy Consumption [kW]'
                 },
                 plotLines: [{
                     value: 30000,
@@ -58,13 +61,13 @@ $(function () {
                 }
             },
             legend: {
-                enabled: false
+                enabled: true
             },
             exporting: {
                 enabled: false
             },
             series: [{
-                name: 'Power Consumption prediction',
+                name: 'Actual',
                 data: (function() {
 					var json = <%- initialPulse %>;
 					var data = new Array(32);
@@ -76,6 +79,20 @@ $(function () {
 					}
 					return data;
 				})()
+            },
+            {
+                name: 'Predicted',
+                data: (function() {
+                    var json = <%- initialPulse %>;
+                    var data = new Array(32);
+                    for(var i = 0 ; i < json.length ; i++) {
+                        data[i] = {
+                            x: new Date(json[i].date),
+                            y: json[i].power+50
+                        };
+                    }
+                    return data;
+                })()
             }]
         });
     });
