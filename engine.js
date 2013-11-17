@@ -77,10 +77,10 @@ function summaryObj(index, day, rad, radVar,  hum, humVar,
   this.powVar = powVar
   }
 }
-exports.loadReadings("data_set.csv", transform);
+exports.loadReadings("data_set.csv", transform);var FRACTION_OF_TRAINING_SET = 0.5; // only use half of the set
 function transform(datasetReadings){
   var summaries = new Array();
-  for(var i = 0; i < datasetReadings.length - (24 * 4); i ++){
+  for(var i = 0; i < Math.floor(datasetReadings.length * 0.5) - (24 * 4); i ++){
    summaries.push(summary(datasetReadings, i));
    console.log(summaries[i]);
   }  return summaries;
