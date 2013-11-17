@@ -11,6 +11,7 @@ var pulse		= require('./lib/pulse');
 // Machine Learning
 var vector      = require('./lib/vector');
 var ml          = require('./lib/machinelearning');
+var predictor   = require('./lib/predictor');
 
 //Forecasting
 var engine		= require('./engine');
@@ -133,15 +134,33 @@ var ForeCaster = function() {
 		}
 		
 		//Pulse API and live chart
-		self.get_routes['/pulse'] = function(req, res) {
-			pulse.getLatestPulseData(function(data) {
+		self.get_routes['/pulse_future'] = function(req, res) {
+			pulse.getPulseData(true, function(data) {
+				res.json(data);
+			});
+		}
+		
+		self.get_routes['/pulse_past'] = function(req, res) {
+			pulse.getPulseData(false, function(data) {
 				res.json(data);
 			});
 		}
 		
 		self.get_routes['/live'] = function(req, res) {
-			pulse.getLatestPulseData(function(data) {
-				res.render('live.ejs', {initialPulse: JSON.stringify(data)});
+			pulse.getPulseData(false, function(past) {
+				pulse.getPulseData(true, function(future) {
+					/*engine.compute(past.concat(future), function(forecast) {
+						res.render('live.ejs', {initialPulse: JSON.stringify(past),
+												powerForecast: JSON.stringify(forecast)});
+					});*/
+					var features = predictor.parse(future);
+					var forecast = predictor.predict(features);
+					for(var i = 0 ; i < future.length ; i++) {
+						future[i].power = forecast[i];
+					}
+					res.render('live.ejs', {initialPulse: JSON.stringify(past),
+												powerForecast: JSON.stringify(future)});
+				});
 			});
 		}
 

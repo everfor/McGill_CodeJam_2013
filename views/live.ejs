@@ -10,7 +10,7 @@ $(function () {
     $(document).ready(function() {
         Highcharts.setOptions({
             global: {
-                useUTC: false
+                useUTC: true
             }
         });
     
@@ -67,33 +67,33 @@ $(function () {
                 enabled: false
             },
             series: [{
-                name: 'Actual',
-                data: (function() {
-					var json = <%- initialPulse %>;
-					var data = new Array(32);
-					for(var i = 0 ; i < json.length ; i++) {
-						data[i] = {
-							x: new Date(json[i].date),
-							y: json[i].power
-						};
-					}
-					return data;
-				})()
-            },
-            {
-                name: 'Predicted',
-                data: (function() {
-                    var json = <%- initialPulse %>;
-                    var data = new Array(32);
-                    for(var i = 0 ; i < json.length ; i++) {
-                        data[i] = {
-                            x: new Date(json[i].date),
-                            y: json[i].power+50
-                        };
-                    }
-                    return data;
-                })()
-            }]
+					name: 'Past power consumption',
+					data: (function() {
+						var json = <%- initialPulse %>;
+						var data = new Array(32);
+						for(var i = 0 ; i < json.length ; i++) {
+							data[i] = {
+								x: new Date(json[i].date),
+								y: json[i].power
+							};
+						}
+						return data;
+					})()
+				}, {
+					name: 'Forecasted power consumption',
+					data: (function() {
+						var json = <%- powerForecast %>;
+						var data = new Array(64);
+						for(var i = 0 ; i < json.length ; i++) {
+							data[i] = {
+								x: new Date(json[i].date),
+								y: json[i].power
+							};
+						}
+						return data;
+					})()
+				}
+			]
         });
     });
     
