@@ -194,7 +194,7 @@ var ForeCaster = function() {
                     analysis.loadReadings(newPath, function(readings) {
                         var m = readings.length,
                             features = [],
-                            weights = new vector.Vector(new Array(20694.954389081628,1815.3521425576662,3219.1408722994197,-3334.5343224799003,4298.639031144278,-174.78245361926216)),
+                            weights = new vector.Vector(new Array(19937.086050515038,1850.6840812095181,639.8623844121382,-4014.7087874234094,5814.434855609916,-208.1588326039659)),
                             results = [],
                             alpha = 0.3,
                             lambda = 0;
@@ -208,23 +208,27 @@ var ForeCaster = function() {
                             // Radiation - Linear
                             features[i].vector[2] = parseFloat(readings[i].radiation);
                             // Time on a specific day
-                            features[i].vector[3] = parseFloat(Math.abs(readings[i].date.getHours() - 12));
+                            features[i].vector[3] = parseFloat(Math.abs(readings[i].date.getHours() * 60 + readings[i].date.getMinutes() - 720));
                             // Temperature - Should be exponential though
-                            features[i].vector[4] = parseFloat(readings[i].temperature);
+                            features[i].vector[4] = readings[i].temperature > 10 ? readings[i].temperature - 10 : 0;
                             // Month - Christmas in December so power demand should be low
-                            features[i].vector[5] = readings[i].date.getMonth() == 11 ? 1 : 0;
+                            features[i].vector[5] = ((readings[i].date.getMonth() == 11 && readings[i].date.getDate() >= 15)
+                                                    || (readings[i].date.getMonth() == 0 && readings[i].date.getDate() <= 10)) ? 1 : 0;
                             results[i] = parseFloat(readings[i].power);
                         }
 
                         ml.normalize(features);
 
                         result = '';
+                        pre = ''
                         for (var j = 0; j < m; j++) {
                             // ml.train(m, features, weights, results, alpha, lambda);
                             // console.log('training: ' + j + ' ' + weights.vector + ' cost: ' + ml.cost(features, weights, results));
                             // result += 'training: ' + j + ' ' + weights.vector + ' cost: ' + ml.cost(features, weights, results) + '\n';
-                            result += ml.predict(features[j], weights) + '  ' + results[j] + '\n';
+                            pre += ml.predict(features[j], weights) + '\n';
+                            result += results[j] + '\n';
                         }
+                        fs.writeFile('./pre.txt', pre, function(err) {});
 
                         // result += weights.vector + '\n';
 
