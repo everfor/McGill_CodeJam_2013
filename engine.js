@@ -1,8 +1,4 @@
-//TODO: preprocess once, rather than everytime node is run
-//TODO: input real current file to compare with history
-//TODO: fiddle with weights to find good matches
-//TODO: figure out how to do the fiddling over a large test set
-
+//TEST ON FULL SET RATHER THAN FIRST HALF
 knn = require('alike');
 var fs = require('fs');
 var csv	= require('csv');
@@ -128,7 +124,7 @@ function slicer(historical, indexBest) {
 //converts initial history into the style we compare
 function transformRawHistoryToSummaryList(historical) {
     var summaries = new Array();
-    for(var i = 0; i < Math.floor(historical.length - (24 * 4)); i ++){
+    for(var i = 0; i < Math.floor(historical.length/2 - (24 * 4)); i ++){
         summaries.push(summary(historical, i));
     }
     return summaries;
