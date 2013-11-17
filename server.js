@@ -2,12 +2,16 @@
 //  OpenShift Node application
 var express 	= require('express');
 var fs      	= require('fs');
+
+//CSV and Pulse Energy interfacing
 var analysis	= require('./lib/analysis');
 var reading 	= require('./lib/reading');
+var pulse		= require('./lib/pulse');
 
 // Machine Learning
 var vector      = require('./lib/vector');
 var ml          = require('./lib/machinelearning');
+
 
 /**
  *  Define the sample application.
@@ -113,6 +117,13 @@ var ForeCaster = function() {
             res.setHeader('Content-Type', 'text/html');
             res.send(self.cache_get('index'));
         };
+		
+		self.get_routes['/pulse'] = function(req, res) {
+			pulse.getLatestPulseData(function(data) {
+				var html = "<html><body>" + JSON.stringify(data, null, 4) + "</body></html>";
+				res.send(html);
+			});
+		}
 
         self.get_routes['/testml'] = function(req, res) {
             var features = [],
@@ -149,7 +160,8 @@ var ForeCaster = function() {
 						var html = "<html><body>";
 						
 						for(var i = 0 ; i < readings.length ; i++) {
-							html += readings[i].radiation + "<br/>";
+							html += readings[i].temperature + "<br/>";
+							console.log(readings[i].temperature);
 						}
 						
 						html += "</body></html>";
