@@ -170,7 +170,7 @@ var ForeCaster = function() {
             });
         };
 
-        self.post_routes['/mlwithupload'] = function(req, res) {
+        self.post_routes['/mltraining'] = function(req, res) {
             fs.readFile(req.files.file.path, function (err, data) {
                 var newPath = __dirname + "/uploads/input.csv";
                 fs.writeFile(newPath, data, function (err) {
