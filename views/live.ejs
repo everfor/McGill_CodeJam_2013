@@ -1,16 +1,25 @@
 <!DOCTYPE HTML>
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-		<title>Power consumption prediction </title>
+        <head>
+                <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+                <title>Power consumption prediction </title>
 
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
-		<script type="text/javascript">
+                <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+                    <!-- Bootstrap core CSS -->
+            <link href="http://getbootstrap.com/dist/css/bootstrap.css" rel="stylesheet">
+            <link href = "http://getbootstrap.com/examples/carousel/carousel.css" ref = "stylesheet">
+            <!-- 
+<link href="http://getbootstrap.com/examples/jumbotron/jumbotron.css" rel="stylesheet">
+-->
+            
+            
+                <script type="text/javascript">
 $(function () {
     $(document).ready(function() {
         Highcharts.setOptions({
             global: {
-                useUTC: false
+                useUTC: false,
+                zoomType: 'x'
             }
         });
     
@@ -34,15 +43,18 @@ $(function () {
                 }
             },
             title: {
-                text: 'Energy Usage in '
+                text: 'Energy Prediction and History '
             },
             xAxis: {
+                title: {
+                    text: 'Time'
+                },
                 type: 'datetime',
                 tickPixelInterval: 150
             },
             yAxis: {
                 title: {
-                    text: 'predicted power demand [kW]'
+                    text: 'Energy Consumption [kW]'
                 },
                 plotLines: [{
                     value: 30000,
@@ -58,36 +70,104 @@ $(function () {
                 }
             },
             legend: {
-                enabled: false
+                enabled: true
             },
             exporting: {
                 enabled: false
             },
             series: [{
-                name: 'Power Consumption prediction',
+                name: 'Actual',
                 data: (function() {
-					var json = <%- initialPulse %>;
-					var data = new Array(32);
-					for(var i = 0 ; i < json.length ; i++) {
-						data[i] = {
-							x: new Date(json[i].date),
-							y: json[i].power
-						};
-					}
-					return data;
-				})()
+                                        var json = <%- initialPulse %>;
+                                        var data = new Array(32);
+                                        for(var i = 0 ; i < json.length ; i++) {
+                                                data[i] = {
+                                                        x: new Date(json[i].date),
+                                                        y: json[i].power
+                                                };
+                                        }
+                                        return data;
+                                })()
+            },
+            {
+                name: 'Predicted',
+                data: (function() {
+                    var json = <%- initialPulse %>;
+                    var data = new Array(32);
+                    for(var i = 0 ; i < json.length ; i++) {
+                        data[i] = {
+                            x: new Date(json[i].date),
+                            y: json[i].power+50
+                        };
+                    }
+                    return data;
+                })()
             }]
         });
     });
     
 });
-		</script>
-	</head>
-	<body>
+                </script>
+        </head>
+        <body background="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAlcAAAFNCAYAAAAtnkrkAAAWz0lEQVR4Xu3d7ZKbSBIFULftd/bL+2OXWRPBMoAKOum+KR3/mYkZupQ6t2TdQIh++/Hjx58v/hAgQIAAAQIECJQIvClXJY4WIUCAAAECBAj8I6Bc2QgECBAgQIAAgUIB5aoQ01IECBAgQIAAAeXKHiBAgAABAgQIFAooV4WYliJAgAABAgQIKFf2AAECBAgQIECgUEC5KsS0FAECBAgQIEBAubIHCBAgQIAAAQKFAspVIaalCBAgQIAAAQLKlT1AgAABAgQIECgUUK4KMS1FgAABAgQIEFCu7AECBAgQIECAQKGAclWIaSkCBAgQIECAgHJlDxAgQIAAAQIECgWUq0JMSxEgQIAAAQIElCt7gAABAgQIECBQKKBcFWJaigABAgQIECCgXNkDBAgQIECAAIFCAeWqENNSBAgQIECAAAHlyh4gQIAAAQIECBQKKFeFmJYiQIAAAQIECChX9gABAgQIECBAoFBAuSrEtBQBAgQIECBAQLmyBwgQIECAAAEChQLKVSGmpQgQIECAAAECypU9QIAAAQIECBAoFFCuCjEtRYAAAQIECBBQruwBAgQIECBAgEChgHJViGkpAgQIECBAgIByZQ8QIECAAAECBAoFlKtCTEsRIECAAAECBJQre4AAAQIECBAgUCigXBViWooAAQIECBAgoFzZAwQIECBAgACBQgHlqhDTUgQIECBAgAAB5coeIECAAAECBAgUCihXhZiWIkCAAAECBAgoV/YAAQIECBAgQKBQQLkqxLQUAQIECBAgQEC5sgcIECBAgAABAoUCylUhpqUIECBAgAABAsqVPUCAAAECBAgQKBRQrgoxLUWAAAECBAgQUK7sAQIECBAgQIBAoYByVYhpKQIECBAgQICAcmUPECBAgAABAgQKBZSrQkxLESBAgAABAgSUK3uAAAECBAgQIFAooFwVYlqKAAECBAgQIKBc2QMECBAgQIAAgUIB5aoQ01IECBAgQIAAAeXKHiBAgAABAgQIFAooV4WYliJAgAABAgQIKFf2AAECBAgQIECgUEC5KsS0FAECBAgQIEBAubIHCBAgQIAAAQKFAspVIaalCBAgQIAAAQLKlT1AgAABAgQIECgUUK4KMS1FgAABAgQIEFCu7AECBAgQIECAQKGAclWIaSkCBAgQIECAgHJlDxAgQIAAAQIECgWUq0JMSxEgQIAAAQIElCt7gAABAgQIECBQKKBcFWJaigABAgQIECCgXNkDBAgQIECAAIFCAeWqENNSBAgQIECAAAHlyh4gQIAAAQIECBQKKFeFmJYiQIAAAQIECChX9gABAgQIECBAoFBAuSrEtBQBAgQIECBAQLmyBwgQIECAAAEChQLKVSGmpQgQIECAAAECypU9QIAAAQIECBAoFFCuCjEtRYAAAQIECBBQruwBAgQIECBAgEChgHJViGkpAgQIECBAgIByZQ8QIECAAAECBAoFlKtCTEsRIECAAAECBJQre4AAAQIECBAgUCigXBViWooAAQIECBAgoFzZAwQIECBAgACBQgHlqhDTUgQIECBAgAAB5coeIECAAAECBAgUCihXhZiWIkCAAAECBAgoV/YAAQIECBAgQKBQQLkqxLQUAQIECBAgQEC5sgcIECBAgAABAoUCylUhpqUIECBAgAABAsqVPUCAAAECBAgQKBRQrgoxLUWAAAECBAgQUK7sAQIECBAgQIBAoYByVYhpKQIECBAgQICAcmUPECBAgAABAgQKBZSrQkxLESBAgAABAgSUK3uAAAECBAgQIFAooFwVYlqKAAECBAgQIKBc2QMECBAgQIAAgUIB5aoQ01IECBAgQIAAAeXKHiBAgAABAgQIFAooV4WYliJAgAABAgQIKFf2AAECBAgQIECgUEC5KsS0FAECBAgQIEBAubIHCBAgQIAAAQKFAspVIaalCBAgQIAAAQLKlT1AgAABAgQIECgUUK4KMS1FgAABAgQIEFCu7AECBAgQIECAQKGAclWIaSkCBAgQIECAgHJlDxAgQIAAAQIECgWUq0JMSxEgQIAAAQIElCt7gAABAgQIECBQKKBcFWJaigABAgQIECCgXNkDBAgQIECAAIFCAeWqENNSBAgQIECAAAHlyh4gQIAAAQIECBQKKFeFmJYiQIAAAQIECChX9gABAgQIECBAoFBAuSrEtBQBAgQIECBAQLmyBwgQIECAAAEChQLKVSGmpQgQIECAAAECypU9QIAAAQIECBAoFFCuCjEtRYAAAQIECBBQruwBAgQIECBAgEChgHJViGkpAgQIECBAgIByZQ8QIECAAAECBAoFlKtCTEsRIECAAAECBJQre4AAAQIECBAgUCigXBViWooA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gAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0FlKuGoRmZAAECBAgQyBVQrnKzMRkBAgQIECDQUEC5ahiakQkQIECAAIFcAeUqNxuTESBAgAABAg0F/gPZ1mXpiSSG7QAAAABJRU5ErkJggg==">
 <script src="./js/highcharts.js"></script>
 <script src="./js/modules/exporting.js"></script>
 
-<div id="container" style="min-width: 310px; height: 500px; margin: 0 auto"></div>
+            
 
-	</body>
+            <!-- navigation bar -->
+        
+<div class="navbar-wrapper">
+      <div class="container">
+
+        <div class="navbar navbar-inverse navbar-static-top" role="navigation">
+          <div class="container">
+            <div class="navbar-header">
+              <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+              </button>
+              <a class="navbar-brand" href="#">Energy Preduction Engine </a>
+            </div>
+            <div class="navbar-collapse collapse">
+              <ul class="nav navbar-nav">
+                <li class="active"><a href="#">UI interface</a></li>
+                  <li ><a href="#MacInt">Machine Interface</a></li>
+                <li><a href="#about">About McGill Robotics</a></li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+        
+<sript
+
+
+    <!-- graph Pane  -->
+
+<div id="container" style="min-width: 450px;max-width:1140px; height: 500px; margin: 0 auto"></div>
+    <div class="container">
+        <br/>
+        <br/>
+        <div id = "MacInt" class="caption" style="color:#ffffff"  style="margin-bottom:3cm">
+            <h1  align = "center"  >  Machine Interaction </h1>
+            <h4 align = "center" > To try out the machine interaction, you can access our API using the following command : </h4> 
+            <p align = "center"  style="margin-bottom:3cm;"><code style="font-size:150%"> curl -F file=@sample_input.csv http://your_site.com/some_extension > sample_output.txt</code></p>
+        </div>
+        <div id = "about" style="margin-bottom:5cm;color:#ffffff">
+            <h1 align = "center" class="caption" >About us</h1>
+            <h4 align = "center" >stuffff</h4>
+        </div>
+        
+              <!-- FOOTER -->
+      <footer style="color:#ffffff" >
+        <p class="pull-right" ><a href="#">Back to top</a></p>
+        <p>&copy; 2013 Company, Inc. &middot; <a href="#">Privacy</a> &middot; <a href="#">Terms</a></p>
+      </footer>
+    </div> 
+</body>
 </html>
