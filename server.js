@@ -168,7 +168,55 @@ var ForeCaster = function() {
 					});
                 });
             });
-        }
+        };
+
+        self.post_routes['/mlwithupload'] = function(req, res) {
+            fs.readFile(req.files.file.path, function (err, data) {
+                var newPath = __dirname + "/uploads/input.csv";
+                fs.writeFile(newPath, data, function (err) {
+                    
+                    analysis.loadReadings(newPath, function(readings) {
+                        var m = readings.length,
+                            features = [],
+                            weights = new vector.Vector(new Array(20694.954389081628,1815.3521425576662,3219.1408722994197,-3334.5343224799003,4298.639031144278,-174.78245361926216)),
+                            results = [],
+                            alpha = 0.3,
+                            lambda = 0;
+                        
+                        for (var i = 0; i < m; i++) {
+                            features.push(new vector.Vector(Array.apply(null, new Array(6)).map(Number.prototype.valueOf,1)));
+                        }
+                        for (var i = 0; i < m; i++) {
+                            // Weekday = 1, weekend = -1
+                            features[i].vector[1] = (readings[i].date.getDay() > 0 && readings[i].date.getDay() < 6) ? 1 : -1;
+                            // Radiation - Linear
+                            features[i].vector[2] = parseFloat(readings[i].radiation);
+                            // Time on a specific day
+                            features[i].vector[3] = parseFloat(Math.abs(readings[i].date.getHours() - 12));
+                            // Temperature - Should be exponential though
+                            features[i].vector[4] = parseFloat(readings[i].temperature);
+                            // Month - Christmas in December so power demand should be low
+                            features[i].vector[5] = readings[i].date.getMonth() == 11 ? 1 : 0;
+                            results[i] = parseFloat(readings[i].power);
+                        }
+
+                        ml.normalize(features);
+
+                        result = '';
+                        for (var j = 0; j < m; j++) {
+                            // ml.train(m, features, weights, results, alpha, lambda);
+                            // console.log('training: ' + j + ' ' + weights.vector + ' cost: ' + ml.cost(features, weights, results));
+                            // result += 'training: ' + j + ' ' + weights.vector + ' cost: ' + ml.cost(features, weights, results) + '\n';
+                            result += ml.predict(features[j], weights) + '  ' + results[j] + '\n';
+                        }
+
+                        // result += weights.vector + '\n';
+
+                        res.send(result);
+                    });
+                });
+            });
+        };
     };
 
 
