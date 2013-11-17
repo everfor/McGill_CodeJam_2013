@@ -78,6 +78,7 @@ $(function () {
             series: [{
                 name: 'Actual',
                 data: (function() {
+<<<<<<< HEAD
                                         var json = <%- initialPulse %>;
                                         var data = new Array(32);
                                         for(var i = 0 ; i < json.length ; i++) {
@@ -88,6 +89,18 @@ $(function () {
                                         }
                                         return data;
                                 })()
+=======
+					var json = <%- initialPulse %>;
+					var data = new Array(32);
+					for(var i = 0 ; i < json.length ; i++) {
+						data[i] = {
+							x: new Date(json[i].date),
+							y: json[i].power
+						};
+					}
+					return data;
+				})()
+>>>>>>> 34d516ae21eebe1a564afac0a194406e041332ed
             },
             {
                 name: 'Predicted',
