@@ -24,7 +24,7 @@ exports.loadReadings = function(file, callback) {
 			datasetReadings[i + 1].humidity = datasetReadings[i].humidity + stepHum;
 			datasetReadings[i + 2].humidity = datasetReadings[i + 1].humidity + stepHum;
 			datasetReadings[i + 3].humidity = datasetReadings[i + 2].humidity + stepHum;
-			//v
+			
 			var stepTemp = (datasetReadings[next].temperature - datasetReadings[i].temperature) / 4;
 			datasetReadings[i + 1].temperature = datasetReadings[i].temperature + stepTemp;
 			datasetReadings[i + 2].temperature = datasetReadings[i + 1].temperature + stepTemp;
@@ -60,10 +60,10 @@ exports.loadReadings = function(file, callback) {
 };
 
 //exports.sampleData = exports.getReadings(__dirname + "/data/data_set.csv");
-
-function obj(day, rad, radVar,  hum, humVar,
+// we will be using the standard variation instead of the variance// sorry not sorry
+function summaryObj(index, day, rad, radVar,  hum, humVar,
  temp,  tempVar, wind, windVar, pow, powVar){
-{
+{  this.index = index,
   this.day = day,
   this.rad = rad,
   this.radVar = radVar,
@@ -115,7 +115,7 @@ summary = function (datasetReadings, i) {
     var powVar = 0.0;
     for(var j = 0; j < 24; j++){
        if(j < 8){
-          powVar += Math.pow((datasetReadings[i + j].mapower - pow),2);
+          powVar += Math.pow((datasetReadings[i + j].power - pow),2);
        }
        radVar += Math.pow((datasetReadings[i + j].radiation - rad),2);
        humVar += Math.pow((datasetReadings[i + j].humidity - hum),2);
@@ -126,8 +126,8 @@ summary = function (datasetReadings, i) {
     radVar /= 24;
     humVar /= 24;
     tempVar /= 24;
-    windVar /= 24;
-    return new obj(day, rad, radVar,  hum, humVar,
+    windVar /= 24;		powVar = Math.sqrt(powVar);    radVar = Math.sqrt(radVar);    humVar = Math.sqrt(humVar);    tempVar = Math.sqrt(tempVar);    windVar = Math.sqrt(windVar);	
+    return new summaryObj(i, day, rad, radVar,  hum, humVar,
  temp,  tempVar, wind, windVar, pow, powVar);
 }
 
