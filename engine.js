@@ -1,6 +1,6 @@
 var fs      = require('fs');
 var csv		= require('csv');
-var reading = require('./reading');
+var reading = require('./lib/reading');
 
 var self = this;
 
