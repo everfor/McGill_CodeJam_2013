@@ -115,7 +115,7 @@ summary = function (datasetReadings, i) {
     var powVar = 0.0;
     for(var j = 0; j < 24; j++){
        if(j < 8){
-          powVar += Math.pow((datasetReadings[i + j].power - pow),2);
+          powVar += Math.pow((datasetReadings[i + j].mapower - pow),2);
        }
        radVar += Math.pow((datasetReadings[i + j].radiation - rad),2);
        humVar += Math.pow((datasetReadings[i + j].humidity - hum),2);
