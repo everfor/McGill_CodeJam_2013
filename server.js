@@ -213,13 +213,21 @@ var ForeCaster = function() {
                     analysis.loadReadings(newPath, function(readings) {
                         var m = readings.length,
                             features = [],
-                            weights = new vector.Vector(new Array(19937.086050515038,1850.6840812095181,639.8623844121382,-4014.7087874234094,5814.434855609916,-208.1588326039659)),
+                            weights = new vector.Vector(
+                                new Array(
+                                    17093.862529391074,
+                                    1842.9387766915077,
+                                    612.2699466131371,
+                                    -4017.5312398588926,
+                                    5728.063077130966,
+                                    -5204.672034748349,
+                                    -668.8350487258651)),
                             results = [],
-                            alpha = 0.3,
-                            lambda = 0;
+                            alpha = 0.7,
+                            lambda = 10;
                         
                         for (var i = 0; i < m; i++) {
-                            features.push(new vector.Vector(Array.apply(null, new Array(6)).map(Number.prototype.valueOf,1)));
+                            features.push(new vector.Vector(Array.apply(null, new Array(7)).map(Number.prototype.valueOf,1)));
                         }
                         for (var i = 0; i < m; i++) {
                             // Weekday = 1, weekend = -1
@@ -230,13 +238,16 @@ var ForeCaster = function() {
                             features[i].vector[3] = parseFloat(Math.abs(readings[i].date.getHours() * 60 + readings[i].date.getMinutes() - 720));
                             // Temperature - Should be exponential though
                             features[i].vector[4] = readings[i].temperature > 10 ? readings[i].temperature - 10 : 0;
+                            // Temperature Exp
+                            features[i].vector[5] = Math.exp(readings[i].temperature - 10);
                             // Month - Christmas in December so power demand should be low
-                            features[i].vector[5] = ((readings[i].date.getMonth() == 11 && readings[i].date.getDate() >= 15)
+                            features[i].vector[6] = ((readings[i].date.getMonth() == 11 && readings[i].date.getDate() >= 15)
                                                     || (readings[i].date.getMonth() == 0 && readings[i].date.getDate() <= 10)) ? 1 : 0;
                             results[i] = parseFloat(readings[i].power);
                         }
 
                         ml.normalize(features);
+                        console.log(features[0].vector);
 
                         result = '';
                         pre = ''
