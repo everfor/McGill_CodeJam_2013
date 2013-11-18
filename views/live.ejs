@@ -71,7 +71,7 @@ $(function () {
 					data: (function() {
 						var json = <%- initialPulse %>;
 						var data = new Array(32);
-						for(var i = 0 ; i < json.length ; i++) {
+						for(var i = 0 ; i < json.length; i++) {
 							data[i] = {
 								x: new Date(json[i].date),
 								y: json[i].power
@@ -84,7 +84,7 @@ $(function () {
 					data: (function() {
 						var json = <%- powerForecast %>;
 						var data = new Array(64);
-						for(var i = 0 ; i < json.length ; i++) {
+						for(var i = 0 ; i < json.length; i++) {
 							data[i] = {
 								x: new Date(json[i].date),
 								y: json[i].power
@@ -92,7 +92,21 @@ $(function () {
 						}
 						return data;
 					})()
-				}
+				}, {
+                    name: 'Reality-Prediction',
+                    data: (function() {
+                        var past = <%- initialPulse %>;
+                        var future = <%- powerForecast %>;
+
+                        var data = [
+                            { x: new Date(past[past.length - 1].date), y: past[past.length - 1].power },
+                            { x: new Date(future[0].date), y: future[0].power }
+                        ];
+                        return data;
+                    })(),
+
+                    dashStyle: 'dash'
+                },
 			]
         });
     });
