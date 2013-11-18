@@ -124,7 +124,7 @@ function slicer(historical, indexBest) {
 //converts initial history into the style we compare
 function transformRawHistoryToSummaryList(historical) {
     var summaries = new Array();
-    for(var i = 0; i < Math.floor(historical.length/**//2/**/ - (24 * 4)); i ++){
+    for(var i = 0; i < Math.floor(historical.length/2 - (24 * 4)); i ++){
         summaries.push(summary(historical, i));
     }
     return summaries;
